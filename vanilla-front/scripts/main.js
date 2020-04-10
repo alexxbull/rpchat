@@ -1,10 +1,16 @@
-const channels = document.querySelector('.channels-container')
-const mobileNavButton = document.querySelector('.mobile-nav-button')
-const users = document.querySelector('.users-container')
+const backdrop = document.querySelector('.backdrop')
+const navBarMenu = document.querySelector('.nav-bar-menu')
+const navBarButton = document.querySelector('.nav-bar-button')
 
-const toggleMobileNav = () => {
-  channels.classList.toggle('show')
-  users.classList.toggle('show')
+const toggleNavBarMenu = () => {
+  if (backdrop.style['display'] === 'block') {
+    backdrop.style['display'] = 'none'
+    navBarMenu.style['display'] = 'none'
+  } else {
+    backdrop.style['display'] = 'block'
+    navBarMenu.style['display'] = 'flex'
+  }
 }
 
-mobileNavButton.addEventListener('click', toggleMobileNav)
+navBarButton.addEventListener('click', toggleNavBarMenu)
+backdrop.addEventListener('click', toggleNavBarMenu)

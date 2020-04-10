@@ -10,34 +10,59 @@ body {
     font-family: "Open-Sans", sans-serif;
 }
 
-.mobile-nav-button {
-    width: 3rem;
+.backdrop {    
+    display: none;
+    background: rgba(94, 94, 94, 0.267);    
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 1;
+}
+
+.nav-bar {
+    display: block;
+    border-bottom: 1px solid black;
+    background-color: rgb(119, 119, 119);
+}
+
+.nav-bar-button {
+    width: 2.5rem;
     background: none;
     cursor: pointer;
     border: none;
 }
 
-.mobile-nav-button__bar {
+.nav-bar-button__bar {
     height: 0.2rem;
     background: black;
     display: block;
     margin: 0.5rem 0;
 }
 
-.channels-container, .users-container {
+.nav-bar-menu {
     display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 60vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgb(255, 0, 0);
+    border: 1px solid black;
 }
 
-.show {
-    display: block;
+.channels, .users {
+    list-style: none;
 }
 
 @media (min-width: 40rem) {
-    .channels-container, .users-container {
-        display: block;
+    .nav-bar-button {
+        display: none;
     }
 
-    .mobile-nav-button {
-        display: none;
+    .channels-container, .users-container {
+        display: block;
     }
 }
