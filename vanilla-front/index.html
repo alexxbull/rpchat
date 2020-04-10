@@ -4,24 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/main.css">
     <title>RPChat</title>
 </head>
 
 <body>
     <div class="container">
-        <section class="channels-container">
-            <h1>Channels</h1>
-            <ul class="channels">
-                <li class="channel">Channel</li>
-            </ul>
-        </section>
 
-        <section class="users-container">
-            <h1>Users</h1>
-            <ul class="users">
-                <li class="users">User</li>
-            </ul>
-        </section>
+        <nav class="mobile-nav">
+            <button class="mobile-nav-button">
+                <span class="mobile-nav-button__bar"></span>
+                <span class="mobile-nav-button__bar"></span>
+                <span class="mobile-nav-button__bar"></span>
+            </button>
+            <span>Current Channel</span>
+
+            <section class="channels-container">
+                <h1>Channels</h1>
+                <ul class="channels">
+                    <li class="channel">Channel</li>
+                </ul>
+            </section>
+
+            <section class="users-container">
+                <h1>Users</h1>
+                <ul class="users">
+                    <li class="users">User</li>
+                </ul>
+            </section>
+        </nav>
+
 
         <main class="messages-container">
             <article class="message">message</article>
@@ -31,6 +43,8 @@
             </div>
         </main>
     </div>
+
+    <script src="./scripts/main.js"></script>
 </body>
 
 </html>

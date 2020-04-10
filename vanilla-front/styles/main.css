@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Open-Sans", sans-serif;
+}
+
+.mobile-nav-button {
+    width: 3rem;
+    background: none;
+    cursor: pointer;
+    border: none;
+}
+
+.mobile-nav-button__bar {
+    height: 0.2rem;
+    background: black;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.channels-container, .users-container {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+@media (min-width: 40rem) {
+    .channels-container, .users-container {
+        display: block;
+    }
+
+    .mobile-nav-button {
+        display: none;
+    }
+}
