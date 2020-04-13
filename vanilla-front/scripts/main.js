@@ -1,3 +1,6 @@
+// load the at the bottom of the page
+window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" })
+
 const backdrop = document.querySelector('.backdrop')
 const navBarMenu = document.querySelector('.nav-bar-menu')
 const navBarButton = document.querySelector('.nav-bar-button')
