@@ -35,6 +35,16 @@ body {
     background-color: rgb(119, 119, 119);
 }
 
+.nav-bar-header {
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar-title {
+    font-size: 1.1rem;
+    margin: 0 auto;
+}
+
 .nav-bar-button {
     width: 2.5rem;
     background: none;
