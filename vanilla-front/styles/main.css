@@ -6,8 +6,18 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: "Open-Sans", sans-serif;
+    min-height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
 }
 
 .backdrop {    
@@ -51,6 +61,20 @@ body {
     z-index: 10;
     background-color: rgb(255, 0, 0);
     border: 1px solid black;
+}
+
+.messages-container {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-y: scroll;
+    flex: 1;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.reply-container {
+    position: fixed;
+    bottom: 0;
 }
 
 .channels, .users {
