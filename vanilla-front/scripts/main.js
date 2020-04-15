@@ -1,10 +1,11 @@
-// load the at the bottom of the page
-window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" })
+// load the page to the bottom of the chat messages
+const messages = document.querySelector('.messages')
+messages.scrollTo({ left: 0, top: messages.scrollHeight, behavior: "smooth" })
 
+// mobile: toggle backdrop and nav menu via clicking the nav button
 const backdrop = document.querySelector('.backdrop')
-const navBarMenu = document.querySelector('.nav-bar-menu')
-const navBarButton = document.querySelector('.nav-bar-button')
-
+const navBarButton = document.querySelector('.chat-nav-button')
+const navBarMenu = document.querySelector('.chat-nav')
 const toggleNavBarMenu = () => {
   if (backdrop.style['display'] === 'block') {
     backdrop.style['display'] = 'none'
