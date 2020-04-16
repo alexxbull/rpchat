@@ -37,14 +37,14 @@ body {
     background-color: rgb(119, 119, 119);
 }
 
-.chat-nav-button {
+.chat-channels-button {
     width: 2.5rem;
     background: none;
     cursor: pointer;
     border: none;
 }
 
-.chat-nav-button__bar {
+.chat-channels-button__bar {
     height: 0.2rem;
     background: black;
     display: block;
@@ -63,18 +63,41 @@ body {
     height: 100%;
 }
 
-.chat-nav {
+.chat-users-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    color: white;
+}
+
+:focus {
+    outline: none;
+}
+
+::-moz-focus-inner {
+    border: 0;
+  }
+
+.channels-container, .users-container {
     display: none;
     flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
     width: 60vw;
     position: fixed;
     top: 0;
-    left: 0;
     z-index: 10;
-    background-color: orange;
     overflow-y: auto;
+}
+
+.channels-container {
+    background-color: orange;
+    left: 0;
+}
+
+.users-container {     
+    background: greenyellow;
+    right: 0;
 }
 
 .chat {
@@ -103,11 +126,11 @@ body {
 }
 
 @media (min-width: 40rem) {
-    .chat-nav-button {
+    .chat-channels-button, .chat-users-button {
         display: none;
     }
 
-    .chat-nav {
+    .channels-container, .users-container {
         display: flex;
         height: auto;
         width: auto;
