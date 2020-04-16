@@ -2,19 +2,39 @@
 const messages = document.querySelector('.messages')
 messages.scrollTo({ left: 0, top: messages.scrollHeight, behavior: "smooth" })
 
-// mobile: toggle backdrop and nav menu via clicking the nav button
+
+// mobile: on backdrop click hide users, channels, and backdrop
 const backdrop = document.querySelector('.backdrop')
-const navBarButton = document.querySelector('.chat-nav-button')
-const navBarMenu = document.querySelector('.chat-nav')
-const toggleNavBarMenu = () => {
+
+backdrop.addEventListener('click', () => {
   if (backdrop.style['display'] === 'block') {
     backdrop.style['display'] = 'none'
-    navBarMenu.style['display'] = 'none'
-  } else {
-    backdrop.style['display'] = 'block'
-    navBarMenu.style['display'] = 'flex'
+    channelsContainer.style['display'] = 'none'
+    usersContainer.style['display'] = 'none'
   }
 }
+)
 
-navBarButton.addEventListener('click', toggleNavBarMenu)
-backdrop.addEventListener('click', toggleNavBarMenu)
+// mobile: show channels when clicking the channels button and hide users
+const channelsButton = document.querySelector('.chat-channels-button')
+const channelsContainer = document.querySelector('.channels-container')
+
+channelsButton.addEventListener('click', () => {
+  if (channelsContainer.style['display'] !== 'block') {
+    backdrop.style['display'] = 'block'
+    channelsContainer.style['display'] = 'flex'
+  }
+}
+)
+
+// mobile: show users when clicking the users button and hide channels
+const usersButton = document.querySelector('.chat-users-button')
+const usersContainer = document.querySelector('.users-container')
+
+usersButton.addEventListener('click', () => {
+  if (usersContainer.style['display'] !== 'block') {
+    backdrop.style['display'] = 'block'
+    usersContainer.style['display'] = 'flex'
+  }
+}
+)
