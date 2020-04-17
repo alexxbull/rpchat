@@ -9,8 +9,8 @@ const backdrop = document.querySelector('.backdrop')
 backdrop.addEventListener('click', () => {
   if (backdrop.style['display'] === 'block') {
     backdrop.style['display'] = 'none'
-    channelsContainer.style['display'] = 'none'
-    usersContainer.style['display'] = 'none'
+    channelsContainer.style['transform'] = 'translateX(-100%)'
+    usersContainer.style['transform'] = 'translateX(100%)'
   }
 }
 )
@@ -22,7 +22,7 @@ const channelsContainer = document.querySelector('.channels-container')
 channelsButton.addEventListener('click', () => {
   if (channelsContainer.style['display'] !== 'block') {
     backdrop.style['display'] = 'block'
-    channelsContainer.style['display'] = 'flex'
+    channelsContainer.style['transform'] = 'translateX(0%)'
   }
 }
 )
@@ -34,7 +34,7 @@ const usersContainer = document.querySelector('.users-container')
 usersButton.addEventListener('click', () => {
   if (usersContainer.style['display'] !== 'block') {
     backdrop.style['display'] = 'block'
-    usersContainer.style['display'] = 'flex'
+    usersContainer.style['transform'] = 'translateX(0%)'
   }
 }
 )

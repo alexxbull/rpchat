@@ -80,7 +80,6 @@ body {
   }
 
 .channels-container, .users-container {
-    display: none;
     flex-direction: column;
     height: 100vh;
     width: 60vw;
@@ -88,17 +87,19 @@ body {
     top: 0;
     z-index: 10;
     overflow-y: auto;    
-    flex: 1;
+    transition: transform 0.3s;
 }
 
 .channels-container {
     background-color: orange;
     left: 0;
+    transform: translateX(-100%)
 }
 
 .users-container {     
     background: greenyellow;
     right: 0;
+    transform: translateX(100%);
 }
 
 .chat {
@@ -136,5 +137,7 @@ body {
         height: auto;
         width: auto;
         position: static;
+        flex: 1;
+        transform: translateX(0%);
     }
 }
