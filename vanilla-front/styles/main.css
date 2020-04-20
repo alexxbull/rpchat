@@ -86,20 +86,46 @@ body {
     position: fixed;
     top: 0;
     z-index: 10;
-    overflow-y: auto;    
-    transition: transform 0.3s;
+    overflow: hidden auto;
+    transition: transform 0.3s; 
 }
 
 .channels-container {
     background-color: orange;
     left: 0;
-    transform: translateX(-100%)
+    transform: translate(-100%);
 }
 
-.users-container {     
-    background: greenyellow;
-    right: 0;
-    transform: translateX(100%);
+.channels-header {
+    display: flex;
+    align-items: center;
+    position: static;
+}
+
+.channels-icon {
+    background: url('../images/channels-icon.svg');
+    min-height: 2rem;
+    min-width: 2rem;
+    background-size: 2rem 2rem;
+}
+
+.channels-header h1 {
+    font-size: 1.2rem;
+}
+
+.add-icon {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  margin-left: auto;
+}
+
+.add-icon:hover {
+    cursor: pointer;
+}
+
+.channels, .users {
+    list-style: none;
 }
 
 .chat {
@@ -123,8 +149,10 @@ body {
     cursor: pointer;
 }
 
-.channels, .users {
-    list-style: none;
+.users-container {     
+    background: greenyellow;
+    right: 0;
+    transform: translate(100%);
 }
 
 @media (min-width: 40rem) {
@@ -138,6 +166,30 @@ body {
         width: auto;
         position: static;
         flex: 1;
-        transform: translateX(0%);
+        transform: none;
+    }
+
+    .channels-header .tooltip {
+        font-size: 0.8rem;
+        position: fixed;
+        background-color: rgb(70, 70, 70);
+        color: white;
+        border-radius: 10px;
+        padding: 5px;
+        opacity: 0;
+        transition: opacity ease-in 0.1s;
+        visibility: hidden;
+    }
+
+    .channels-header .tooltip::after {
+        content: "";
+        font-size: 0.9rem;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
     }
 }
