@@ -48,7 +48,7 @@ addChannelIcon.addEventListener('mouseenter', (event) => {
   if (window.outerWidth >= 16 * 40) {
     Object.assign(channelTooltip.style, {
       top: 0,
-      left: addChannelIcon.offsetLeft - channelTooltip.offsetWidth / 2.25 + 'px',
+      left: addChannelIcon.offsetLeft - channelTooltip.offsetWidth / 2.31 + 'px',
       visibility: 'visible',
       opacity: 1.
     })
