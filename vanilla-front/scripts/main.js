@@ -40,23 +40,22 @@ usersButton.addEventListener('click', () => {
 )
 
 // desktop: show channels's tooltip when hovering over add channel's icon
-const addChannelIcon = document.querySelector('.channels-header .add-icon')
-const channelTooltip = document.querySelector('.channels-header .tooltip')
-console.log(channelTooltip)
+const createChannelIcon = document.querySelector('.channels-header .add-icon')
+const createChannelTooltip = document.querySelector('.channels-header .add-icon ~ .tooltip')
 
-addChannelIcon.addEventListener('mouseenter', (event) => {
+createChannelIcon.addEventListener('mouseenter', (event) => {
   if (window.outerWidth >= 16 * 40) {
-    Object.assign(channelTooltip.style, {
+    Object.assign(createChannelTooltip.style, {
       top: 0,
-      left: addChannelIcon.offsetLeft - channelTooltip.offsetWidth / 2.31 + 'px',
+      left: createChannelIcon.offsetLeft - createChannelTooltip.offsetWidth / 2.31 + 'px',
       visibility: 'visible',
       opacity: 1.
     })
   }
 })
 
-addChannelIcon.addEventListener('mouseleave', (event) => {
-  Object.assign(channelTooltip.style, {
+createChannelIcon.addEventListener('mouseleave', (event) => {
+  Object.assign(createChannelTooltip.style, {
     visibility: 'hidden',
     opacity: 0,
   })
