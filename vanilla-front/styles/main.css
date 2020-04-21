@@ -13,6 +13,7 @@ html {
 body {
     font-family: "Open-Sans", sans-serif;
     height: 100%;
+    font-size: 1rem;
 }
 
 .container {
@@ -88,6 +89,7 @@ body {
     z-index: 10;
     overflow: hidden auto;
     transition: transform 0.3s; 
+    padding: 8px;
 }
 
 .channels-container {
@@ -99,7 +101,6 @@ body {
 .channels-header {
     display: flex;
     align-items: center;
-    position: static;
 }
 
 .channels-icon {
@@ -111,6 +112,7 @@ body {
 
 .channels-header h1 {
     font-size: 1.2rem;
+    margin-left: 4px;
 }
 
 .add-icon {
@@ -124,8 +126,22 @@ body {
     cursor: pointer;
 }
 
+.add-icon ~ .tooltip {
+    display: none;
+}
+
 .channels, .users {
     list-style: none;
+    padding: 8px;
+}
+
+.channel {
+    margin-bottom: 8px;
+}
+
+.hashtag {
+    color: grey;
+    margin-right: 4px;
 }
 
 .chat {
@@ -138,6 +154,93 @@ body {
 
 .messages {
     overflow-y: auto;
+}
+
+.message {
+    padding: 5px;
+    display: flex;
+    position: relative;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.message .user-icon img {
+    border-radius: 50%;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+    background: white
+}
+
+.message-username {
+    font-weight: bold;
+    padding: 0 0.7rem;
+}
+
+.message-date {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.message-time {
+    display: none;
+}
+
+.message-text-list {
+    list-style: none;
+}
+
+.message-text-container {
+    position: relative;
+    padding: 0 0.7rem 0.7rem 0.7rem;
+}
+
+.users-header {
+    display: flex;
+    align-items: center;
+}
+
+.users-header .users-icon {
+    background: url('../images/users-icon.svg');
+    min-height: 2rem;
+    min-width: 2rem;
+    background-size: 2rem 2rem;
+}
+
+.users-header h1 {
+    font-size: 1.2rem;
+    margin-left: 4px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.user-icon img {
+    min-height: 2rem;
+    min-width: 2rem;
+    max-height: 2rem;
+    max-width: 2rem;
+}
+
+.user .user-icon {
+    border-radius: 50%;
+    min-height: 2rem;
+    min-width: 2rem;
+    max-height: 2rem;
+    max-width: 2rem;
+    background: white
+}
+
+.user span {
+    margin-left: 16px;
 }
 
 .reply-container {
@@ -170,6 +273,7 @@ body {
     }
 
     .channels-header .tooltip {
+        display: block;
         font-size: 0.8rem;
         position: fixed;
         background-color: rgb(70, 70, 70);
@@ -192,4 +296,20 @@ body {
         border-style: solid;
         border-color: black transparent transparent transparent;
     }
+    
+    .message-time {    
+        display: block;
+        font-size: 0.7rem;
+        position: absolute;    
+        bottom: 0;
+        right: 0.7rem;
+        opacity: 0;
+        transition: opacity 0.15s ease-out;
+        padding: 0;
+    }
+
+    .message-text-container:hover > .message-time {
+        opacity: 1;
+    }
+
 }
