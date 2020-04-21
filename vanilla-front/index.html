@@ -34,52 +34,52 @@
                     <div class="tooltip">Create Channel</div>
                 </header>
                 <ul class="channels">
-                    <li class="channel">Channel1</li>
-                    <li class="channel">Channel2</li>
-                    <li class="channel">Channel3</li>
+                    <li class="channel"><span class="hashtag">#</span>Channel1</li>
+                    <li class="channel"><span class="hashtag">#</span>Channel2</li>
+                    <li class="channel"><span class="hashtag">#</span>Channel3</li>
                 </ul>
             </section>
 
             <main class="chat">
                 <div class="messages">
-                    <article class="message">start</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">message1</article>
-                    <article class="message">message2</article>
-                    <article class="message">message3</article>
-                    <article class="message">end</article>
+                    <article class="message">
+                        <div class="user-icon">
+                            <img src="./images/user-icon.svg" alt="user-icon" width="40px" height="40px">
+                        </div>
+                        <div class="message-content">
+                            <span class="message-username">User Name
+                                <span class="message-date">Date</span>
+                                <span class="message-date">Time</span>
+                            </span>
+                            <ol class="message-text-list">
+                                <li class="message-text-container">
+                                    <p class="message-text">Message text 1.
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore at voluptatum
+                                        omnis
+                                        delectus aut quia, non quidem quasi, perspiciatis maxime rerum nobis. Molestiae
+                                        saepe
+                                        doloremque ducimus porro, inventore modi consequuntur?
+                                    </p>
+                                    <div class="message-time">Time</div>
+                                </li>
+                                <li class="message-text-container">
+                                    <div class="message-time">Time</div>
+                                    <p class="message-text">Message text 2.
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore at voluptatum
+                                        omnis
+                                        delectus aut quia, non quidem quasi, perspiciatis maxime rerum nobis. Molestiae
+                                        saepe
+                                        doloremque ducimus porro, inventore modi consequuntur?
+                                    </p>
+                                </li>
+                                <li class="message-text-container">
+                                    <div class="message-time">Time</div>
+                                    <p class="message-text">Message text 3.
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+                    </article>
                 </div>
                 <div class="reply-container">
                     <input type="text" placeholder="Reply">
@@ -88,11 +88,29 @@
             </main>
 
             <section class="users-container">
-                <h1>Users</h1>
+                <div class="users-header">
+                    <div class="users-icon"></div>
+                    <h1>Users</h1>
+                </div>
                 <ul class="users">
-                    <li class="users">User1</li>
-                    <li class="users">User2</li>
-                    <li class="users">User3</li>
+                    <li class="user">
+                        <div class="user-icon">
+                            <img src="./images/user-icon.svg" alt="user-icon" width="32px" height="32px">
+                        </div>
+                        <span>User1</span>
+                    </li>
+                    <li class="user">
+                        <div class="user-icon">
+                            <img src="./images/user-icon.svg" alt="user-icon" width="32px" height="32px">
+                        </div>
+                        <span>User2</span>
+                    </li>
+                    <li class="user">
+                        <div class="user-icon">
+                            <img src="./images/user-icon.svg" alt="user-icon" width="32px" height="32px">
+                        </div>
+                        <span>User3</span>
+                    </li>
                 </ul>
             </section>
         </div>
