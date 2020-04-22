@@ -13,7 +13,6 @@ html {
 body {
     font-family: "Open-Sans", sans-serif;
     height: 100%;
-    font-size: 1rem;
 }
 
 .container {
@@ -200,6 +199,37 @@ body {
     padding: 0 0.7rem 0.7rem 0.7rem;
 }
 
+.reply-container {
+    background: none;
+    margin-top: auto;
+    display: flex;
+}
+
+.reply-container__reply-box {
+    flex: 1;
+    border: none;
+    border-radius: 25px;    
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
+.reply-container__reply-button {
+    cursor: pointer;
+    border: none;
+    width: 2.5rem;
+    height: auto;
+    background: url(../images/send-icon.svg) center/1.5rem no-repeat border-box slategray;
+
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
+.users-container {     
+    background: greenyellow;
+    right: 0;
+    transform: translate(100%);
+}
+
 .users-header {
     display: flex;
     align-items: center;
@@ -241,21 +271,6 @@ body {
 
 .user span {
     margin-left: 16px;
-}
-
-.reply-container {
-    background: royalblue;
-    margin-top: auto;
-}
-
-.reply-container input[type=submit] {
-    cursor: pointer;
-}
-
-.users-container {     
-    background: greenyellow;
-    right: 0;
-    transform: translate(100%);
 }
 
 @media (min-width: 40rem) {
