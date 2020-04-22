@@ -88,7 +88,6 @@ body {
     z-index: 10;
     overflow: hidden auto;
     transition: transform 0.3s; 
-    padding: 8px;
 }
 
 .channels-container {
@@ -97,9 +96,21 @@ body {
     transform: translate(-100%);
 }
 
+
+.channels-container__backdrop {    
+    display: none;
+    background: rgba(44, 44, 44, 0.267);    
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
 .channels-header {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
 }
 
 .channels-icon {
@@ -132,6 +143,8 @@ body {
 .channels, .users {
     list-style: none;
     padding: 8px;
+    overflow-x: hidden;
+    padding: 0.5rem;
 }
 
 .channel {
@@ -141,6 +154,65 @@ body {
 .hashtag {
     color: grey;
     margin-right: 4px;
+}
+
+.settings-bar {
+    display: flex;
+    position: absolute;
+    /* width: 90%; */
+    width: 100%;
+    padding: 0.5rem;
+    bottom: 0;
+    margin: auto 0 0.5rem 0;
+}
+
+.settings-bar .user {
+    flex: 1;
+    overflow: hidden;
+}
+
+.settings-bar .user .name {
+    font-size: 0.9rem;
+    margin-left: 0.4rem;
+}
+
+.settings-bar__settings {
+    height: 2rem;
+    width: 2rem;
+    z-index: 10;
+}
+
+.settings-bar__settings__button {
+    background: url('../images/settings.svg') center/2rem no-repeat;    
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+.settings-bar__settings__menu {
+    position: absolute;
+    bottom: 4rem;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1;
+    background: white;
+    border: none;    
+    width: 100%; 
+    display: none;
+    z-index: 10;    
+}
+
+.settings-bar__settings__menu__item {
+    background: slategray;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
 }
 
 .chat {
@@ -233,6 +305,7 @@ body {
 .users-header {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
 }
 
 .users-header .users-icon {
@@ -282,9 +355,12 @@ body {
         display: flex;
         height: auto;
         width: auto;
-        position: static;
         flex: 1;
         transform: none;
+    }
+
+    .channels-container {
+        position: relative;
     }
 
     .channels-header .tooltip {
@@ -311,7 +387,7 @@ body {
         border-style: solid;
         border-color: black transparent transparent transparent;
     }
-    
+
     .message-time {    
         display: block;
         font-size: 0.7rem;
@@ -325,6 +401,10 @@ body {
 
     .message-text-container:hover > .message-time {
         opacity: 1;
+    }
+
+    .users-container {
+        position: static;
     }
 
 }

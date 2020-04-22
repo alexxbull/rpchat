@@ -27,6 +27,7 @@
 
         <div class="chat-container">
             <section class="channels-container">
+                <div class="channels-container__backdrop"></div>
                 <header class="channels-header">
                     <div class="channels-icon"></div>
                     <h1>Channels</h1>
@@ -38,6 +39,21 @@
                     <li class="channel"><span class="hashtag">#</span>Channel2</li>
                     <li class="channel"><span class="hashtag">#</span>Channel3</li>
                 </ul>
+                <div class="settings-bar">
+                    <div class="user">
+                        <div class="user-icon">
+                            <img src="./images/user-icon.svg" alt="user-icon" width="40px" height="40px">
+                        </div>
+                        <div class="name">User Name</div>
+                    </div>
+                    <div class="settings-bar__settings">
+                        <button class="settings-bar__settings__button"></button>
+                        <div class="settings-bar__settings__menu">
+                            <a href="#" class="settings-bar__settings__menu__item about">About</a>
+                            <a href="#" class="settings-bar__settings__menu__item signout">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <main class="chat">

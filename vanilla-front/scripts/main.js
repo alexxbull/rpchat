@@ -2,19 +2,6 @@
 const messages = document.querySelector('.messages')
 messages.scrollTo({ left: 0, top: messages.scrollHeight, behavior: "smooth" })
 
-
-// mobile: on backdrop click hide users, channels, and backdrop
-const backdrop = document.querySelector('.backdrop')
-
-backdrop.addEventListener('click', () => {
-  if (backdrop.style['display'] === 'block') {
-    backdrop.style['display'] = 'none'
-    channelsContainer.style['transform'] = 'translateX(-100%)'
-    usersContainer.style['transform'] = 'translateX(100%)'
-  }
-}
-)
-
 // mobile: show channels when clicking the channels button and hide users
 const channelsButton = document.querySelector('.chat-channels-button')
 const channelsContainer = document.querySelector('.channels-container')
@@ -60,3 +47,34 @@ createChannelIcon.addEventListener('mouseleave', (event) => {
     opacity: 0,
   })
 })
+
+// settings menu when clicking settings button
+const settingsButton = document.querySelector('.settings-bar__settings__button')
+const settingsMenu = document.querySelector('.settings-bar__settings__menu')
+const channelsBackdrop = document.querySelector('.channels-container__backdrop')
+
+settingsButton.addEventListener('click', () => {
+  settingsMenu.style['display'] = 'flex'
+  channelsBackdrop.style['display'] = 'block'
+})
+
+channelsBackdrop.addEventListener('click', () => {
+  if (channelsBackdrop.style['display'] === 'block') {
+    channelsBackdrop.style['display'] = 'none'
+    settingsMenu.style['display'] = 'none'
+  }
+})
+
+// mobile: on backdrop click hide users, channels, and backdrop
+const backdrop = document.querySelector('.backdrop')
+
+backdrop.addEventListener('click', () => {
+  if (backdrop.style['display'] === 'block') {
+    backdrop.style['display'] = 'none'
+    channelsContainer.style['transform'] = 'translateX(-100%)'
+    usersContainer.style['transform'] = 'translateX(100%)'
+    channelsBackdrop.style['display'] = 'none'
+    settingsMenu.style['display'] = 'none'
+  }
+}
+)
