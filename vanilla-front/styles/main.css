@@ -277,7 +277,7 @@ body {
     background: none;
     margin-top: auto;
     display: flex;
-    padding: 1rem;;
+    padding: 0.5rem;;
     align-items: center;
 }
 
@@ -286,6 +286,7 @@ body {
     border: none;
     border-radius: 25px;    
     padding: 0.4rem;
+    font-size: 0.9rem;
 }
 
 .reply-container__reply-button {
@@ -366,6 +367,10 @@ body {
         position: relative;
     }
 
+    .messages, .reply-container__reply-box {
+        font-size: 1rem;
+    }
+
     .channels-header .tooltip {
         display: block;
         font-size: 0.8rem;
@@ -420,4 +425,7 @@ body {
         background-size: 2rem;
     }
 
+    .users-container {
+        z-index: 0;
+    }
 }
