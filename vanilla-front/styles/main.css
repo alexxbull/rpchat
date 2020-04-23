@@ -410,4 +410,14 @@ body {
         position: static;
     }
 
+    .reply-container__reply-box {
+        padding: 0.6rem;
+    }
+
+    .reply-container__reply-button {
+        height: 2.5rem;
+        width: 2.5rem;
+        background-size: 2rem;
+    }
+
 }
