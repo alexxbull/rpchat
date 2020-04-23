@@ -1,3 +1,6 @@
+const rem = 16
+const isMobile = () => window.outerWidth < 40 * rem ? true : false
+
 // load the page to the bottom of the chat messages
 const messages = document.querySelector('.messages')
 messages.scrollTo({ left: 0, top: messages.scrollHeight, behavior: "smooth" })
@@ -56,12 +59,17 @@ const channelsBackdrop = document.querySelector('.channels-container__backdrop')
 settingsButton.addEventListener('click', () => {
   settingsMenu.style['display'] = 'flex'
   channelsBackdrop.style['display'] = 'block'
+  backdrop.style['display'] = 'block'
 })
 
 channelsBackdrop.addEventListener('click', () => {
   if (channelsBackdrop.style['display'] === 'block') {
     channelsBackdrop.style['display'] = 'none'
     settingsMenu.style['display'] = 'none'
+
+    // hide backdrop if on desktop
+    if (!isMobile())
+      backdrop.style['display'] = 'none'
   }
 })
 
@@ -71,10 +79,13 @@ const backdrop = document.querySelector('.backdrop')
 backdrop.addEventListener('click', () => {
   if (backdrop.style['display'] === 'block') {
     backdrop.style['display'] = 'none'
-    channelsContainer.style['transform'] = 'translateX(-100%)'
-    usersContainer.style['transform'] = 'translateX(100%)'
-    channelsBackdrop.style['display'] = 'none'
     settingsMenu.style['display'] = 'none'
+    channelsBackdrop.style['display'] = 'none'
+
+    if (isMobile()) {
+      channelsContainer.style['transform'] = 'translateX(-100%)'
+      usersContainer.style['transform'] = 'translateX(100%)'
+    }
   }
 }
 )
