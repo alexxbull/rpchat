@@ -119,7 +119,6 @@ body {
 .settings-bar {
     display: flex;
     position: absolute;
-    /* width: 90%; */
     width: 100%;
     padding: 0.5rem;
     bottom: 0;
@@ -186,6 +185,7 @@ body {
     display: flex;
     align-items: center;
     background-color: rgb(119, 119, 119);
+    height: 2.5rem;
 }
 
 .chat-channels-button {
@@ -226,6 +226,7 @@ body {
 .messages {
     overflow-y: auto;
     padding: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .message {
@@ -276,21 +277,22 @@ body {
     background: none;
     margin-top: auto;
     display: flex;
+    padding: 1rem;;
+    align-items: center;
 }
 
 .reply-container__reply-box {
     flex: 1;
     border: none;
     border-radius: 25px;    
-    padding: 0.6rem;
-    font-size: 1rem;
+    padding: 0.4rem;
 }
 
 .reply-container__reply-button {
     cursor: pointer;
     border: none;
-    width: 2.5rem;
-    height: auto;
+    width: 2rem;
+    height: 2rem;
     background: url(../images/send-icon.svg) center/1.5rem no-repeat border-box slategray;
 
     border-radius: 50%;
