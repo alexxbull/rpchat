@@ -12,4 +12,4 @@
 *.out
 
 # go module misc. files
-.sum
+go.sum
