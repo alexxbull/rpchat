@@ -28,8 +28,3 @@ func main() {
 
 	server.Serve(lis)
 }
-
-func sendMessages() {
-
-	// client := chat.NewChatServiceClient(conn)
-}
