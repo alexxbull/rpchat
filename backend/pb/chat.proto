@@ -1,15 +1,18 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 package chat;
 
 message ChatMessageRequest {
   string user = 1;
-  google.protobuf.Timestamp date = 2;
-  string msg = 3;
+  string memo = 2;
+  string channel = 3;
 }
 
+message ChatMessageResponse { bool received = 1; }
+
+message EmptyMessage {}
+
 service ChatService {
-  rpc Chat(stream ChatMessageRequest) returns (stream ChatMessageRequest);
+  rpc Broadcast(EmptyMessage) returns (stream ChatMessageRequest);
+  rpc SendMessage(ChatMessageRequest) returns (ChatMessageResponse);
 }

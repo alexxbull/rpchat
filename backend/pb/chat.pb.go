@@ -7,7 +7,6 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -26,12 +25,12 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type ChatMessageRequest struct {
-	User                 string               `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	Date                 *timestamp.Timestamp `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
-	Msg                  string               `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	User                 string   `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	Memo                 string   `protobuf:"bytes,2,opt,name=memo,proto3" json:"memo,omitempty"`
+	Channel              string   `protobuf:"bytes,3,opt,name=channel,proto3" json:"channel,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ChatMessageRequest) Reset()         { *m = ChatMessageRequest{} }
@@ -66,22 +65,94 @@ func (m *ChatMessageRequest) GetUser() string {
 	return ""
 }
 
-func (m *ChatMessageRequest) GetDate() *timestamp.Timestamp {
+func (m *ChatMessageRequest) GetMemo() string {
 	if m != nil {
-		return m.Date
-	}
-	return nil
-}
-
-func (m *ChatMessageRequest) GetMsg() string {
-	if m != nil {
-		return m.Msg
+		return m.Memo
 	}
 	return ""
 }
 
+func (m *ChatMessageRequest) GetChannel() string {
+	if m != nil {
+		return m.Channel
+	}
+	return ""
+}
+
+type ChatMessageResponse struct {
+	Received             bool     `protobuf:"varint,1,opt,name=received,proto3" json:"received,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ChatMessageResponse) Reset()         { *m = ChatMessageResponse{} }
+func (m *ChatMessageResponse) String() string { return proto.CompactTextString(m) }
+func (*ChatMessageResponse) ProtoMessage()    {}
+func (*ChatMessageResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{1}
+}
+
+func (m *ChatMessageResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ChatMessageResponse.Unmarshal(m, b)
+}
+func (m *ChatMessageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ChatMessageResponse.Marshal(b, m, deterministic)
+}
+func (m *ChatMessageResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChatMessageResponse.Merge(m, src)
+}
+func (m *ChatMessageResponse) XXX_Size() int {
+	return xxx_messageInfo_ChatMessageResponse.Size(m)
+}
+func (m *ChatMessageResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChatMessageResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ChatMessageResponse proto.InternalMessageInfo
+
+func (m *ChatMessageResponse) GetReceived() bool {
+	if m != nil {
+		return m.Received
+	}
+	return false
+}
+
+type EmptyMessage struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EmptyMessage) Reset()         { *m = EmptyMessage{} }
+func (m *EmptyMessage) String() string { return proto.CompactTextString(m) }
+func (*EmptyMessage) ProtoMessage()    {}
+func (*EmptyMessage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{2}
+}
+
+func (m *EmptyMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EmptyMessage.Unmarshal(m, b)
+}
+func (m *EmptyMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EmptyMessage.Marshal(b, m, deterministic)
+}
+func (m *EmptyMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EmptyMessage.Merge(m, src)
+}
+func (m *EmptyMessage) XXX_Size() int {
+	return xxx_messageInfo_EmptyMessage.Size(m)
+}
+func (m *EmptyMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_EmptyMessage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EmptyMessage proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*ChatMessageRequest)(nil), "chat.ChatMessageRequest")
+	proto.RegisterType((*ChatMessageResponse)(nil), "chat.ChatMessageResponse")
+	proto.RegisterType((*EmptyMessage)(nil), "chat.EmptyMessage")
 }
 
 func init() {
@@ -89,19 +160,21 @@ func init() {
 }
 
 var fileDescriptor_8c585a45e2093e54 = []byte{
-	// 183 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x8e, 0xb1, 0x8e, 0x83, 0x30,
-	0x10, 0x44, 0xe5, 0xc3, 0x3a, 0xe9, 0x96, 0xe6, 0xb4, 0x95, 0x45, 0x73, 0xe8, 0x2a, 0x2a, 0x13,
-	0x91, 0x3e, 0x4d, 0x6a, 0x1a, 0x92, 0x1f, 0x30, 0x64, 0x63, 0x88, 0x82, 0x4c, 0xf0, 0x92, 0xef,
-	0x8f, 0x6c, 0x44, 0x15, 0xa5, 0x7b, 0xf6, 0x8e, 0xde, 0x0c, 0x40, 0xd7, 0x1b, 0xd6, 0xd3, 0xec,
-	0xd8, 0xa1, 0x0c, 0x9c, 0xfd, 0x59, 0xe7, 0xec, 0x9d, 0xca, 0xf8, 0xd7, 0x2e, 0xd7, 0x92, 0x87,
-	0x91, 0x3c, 0x9b, 0x71, 0x5a, 0x63, 0xff, 0x37, 0xc0, 0x63, 0x6f, 0xb8, 0x26, 0xef, 0x8d, 0xa5,
-	0x86, 0x1e, 0x0b, 0x79, 0x46, 0x04, 0xb9, 0x78, 0x9a, 0x95, 0xc8, 0x45, 0xf1, 0xd3, 0x44, 0x46,
-	0x0d, 0xf2, 0x62, 0x98, 0xd4, 0x57, 0x2e, 0x8a, 0xb4, 0xca, 0xf4, 0x6a, 0xd6, 0x9b, 0x59, 0x9f,
-	0x37, 0x73, 0x13, 0x73, 0xf8, 0x0b, 0xc9, 0xe8, 0xad, 0x4a, 0xa2, 0x22, 0x60, 0x55, 0x43, 0x1a,
-	0xba, 0x4e, 0x34, 0x3f, 0x87, 0x8e, 0xf0, 0x00, 0x32, 0x3c, 0x51, 0xe9, 0x38, 0xfb, 0x7d, 0x46,
-	0xf6, 0xf1, 0x52, 0x88, 0x9d, 0x68, 0xbf, 0x63, 0xf5, 0xfe, 0x15, 0x00, 0x00, 0xff, 0xff, 0x59,
-	0x8d, 0x26, 0xd9, 0xf6, 0x00, 0x00, 0x00,
+	// 214 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4a, 0xce, 0x48, 0x2c,
+	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x01, 0xb1, 0x95, 0xc2, 0xb8, 0x84, 0x9c, 0x33,
+	0x12, 0x4b, 0x7c, 0x53, 0x8b, 0x8b, 0x13, 0xd3, 0x53, 0x83, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b,
+	0x84, 0x84, 0xb8, 0x58, 0x4a, 0x8b, 0x53, 0x8b, 0x24, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0xc0,
+	0x6c, 0x90, 0x58, 0x6e, 0x6a, 0x6e, 0xbe, 0x04, 0x13, 0x44, 0x0c, 0xc4, 0x16, 0x92, 0xe0, 0x62,
+	0x4f, 0xce, 0x48, 0xcc, 0xcb, 0x4b, 0xcd, 0x91, 0x60, 0x06, 0x0b, 0xc3, 0xb8, 0x4a, 0x86, 0x5c,
+	0xc2, 0x28, 0xe6, 0x16, 0x17, 0xe4, 0xe7, 0x15, 0xa7, 0x0a, 0x49, 0x71, 0x71, 0x14, 0xa5, 0x26,
+	0xa7, 0x66, 0x96, 0xa5, 0xa6, 0x80, 0x0d, 0xe7, 0x08, 0x82, 0xf3, 0x95, 0xf8, 0xb8, 0x78, 0x5c,
+	0x73, 0x0b, 0x4a, 0x2a, 0xa1, 0x7a, 0x8c, 0xfa, 0x18, 0xb9, 0xb8, 0x41, 0x66, 0x04, 0xa7, 0x16,
+	0x95, 0x65, 0x26, 0xa7, 0x0a, 0x59, 0x73, 0x71, 0x3a, 0x15, 0xe5, 0x27, 0xa6, 0x24, 0x27, 0x82,
+	0x5c, 0xa8, 0x07, 0xf6, 0x0a, 0xb2, 0x06, 0x29, 0x09, 0x88, 0x18, 0xa6, 0x7f, 0x0c, 0x18, 0x85,
+	0x9c, 0xb8, 0xb8, 0x83, 0x53, 0xf3, 0x52, 0xa0, 0xe2, 0x42, 0x38, 0x95, 0x4a, 0x49, 0x62, 0x91,
+	0x81, 0x38, 0x3e, 0x89, 0x0d, 0x1c, 0x70, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x0d, 0x5d,
+	0x2a, 0x96, 0x46, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -116,7 +189,8 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ChatServiceClient interface {
-	Chat(ctx context.Context, opts ...grpc.CallOption) (ChatService_ChatClient, error)
+	Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error)
+	SendMessage(ctx context.Context, in *ChatMessageRequest, opts ...grpc.CallOption) (*ChatMessageResponse, error)
 }
 
 type chatServiceClient struct {
@@ -127,30 +201,31 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
 }
 
-func (c *chatServiceClient) Chat(ctx context.Context, opts ...grpc.CallOption) (ChatService_ChatClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ChatService_serviceDesc.Streams[0], "/chat.ChatService/Chat", opts...)
+func (c *chatServiceClient) Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ChatService_serviceDesc.Streams[0], "/chat.ChatService/Broadcast", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &chatServiceChatClient{stream}
+	x := &chatServiceBroadcastClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
-type ChatService_ChatClient interface {
-	Send(*ChatMessageRequest) error
+type ChatService_BroadcastClient interface {
 	Recv() (*ChatMessageRequest, error)
 	grpc.ClientStream
 }
 
-type chatServiceChatClient struct {
+type chatServiceBroadcastClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatServiceChatClient) Send(m *ChatMessageRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *chatServiceChatClient) Recv() (*ChatMessageRequest, error) {
+func (x *chatServiceBroadcastClient) Recv() (*ChatMessageRequest, error) {
 	m := new(ChatMessageRequest)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -158,59 +233,89 @@ func (x *chatServiceChatClient) Recv() (*ChatMessageRequest, error) {
 	return m, nil
 }
 
+func (c *chatServiceClient) SendMessage(ctx context.Context, in *ChatMessageRequest, opts ...grpc.CallOption) (*ChatMessageResponse, error) {
+	out := new(ChatMessageResponse)
+	err := c.cc.Invoke(ctx, "/chat.ChatService/SendMessage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 type ChatServiceServer interface {
-	Chat(ChatService_ChatServer) error
+	Broadcast(*EmptyMessage, ChatService_BroadcastServer) error
+	SendMessage(context.Context, *ChatMessageRequest) (*ChatMessageResponse, error)
 }
 
 // UnimplementedChatServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedChatServiceServer struct {
 }
 
-func (*UnimplementedChatServiceServer) Chat(srv ChatService_ChatServer) error {
-	return status.Errorf(codes.Unimplemented, "method Chat not implemented")
+func (*UnimplementedChatServiceServer) Broadcast(req *EmptyMessage, srv ChatService_BroadcastServer) error {
+	return status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
+}
+func (*UnimplementedChatServiceServer) SendMessage(ctx context.Context, req *ChatMessageRequest) (*ChatMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
 
 func RegisterChatServiceServer(s *grpc.Server, srv ChatServiceServer) {
 	s.RegisterService(&_ChatService_serviceDesc, srv)
 }
 
-func _ChatService_Chat_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ChatServiceServer).Chat(&chatServiceChatServer{stream})
+func _ChatService_Broadcast_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(EmptyMessage)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).Broadcast(m, &chatServiceBroadcastServer{stream})
 }
 
-type ChatService_ChatServer interface {
+type ChatService_BroadcastServer interface {
 	Send(*ChatMessageRequest) error
-	Recv() (*ChatMessageRequest, error)
 	grpc.ServerStream
 }
 
-type chatServiceChatServer struct {
+type chatServiceBroadcastServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatServiceChatServer) Send(m *ChatMessageRequest) error {
+func (x *chatServiceBroadcastServer) Send(m *ChatMessageRequest) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *chatServiceChatServer) Recv() (*ChatMessageRequest, error) {
-	m := new(ChatMessageRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
+func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChatMessageRequest)
+	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return m, nil
+	if interceptor == nil {
+		return srv.(ChatServiceServer).SendMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chat.ChatService/SendMessage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).SendMessage(ctx, req.(*ChatMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _ChatService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "chat.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendMessage",
+			Handler:    _ChatService_SendMessage_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Chat",
-			Handler:       _ChatService_Chat_Handler,
+			StreamName:    "Broadcast",
+			Handler:       _ChatService_Broadcast_Handler,
 			ServerStreams: true,
-			ClientStreams: true,
 		},
 	},
 	Metadata: "chat.proto",
