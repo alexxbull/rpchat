@@ -9,5 +9,4 @@ import (
 	_ "github.com/imdario/mergo"
 	_ "github.com/mattn/go-colorable"
 	_ "github.com/pelletier/go-toml"
-	_ "golang.org/x/sys"
 )
