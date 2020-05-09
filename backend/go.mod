@@ -12,4 +12,5 @@ require (
 	github.com/mattn/go-colorable v0.1.6
 	github.com/pelletier/go-toml v1.7.0
 	google.golang.org/grpc v1.29.1
+	google.golang.org/protobuf v1.22.0
 )
