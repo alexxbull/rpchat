@@ -1,71 +1,38 @@
 package main
 
 import (
+	"context"
+	"database/sql"
 	"fmt"
-	"io"
-	"time"
 
 	chat "github.com/alexxbull/rpchat/backend/pb"
-	"github.com/golang/protobuf/ptypes"
-	"github.com/golang/protobuf/ptypes/timestamp"
+	_ "github.com/lib/pq"
 )
 
-type chatServer struct{}
+type chatServer struct {
+	db *sql.DB
+}
 
-func (cs *chatServer) Chat(in chat.ChatService_ChatServer) error {
-	if cs == nil {
-		return fmt.Errorf("Chat called on nil object")
-	}
-
-	readErr := make(chan error)
-	go readChat(readErr, in)
-
-	// send message to clients
-	// var messages []chat.ChatMessageRequest
-	messages := []chat.ChatMessageRequest{
-		{
-			User: "John",
-			Date: &timestamp.Timestamp{Seconds: time.Now().Unix()},
-			Msg:  "Hello from John",
-		},
-		{
-			User: "Sally",
-			Date: &timestamp.Timestamp{Seconds: time.Now().Add(2 * time.Second).Unix()},
-			Msg:  "Hello from Sally",
-		},
-	}
-
-	for _, v := range messages {
-		err := in.Send(&v)
-		if err != nil {
-			fmt.Printf("Chat error sending message: %v", err)
-		}
-	}
-
-	// read errors from client
-	if err := <-readErr; err != nil {
-		return err
-	}
+func (cs *chatServer) Broadcast(req *chat.EmptyMessage, server chat.ChatService_BroadcastServer) error {
 
 	return nil
 }
 
-func readChat(readErr chan<- error, in chat.ChatService_ChatServer) {
-	for {
-		req, err := in.Recv()
+func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.ChatMessageResponse, error) {
+	db := cs.db
+	res := chat.ChatMessageResponse{Received: false}
+	sql := `INSERT INTO messages(user_name, channel_name, message) 
+			VALUES($1, $2, $3);`
 
-		if err == io.EOF {
-			readErr <- nil
-			return
-		}
-
-		if err != nil {
-			readErr <- fmt.Errorf("readChat error: %v", err)
-			return
-		}
-
-		ts, _ := ptypes.Timestamp(req.Date)
-
-		fmt.Printf("%v - %v: %v\n", ts, req.User, req.Msg)
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return &res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
 	}
+
+	_, err = stmt.Exec(req.User, req.Channel, req.Memo)
+	if err != nil {
+		return &res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+	}
+
+	return &res, nil
 }
