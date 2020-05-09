@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
 	"log"
+	"os"
 
 	"github.com/golang/protobuf/ptypes"
 
@@ -22,7 +24,36 @@ func main() {
 	}
 
 	go receiveMessages(conn)
-	sendMessage(conn)
+	sendMessageShell(conn)
+}
+
+func sendMessageShell(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		fmt.Print("-> ")
+		message, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Unable to read shell message:", err)
+			continue
+		}
+
+		req := chat.ChatMessageRequest{
+			Channel:  "TestChannel",
+			Memo:     message,
+			PostDate: ptypes.TimestampNow(),
+			User:     "TestUser",
+		}
+
+		res, err := client.SendMessage(ctx, &req)
+		if err != nil {
+			log.Fatalln("Response error from server:", err)
+		}
+
+		fmt.Println("Received:", res.Received)
+	}
 }
 
 func sendMessage(conn grpc.ClientConnInterface) {
