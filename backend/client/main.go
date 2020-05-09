@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
+
+	"github.com/golang/protobuf/ptypes"
 
 	chat "github.com/alexxbull/rpchat/backend/pb"
 
@@ -18,9 +21,18 @@ func main() {
 		log.Fatalf("Unable to connect to %v: %v", addr, err)
 	}
 
+	go receiveMessages(conn)
+	sendMessage(conn)
+}
+
+func sendMessage(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
-	req := chat.ChatMessageRequest{User: "TestUser", Memo: "Test message from TestUser", Channel: "TestChannel"}
+	req := chat.ChatMessageRequest{
+		Channel: "TestChannel",
+		Memo:    "Test message from TestUser",
+		User:    "TestUser",
+	}
 
 	res, err := client.SendMessage(ctx, &req)
 	if err != nil {
@@ -28,4 +40,32 @@ func main() {
 	}
 
 	fmt.Println("Received:", res.Received)
+}
+
+func receiveMessages(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := chat.EmptyMessage{}
+
+	stream, err := client.Broadcast(ctx, &req)
+	if err != nil {
+		log.Fatalln("Unable to receive messages", err)
+	}
+
+	res, err := stream.Recv()
+	for err == nil {
+		channel := res.ChatMessage.Channel
+		id := res.Id
+		message := res.ChatMessage.Memo
+		postDate := ptypes.TimestampString(res.ChatMessage.PostDate)
+		user := res.ChatMessage.User
+
+		fmt.Printf("%v @ %v on %v: %v [%v]\n", user, postDate, channel, message, id)
+
+		res, err = stream.Recv()
+	}
+
+	if err != io.EOF {
+		log.Fatalln("Error receiving message", err)
+	}
 }
