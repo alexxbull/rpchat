@@ -11,8 +11,6 @@ message ChatMessageRequest {
   google.protobuf.Timestamp post_date = 4;
 }
 
-message ChatMessageResponse { bool received = 1; }
-
 message EmptyMessage {}
 
 message BroadcastMessage {
@@ -20,7 +18,20 @@ message BroadcastMessage {
   int32 id = 2;
 }
 
+message NewChannelRequest {
+  string name = 1;
+  string description = 2;
+  string owner = 3;
+}
+
+message NewUserRequest {
+  string name = 1;
+  string image_path = 2;
+}
+
 service ChatService {
   rpc Broadcast(EmptyMessage) returns (stream BroadcastMessage);
-  rpc SendMessage(ChatMessageRequest) returns (ChatMessageResponse);
+  rpc SendMessage(ChatMessageRequest) returns (EmptyMessage);
+  rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
+  rpc AddUser(NewUserRequest) returns (EmptyMessage);
 }
