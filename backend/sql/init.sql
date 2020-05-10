@@ -1,12 +1,4 @@
 -- Tables
-CREATE TABLE channels (
-	id SERIAL PRIMARY KEY,
-	channel_name TEXT UNIQUE NOT NULL,
-	creation_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	description TEXT,
-	channel_owner TEXT DEFAULT 'admin' REFERENCES users(user_name) ON UPDATE CASCADE ON DELETE SET DEFAULT 
-);
-
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,	
 	email TEXT UNIQUE NOT NULL,
@@ -16,11 +8,19 @@ CREATE TABLE users (
 	user_password TEXT NOT NULL
 );
 
+CREATE TABLE channels (
+    id SERIAL PRIMARY KEY,
+    channel_name TEXT UNIQUE NOT NULL,
+    creation_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    description TEXT DEFAULT '',
+    channel_owner TEXT DEFAULT 'admin' REFERENCES users(user_name) ON UPDATE CASCADE ON DELETE SET DEFAULT 
+);
+
 CREATE TABLE messages (
 	id SERIAL PRIMARY KEY,
 	user_name TEXT REFERENCES users(user_name) ON UPDATE CASCADE,
 	channel_name TEXT REFERENCES channels(channel_name) ON UPDATE CASCADE ON DELETE CASCADE,
-	message TEXT NOT NULL,
+	message TEXT NOT NULL CHECK (message !~ '^(|\s.*)$'), --do not allow empty or messages with only spaces
 	post_date TIMESTAMPTZ NOT NULL
 );
 
