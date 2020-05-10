@@ -21,9 +21,23 @@ type message struct {
 	user     string
 }
 
+type channel struct {
+	name         string
+	creationDate *timestamppb.Timestamp
+	description  string
+	owner        string
+}
+
+type user struct {
+	name      string
+	imagePath string
+}
+
 type chatServer struct {
 	db         *sql.DB
 	newMessage chan message
+	newChannel chan channel
+	newUser    chan user
 }
 
 func (cs *chatServer) Broadcast(req *chat.EmptyMessage, server chat.ChatService_BroadcastServer) error {
@@ -46,9 +60,9 @@ func (cs *chatServer) Broadcast(req *chat.EmptyMessage, server chat.ChatService_
 	return nil
 }
 
-func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.ChatMessageResponse, error) {
+func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.EmptyMessage, error) {
 	db := cs.db
-	res := chat.ChatMessageResponse{Received: false}
+	res := chat.EmptyMessage{}
 	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
 			VALUES($1, $2, $3, $4)
 			RETURNING id;`
@@ -72,6 +86,5 @@ func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequ
 		user:     req.User,
 	}
 
-	res.Received = true
 	return &res, nil
 }

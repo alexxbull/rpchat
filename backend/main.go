@@ -44,7 +44,12 @@ func main() {
 	}
 
 	// register services
-	chat.RegisterChatServiceServer(server, &chatServer{db, make(chan message)})
+	chat.RegisterChatServiceServer(server, &chatServer{
+		db:         db,
+		newMessage: make(chan message),
+		newChannel: make(chan channel),
+		newUser:    make(chan user),
+	})
 
 	// start grpc server
 	fmt.Println("Starting server...")
