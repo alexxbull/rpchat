@@ -47,12 +47,10 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			User:     "TestUser",
 		}
 
-		res, err := client.SendMessage(ctx, &req)
+		_, err = client.SendMessage(ctx, &req)
 		if err != nil {
 			log.Fatalln("Response error from server:", err)
 		}
-
-		fmt.Println("Received:", res.Received)
 	}
 }
 
@@ -65,12 +63,10 @@ func sendMessage(conn grpc.ClientConnInterface) {
 		User:    "TestUser",
 	}
 
-	res, err := client.SendMessage(ctx, &req)
+	_, err := client.SendMessage(ctx, &req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
-
-	fmt.Println("Received:", res.Received)
 }
 
 func receiveMessages(conn grpc.ClientConnInterface) {
