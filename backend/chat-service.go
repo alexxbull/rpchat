@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	chat "github.com/alexxbull/rpchat/backend/pb"
+	chat "github.com/alexxbull/rpchat/backend/protos"
 	_ "github.com/lib/pq"
 )
 

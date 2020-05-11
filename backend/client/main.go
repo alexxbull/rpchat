@@ -10,7 +10,7 @@ import (
 
 	"github.com/golang/protobuf/ptypes"
 
-	chat "github.com/alexxbull/rpchat/backend/pb"
+	chat "github.com/alexxbull/rpchat/backend/protos"
 
 	"google.golang.org/grpc"
 )
