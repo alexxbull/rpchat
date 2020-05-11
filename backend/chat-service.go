@@ -64,7 +64,7 @@ func (cs *chatServer) broadcast() {
 	}
 }
 
-func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.EmptyMessage, error) {
+func (cs *chatServer) AddMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.EmptyMessage, error) {
 	db := cs.db
 	res := chat.EmptyMessage{}
 	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 

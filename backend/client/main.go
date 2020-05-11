@@ -88,7 +88,7 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			User:     "TestUser",
 		}
 
-		_, err = client.SendMessage(ctx, &req)
+		_, err = client.AddMessage(ctx, &req)
 		if err != nil {
 			log.Fatalln("Response error from server:", err)
 		}
@@ -104,7 +104,7 @@ func sendMessage(conn grpc.ClientConnInterface) {
 		User:    "TestUser",
 	}
 
-	_, err := client.SendMessage(ctx, &req)
+	_, err := client.AddMessage(ctx, &req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}

@@ -33,7 +33,7 @@ message NewUserRequest {
 
 service ChatService {
   rpc Connect(ConnectRequest) returns (stream ChatMessageRequest);
-  rpc SendMessage(ChatMessageRequest) returns (EmptyMessage);
+  rpc AddMessage(ChatMessageRequest) returns (EmptyMessage);
   rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
   rpc AddUser(NewUserRequest) returns (EmptyMessage);
 }
