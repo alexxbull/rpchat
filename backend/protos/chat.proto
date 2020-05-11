@@ -4,20 +4,14 @@ package chat;
 
 import "google/protobuf/timestamp.proto";
 
+message EmptyMessage {}
 message ConnectRequest { string user = 1; }
 
-message ChatMessageRequest {
+message NewMessageRequest {
   string user = 1;
   string memo = 2;
   string channel = 3;
   google.protobuf.Timestamp post_date = 4;
-}
-
-message EmptyMessage {}
-
-message BroadcastMessage {
-  ChatMessageRequest chat_message = 1;
-  int32 id = 2;
 }
 
 message NewChannelRequest {
@@ -31,9 +25,15 @@ message NewUserRequest {
   string image_path = 2;
 }
 
+message BroadcastMessage {
+  NewMessageRequest chat_message = 1;
+  NewChannelRequest channel = 2;
+  NewUserRequest user = 3;
+}
+
 service ChatService {
-  rpc Connect(ConnectRequest) returns (stream ChatMessageRequest);
-  rpc AddMessage(ChatMessageRequest) returns (EmptyMessage);
-  rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
-  rpc AddUser(NewUserRequest) returns (EmptyMessage);
+  rpc Connect(ConnectRequest) returns (stream BroadcastMessage);
+  rpc AddMessage(NewMessageRequest) returns (EmptyMessage);
+  // rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
+  // rpc AddUser(NewUserRequest) returns (EmptyMessage);
 }

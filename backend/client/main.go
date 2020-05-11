@@ -53,12 +53,27 @@ func connect(conn grpc.ClientConnInterface) (chat.ChatService_ConnectClient, err
 func broadcastListen(stream chat.ChatService_ConnectClient) {
 	res, err := stream.Recv()
 	for err == nil {
-		channel := res.Channel
-		message := res.Memo
-		postDate := ptypes.TimestampString(res.PostDate)
-		user := res.User
+		switch {
+		case res.Channel != nil:
+			ch := res.Channel
+			channel := ch.Name
+			desc := ch.Description
+			owner := ch.Owner
+			fmt.Printf("Channel %v created by %v for: %v\n", channel, owner, desc)
+		case res.ChatMessage != nil:
+			msg := res.ChatMessage
+			channel := msg.Channel
+			message := msg.Memo
+			postDate := ptypes.TimestampString(msg.PostDate)
+			user := msg.User
+			fmt.Printf("%v @ %v on %v: %v\n", user, postDate, channel, message)
 
-		fmt.Printf("%v @ %v on %v: %v\n", user, postDate, channel, message)
+		case res.User != nil:
+			user := res.User
+			name := user.Name
+			image := user.ImagePath
+			fmt.Printf("User %v with image at %v\n", name, image)
+		}
 
 		res, err = stream.Recv()
 	}
@@ -81,7 +96,7 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			continue
 		}
 
-		req := chat.ChatMessageRequest{
+		req := chat.NewMessageRequest{
 			Channel:  "TestChannel",
 			Memo:     message,
 			PostDate: ptypes.TimestampNow(),
@@ -98,7 +113,7 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 func sendMessage(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
-	req := chat.ChatMessageRequest{
+	req := chat.NewMessageRequest{
 		Channel: "TestChannel",
 		Memo:    "Test message from TestUser",
 		User:    "TestUser",

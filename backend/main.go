@@ -44,11 +44,11 @@ func main() {
 	}
 
 	cs := chatServer{
-		db:         db,
-		newMessage: make(chan message),
-		newChannel: make(chan channel),
-		newUser:    make(chan user),
-		messageErr: make(chan error),
+		db:           db,
+		newMessage:   make(chan message),
+		newChannel:   make(chan channel),
+		newUser:      make(chan user),
+		broadcastErr: make(chan error),
 	}
 	go cs.broadcast()
 

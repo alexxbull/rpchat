@@ -22,10 +22,9 @@ type message struct {
 }
 
 type channel struct {
-	name         string
-	creationDate *timestamppb.Timestamp
-	description  string
-	owner        string
+	name  string
+	desc  string
+	owner string
 }
 
 type user struct {
@@ -34,37 +33,66 @@ type user struct {
 }
 
 type chatServer struct {
-	db         *sql.DB
-	newMessage chan message
-	newChannel chan channel
-	newUser    chan user
-	streams    []chat.ChatService_ConnectServer
-	messageErr chan error
+	db           *sql.DB
+	newMessage   chan message
+	newChannel   chan channel
+	newUser      chan user
+	streams      []chat.ChatService_ConnectServer
+	broadcastErr chan error
 }
 
 func (cs *chatServer) broadcast() {
-	for msg := range cs.newMessage {
-		res := chat.BroadcastMessage{
-			ChatMessage: &chat.ChatMessageRequest{
-				Channel:  msg.channel,
-				Memo:     msg.memo,
-				PostDate: msg.postDate,
-				User:     msg.user,
-			},
-			Id: msg.id,
-		}
-
-		for _, stream := range cs.streams {
-			err := stream.Send(res.ChatMessage)
-			if err != nil {
-				cs.messageErr <- fmt.Errorf("Unable to send Broadcast message: %v", err)
-				return
+	for {
+		select {
+		case msg := <-cs.newMessage:
+			res := &chat.BroadcastMessage{
+				Channel: nil,
+				ChatMessage: &chat.NewMessageRequest{
+					Channel:  msg.channel,
+					Memo:     msg.memo,
+					PostDate: msg.postDate,
+					User:     msg.user,
+				},
 			}
+			cs.broadcastObject(res, "message")
+
+		case ch := <-cs.newChannel:
+			res := &chat.BroadcastMessage{
+				Channel: &chat.NewChannelRequest{
+					Name:        ch.name,
+					Description: ch.desc,
+					Owner:       ch.owner,
+				},
+				ChatMessage: nil,
+			}
+			cs.broadcastObject(res, "channel")
+		case usr := <-cs.newUser:
+			res := &chat.BroadcastMessage{
+				Channel:     nil,
+				ChatMessage: nil,
+				User: &chat.NewUserRequest{
+					Name:      usr.name,
+					ImagePath: usr.imagePath,
+				},
+			}
+			cs.broadcastObject(res, "user")
 		}
 	}
 }
 
-func (cs *chatServer) AddMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.EmptyMessage, error) {
+// broadcastObject
+// Broadcast object to all clients
+func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string) {
+	for _, stream := range cs.streams {
+		err := stream.Send(res)
+		if err != nil {
+			cs.broadcastErr <- fmt.Errorf("Unable to Broadcast %v: %v", origin, err)
+			return
+		}
+	}
+}
+
+func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.EmptyMessage, error) {
 	db := cs.db
 	res := chat.EmptyMessage{}
 	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
@@ -97,12 +125,10 @@ func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_
 	// save client's stream for future broadcasting
 	cs.streams = append(cs.streams, stream)
 
-	// err := stream.Send(&chat.EmptyMessage{})
-
-	err := stream.Send(&chat.ChatMessageRequest{})
+	err := stream.Send(&chat.BroadcastMessage{})
 	if err != nil {
 		return fmt.Errorf("Unable to connect to client: %v", err)
 	}
 
-	return <-cs.messageErr
+	return <-cs.broadcastErr
 }
