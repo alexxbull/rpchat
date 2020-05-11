@@ -29,6 +29,7 @@ func main() {
 	}
 
 	go broadcastListen(stream)
+	editMessage(conn)
 	sendMessageShell(conn)
 }
 
@@ -160,4 +161,20 @@ func addUser(conn grpc.ClientConnInterface) {
 	}
 
 	fmt.Println("Channel added with id:", res.Id)
+}
+
+func editMessage(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := &chat.EditMessageRequest{
+		Id:   50,
+		Memo: "Updated message from TestUser",
+	}
+
+	_, err := client.EditMessage(ctx, req)
+	if err != nil {
+		log.Fatalln("Response error from server:", err)
+	}
+
+	fmt.Println("Message updated")
 }

@@ -191,3 +191,18 @@ func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*c
 	res.Id = id
 	return res, nil
 }
+
+func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequest) (*chat.EmptyMessage, error) {
+	res := &chat.EmptyMessage{}
+	sql := `UPDATE messages
+			SET message = $1
+			WHERE id = $2;`
+
+	stmt, err := cs.db.Prepare(sql)
+	_, err = stmt.Exec(req.Memo, req.Id)
+	if err != nil {
+		return res, fmt.Errorf("Unable to update message: %v", err)
+	}
+
+	return res, nil
+}

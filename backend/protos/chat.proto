@@ -33,6 +33,11 @@ message NewUserRequest {
 
 message NewUserResponse { int32 id = 1; }
 
+message EditMessageRequest {
+  int32 id = 1;
+  string memo = 2;
+}
+
 message BroadcastMessage {
   NewMessageRequest chat_message = 1;
   NewChannelRequest channel = 2;
@@ -44,4 +49,5 @@ service ChatService {
   rpc AddMessage(NewMessageRequest) returns (NewMessageResponse);
   rpc AddChannel(NewChannelRequest) returns (NewChannelResponse);
   rpc AddUser(NewUserRequest) returns (NewUserResponse);
+  rpc EditMessage(EditMessageRequest) returns (EmptyMessage);
 }
