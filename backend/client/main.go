@@ -23,8 +23,49 @@ func main() {
 		log.Fatalf("Unable to connect to %v: %v", addr, err)
 	}
 
-	go receiveMessages(conn)
+	stream, err := connect(conn)
+	if err != nil {
+		log.Fatalln("Unable to connect to server:", err)
+	}
+
+	go broadcastListen(stream)
 	sendMessageShell(conn)
+}
+
+func connect(conn grpc.ClientConnInterface) (chat.ChatService_ConnectClient, error) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := &chat.ConnectRequest{User: "TestUser"}
+
+	stream, err := client.Connect(ctx, req)
+	if err != nil {
+		return stream, err
+	}
+
+	_, err = stream.Recv()
+	if err != nil {
+		return stream, err
+	}
+
+	return stream, nil
+}
+
+func broadcastListen(stream chat.ChatService_ConnectClient) {
+	res, err := stream.Recv()
+	for err == nil {
+		channel := res.Channel
+		message := res.Memo
+		postDate := ptypes.TimestampString(res.PostDate)
+		user := res.User
+
+		fmt.Printf("%v @ %v on %v: %v\n", user, postDate, channel, message)
+
+		res, err = stream.Recv()
+	}
+
+	if err != io.EOF {
+		log.Fatalln("Unable to receive broadcasted messages:", err)
+	}
 }
 
 func sendMessageShell(conn grpc.ClientConnInterface) {
@@ -66,33 +107,5 @@ func sendMessage(conn grpc.ClientConnInterface) {
 	_, err := client.SendMessage(ctx, &req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
-	}
-}
-
-func receiveMessages(conn grpc.ClientConnInterface) {
-	client := chat.NewChatServiceClient(conn)
-	ctx := context.Background()
-	req := chat.EmptyMessage{}
-
-	stream, err := client.Broadcast(ctx, &req)
-	if err != nil {
-		log.Fatalln("Unable to receive messages", err)
-	}
-
-	res, err := stream.Recv()
-	for err == nil {
-		channel := res.ChatMessage.Channel
-		id := res.Id
-		message := res.ChatMessage.Memo
-		postDate := ptypes.TimestampString(res.ChatMessage.PostDate)
-		user := res.ChatMessage.User
-
-		fmt.Printf("%v @ %v on %v: %v [%v]\n", user, postDate, channel, message, id)
-
-		res, err = stream.Recv()
-	}
-
-	if err != io.EOF {
-		log.Fatalln("Error receiving message", err)
 	}
 }
