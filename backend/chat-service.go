@@ -41,6 +41,18 @@ type chatServer struct {
 	broadcastErr chan error
 }
 
+func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_ConnectServer) error {
+	// save client's stream for future broadcasting
+	cs.streams = append(cs.streams, stream)
+
+	err := stream.Send(&chat.BroadcastMessage{})
+	if err != nil {
+		return fmt.Errorf("Unable to connect to client: %v", err)
+	}
+
+	return <-cs.broadcastErr
+}
+
 func (cs *chatServer) broadcast() {
 	for {
 		select {
@@ -92,48 +104,6 @@ func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string)
 	}
 }
 
-func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.NewMessageResponse, error) {
-	db := cs.db
-	res := chat.NewMessageResponse{}
-	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
-			VALUES($1, $2, $3, $4)
-			RETURNING id;`
-
-	stmt, err := db.Prepare(sql)
-	if err != nil {
-		return &res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
-	}
-
-	var id int32
-	err = stmt.QueryRow(req.User, req.Channel, req.Memo, ptypes.TimestampString(req.PostDate)).Scan(&id)
-	if err != nil {
-		return &res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
-	}
-
-	cs.newMessage <- message{
-		channel:  req.Channel,
-		id:       id,
-		postDate: req.PostDate,
-		memo:     req.Memo,
-		user:     req.User,
-	}
-
-	res.Id = id
-	return &res, nil
-}
-
-func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_ConnectServer) error {
-	// save client's stream for future broadcasting
-	cs.streams = append(cs.streams, stream)
-
-	err := stream.Send(&chat.BroadcastMessage{})
-	if err != nil {
-		return fmt.Errorf("Unable to connect to client: %v", err)
-	}
-
-	return <-cs.broadcastErr
-}
-
 func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.NewChannelResponse, error) {
 	res := &chat.NewChannelResponse{}
 	sql := `INSERT INTO channels(channel_name, description, channel_owner) 
@@ -155,6 +125,36 @@ func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelReques
 		name:  req.Name,
 		desc:  req.Description,
 		owner: req.Owner,
+	}
+
+	res.Id = id
+	return res, nil
+}
+
+func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.NewMessageResponse, error) {
+	db := cs.db
+	res := &chat.NewMessageResponse{}
+	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
+			VALUES($1, $2, $3, $4)
+			RETURNING id;`
+
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
+	}
+
+	var id int32
+	err = stmt.QueryRow(req.User, req.Channel, req.Memo, ptypes.TimestampString(req.PostDate)).Scan(&id)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+	}
+
+	cs.newMessage <- message{
+		channel:  req.Channel,
+		id:       id,
+		postDate: req.PostDate,
+		memo:     req.Memo,
+		user:     req.User,
 	}
 
 	res.Id = id

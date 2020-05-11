@@ -96,14 +96,14 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			continue
 		}
 
-		req := chat.NewMessageRequest{
+		req := &chat.NewMessageRequest{
 			Channel:  "TestChannel",
 			Memo:     message,
 			PostDate: ptypes.TimestampNow(),
 			User:     "TestUser",
 		}
 
-		res, err := client.AddMessage(ctx, &req)
+		res, err := client.AddMessage(ctx, req)
 		if err != nil {
 			log.Fatalln("Response error from server:", err)
 		}
@@ -115,13 +115,13 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 func sendMessage(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
-	req := chat.NewMessageRequest{
+	req := &chat.NewMessageRequest{
 		Channel: "TestChannel",
 		Memo:    "Test message from TestUser",
 		User:    "TestUser",
 	}
 
-	_, err := client.AddMessage(ctx, &req)
+	_, err := client.AddMessage(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
