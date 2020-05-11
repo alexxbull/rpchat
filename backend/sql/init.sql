@@ -55,3 +55,6 @@ AFTER DELETE ON images
 FOR EACH ROW
 EXECUTE PROCEDURE delete_server_image();
 
+--default user
+INSERT INTO users(email, image_path, user_name, user_password)
+VALUES ('admin@admin.com', 'admin.jpeg', 'Admin', 'admin');
