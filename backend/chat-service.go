@@ -38,9 +38,11 @@ type chatServer struct {
 	newMessage chan message
 	newChannel chan channel
 	newUser    chan user
+	streams    []chat.ChatService_ConnectServer
+	messageErr chan error
 }
 
-func (cs *chatServer) Broadcast(req *chat.EmptyMessage, server chat.ChatService_BroadcastServer) error {
+func (cs *chatServer) broadcast() {
 	for msg := range cs.newMessage {
 		res := chat.BroadcastMessage{
 			ChatMessage: &chat.ChatMessageRequest{
@@ -51,13 +53,15 @@ func (cs *chatServer) Broadcast(req *chat.EmptyMessage, server chat.ChatService_
 			},
 			Id: msg.id,
 		}
-		err := server.Send(&res)
-		if err != nil {
-			return fmt.Errorf("Unable to send Broadcast message: %v", err)
+
+		for _, stream := range cs.streams {
+			err := stream.Send(res.ChatMessage)
+			if err != nil {
+				cs.messageErr <- fmt.Errorf("Unable to send Broadcast message: %v", err)
+				return
+			}
 		}
 	}
-
-	return nil
 }
 
 func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequest) (*chat.EmptyMessage, error) {
@@ -87,4 +91,18 @@ func (cs *chatServer) SendMessage(ctx context.Context, req *chat.ChatMessageRequ
 	}
 
 	return &res, nil
+}
+
+func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_ConnectServer) error {
+	// save client's stream for future broadcasting
+	cs.streams = append(cs.streams, stream)
+
+	// err := stream.Send(&chat.EmptyMessage{})
+
+	err := stream.Send(&chat.ChatMessageRequest{})
+	if err != nil {
+		return fmt.Errorf("Unable to connect to client: %v", err)
+	}
+
+	return <-cs.messageErr
 }

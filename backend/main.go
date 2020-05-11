@@ -43,13 +43,17 @@ func main() {
 		log.Fatalf("Unable to listen on %v: %v", addr, err)
 	}
 
-	// register services
-	chat.RegisterChatServiceServer(server, &chatServer{
+	cs := chatServer{
 		db:         db,
 		newMessage: make(chan message),
 		newChannel: make(chan channel),
 		newUser:    make(chan user),
-	})
+		messageErr: make(chan error),
+	}
+	go cs.broadcast()
+
+	// register services
+	chat.RegisterChatServiceServer(server, &cs)
 
 	// start grpc server
 	fmt.Println("Starting server...")
