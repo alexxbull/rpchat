@@ -126,3 +126,20 @@ func sendMessage(conn grpc.ClientConnInterface) {
 		log.Fatalln("Response error from server:", err)
 	}
 }
+
+func addChannel(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := &chat.NewChannelRequest{
+		Name:        "NewTestChannel",
+		Description: "Test channel made by TestUser",
+		Owner:       "TestUser",
+	}
+
+	res, err := client.AddChannel(ctx, req)
+	if err != nil {
+		log.Fatalln("Response error from server:", err)
+	}
+
+	fmt.Println("Channel added with id:", res.Id)
+}

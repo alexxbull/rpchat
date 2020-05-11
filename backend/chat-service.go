@@ -133,3 +133,30 @@ func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_
 
 	return <-cs.broadcastErr
 }
+
+func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.NewChannelResponse, error) {
+	res := &chat.NewChannelResponse{}
+	sql := `INSERT INTO channels(channel_name, description, channel_owner) 
+			VALUES($1, $2, $3)
+			RETURNING id;`
+
+	stmt, err := cs.db.Prepare(sql)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Prepare new channel insertion: %v", err)
+	}
+
+	var id int32
+	err = stmt.QueryRow(req.Name, req.Description, req.Owner).Scan(&id)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+	}
+
+	cs.newChannel <- channel{
+		name:  req.Name,
+		desc:  req.Description,
+		owner: req.Owner,
+	}
+
+	res.Id = id
+	return res, nil
+}
