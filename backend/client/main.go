@@ -143,3 +143,21 @@ func addChannel(conn grpc.ClientConnInterface) {
 
 	fmt.Println("Channel added with id:", res.Id)
 }
+
+func addUser(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := &chat.NewUserRequest{
+		Name:      "newUser",
+		Email:     "newUser@newUser.com",
+		Password:  "newUser",
+		ImagePath: "newUser image path",
+	}
+
+	res, err := client.AddUser(ctx, req)
+	if err != nil {
+		log.Fatalln("Response error from server:", err)
+	}
+
+	fmt.Println("Channel added with id:", res.Id)
+}

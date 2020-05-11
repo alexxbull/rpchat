@@ -26,8 +26,12 @@ message NewChannelResponse { int32 id = 1; }
 
 message NewUserRequest {
   string name = 1;
-  string image_path = 2;
+  string email = 2;
+  string password = 3;
+  string image_path = 4;
 }
+
+message NewUserResponse { int32 id = 1; }
 
 message BroadcastMessage {
   NewMessageRequest chat_message = 1;
@@ -39,5 +43,5 @@ service ChatService {
   rpc Connect(ConnectRequest) returns (stream BroadcastMessage);
   rpc AddMessage(NewMessageRequest) returns (NewMessageResponse);
   rpc AddChannel(NewChannelRequest) returns (NewChannelResponse);
-  // rpc AddUser(NewUserRequest) returns (EmptyMessage);
+  rpc AddUser(NewUserRequest) returns (NewUserResponse);
 }

@@ -29,6 +29,8 @@ type channel struct {
 
 type user struct {
 	name      string
+	email     string
+	password  string
 	imagePath string
 }
 
@@ -155,6 +157,35 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 		postDate: req.PostDate,
 		memo:     req.Memo,
 		user:     req.User,
+	}
+
+	res.Id = id
+	return res, nil
+}
+
+func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*chat.NewUserResponse, error) {
+	db := cs.db
+	res := &chat.NewUserResponse{}
+	sql := `INSERT INTO users(user_name, email, user_password, image_path)
+			VALUES($1, $2, $3, $4)
+			RETURNING id;`
+
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
+	}
+
+	var id int32
+	err = stmt.QueryRow(req.Name, req.Email, req.Password, req.ImagePath).Scan(&id)
+	if err != nil {
+		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+	}
+
+	cs.newUser <- user{
+		name:      req.Name,
+		email:     req.Email,
+		password:  req.Password,
+		imagePath: req.ImagePath,
 	}
 
 	res.Id = id
