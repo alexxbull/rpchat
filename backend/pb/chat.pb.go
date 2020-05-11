@@ -25,6 +25,45 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ConnectRequest struct {
+	User                 string   `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ConnectRequest) Reset()         { *m = ConnectRequest{} }
+func (m *ConnectRequest) String() string { return proto.CompactTextString(m) }
+func (*ConnectRequest) ProtoMessage()    {}
+func (*ConnectRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{0}
+}
+
+func (m *ConnectRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ConnectRequest.Unmarshal(m, b)
+}
+func (m *ConnectRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ConnectRequest.Marshal(b, m, deterministic)
+}
+func (m *ConnectRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConnectRequest.Merge(m, src)
+}
+func (m *ConnectRequest) XXX_Size() int {
+	return xxx_messageInfo_ConnectRequest.Size(m)
+}
+func (m *ConnectRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ConnectRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ConnectRequest proto.InternalMessageInfo
+
+func (m *ConnectRequest) GetUser() string {
+	if m != nil {
+		return m.User
+	}
+	return ""
+}
+
 type ChatMessageRequest struct {
 	User                 string               `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	Memo                 string               `protobuf:"bytes,2,opt,name=memo,proto3" json:"memo,omitempty"`
@@ -39,7 +78,7 @@ func (m *ChatMessageRequest) Reset()         { *m = ChatMessageRequest{} }
 func (m *ChatMessageRequest) String() string { return proto.CompactTextString(m) }
 func (*ChatMessageRequest) ProtoMessage()    {}
 func (*ChatMessageRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{0}
+	return fileDescriptor_8c585a45e2093e54, []int{1}
 }
 
 func (m *ChatMessageRequest) XXX_Unmarshal(b []byte) error {
@@ -98,7 +137,7 @@ func (m *EmptyMessage) Reset()         { *m = EmptyMessage{} }
 func (m *EmptyMessage) String() string { return proto.CompactTextString(m) }
 func (*EmptyMessage) ProtoMessage()    {}
 func (*EmptyMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{1}
+	return fileDescriptor_8c585a45e2093e54, []int{2}
 }
 
 func (m *EmptyMessage) XXX_Unmarshal(b []byte) error {
@@ -131,7 +170,7 @@ func (m *BroadcastMessage) Reset()         { *m = BroadcastMessage{} }
 func (m *BroadcastMessage) String() string { return proto.CompactTextString(m) }
 func (*BroadcastMessage) ProtoMessage()    {}
 func (*BroadcastMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{2}
+	return fileDescriptor_8c585a45e2093e54, []int{3}
 }
 
 func (m *BroadcastMessage) XXX_Unmarshal(b []byte) error {
@@ -179,7 +218,7 @@ func (m *NewChannelRequest) Reset()         { *m = NewChannelRequest{} }
 func (m *NewChannelRequest) String() string { return proto.CompactTextString(m) }
 func (*NewChannelRequest) ProtoMessage()    {}
 func (*NewChannelRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{3}
+	return fileDescriptor_8c585a45e2093e54, []int{4}
 }
 
 func (m *NewChannelRequest) XXX_Unmarshal(b []byte) error {
@@ -233,7 +272,7 @@ func (m *NewUserRequest) Reset()         { *m = NewUserRequest{} }
 func (m *NewUserRequest) String() string { return proto.CompactTextString(m) }
 func (*NewUserRequest) ProtoMessage()    {}
 func (*NewUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{4}
+	return fileDescriptor_8c585a45e2093e54, []int{5}
 }
 
 func (m *NewUserRequest) XXX_Unmarshal(b []byte) error {
@@ -269,6 +308,7 @@ func (m *NewUserRequest) GetImagePath() string {
 }
 
 func init() {
+	proto.RegisterType((*ConnectRequest)(nil), "chat.ConnectRequest")
 	proto.RegisterType((*ChatMessageRequest)(nil), "chat.ChatMessageRequest")
 	proto.RegisterType((*EmptyMessage)(nil), "chat.EmptyMessage")
 	proto.RegisterType((*BroadcastMessage)(nil), "chat.BroadcastMessage")
@@ -281,32 +321,30 @@ func init() {
 }
 
 var fileDescriptor_8c585a45e2093e54 = []byte{
-	// 385 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0x41, 0xab, 0xd3, 0x40,
-	0x14, 0x85, 0x49, 0xed, 0xf3, 0x99, 0x9b, 0x47, 0xd1, 0xcb, 0x43, 0x43, 0x40, 0x2c, 0x59, 0xbd,
-	0x55, 0x2a, 0xed, 0x42, 0x4a, 0x57, 0xb5, 0xba, 0xb4, 0x48, 0xaa, 0xeb, 0x30, 0xcd, 0x5c, 0x93,
-	0x40, 0x27, 0x13, 0x33, 0x53, 0x8b, 0xbf, 0xc2, 0x5f, 0xeb, 0x5e, 0x66, 0x26, 0xa9, 0xc1, 0xd6,
-	0xb7, 0x3b, 0x73, 0xb8, 0xf7, 0x72, 0xce, 0xc7, 0x00, 0xe4, 0x25, 0xd3, 0x49, 0xd3, 0x4a, 0x2d,
-	0x71, 0x6c, 0x74, 0xf4, 0xa6, 0x90, 0xb2, 0x38, 0xd0, 0xcc, 0x7a, 0xfb, 0xe3, 0xb7, 0x99, 0xae,
-	0x04, 0x29, 0xcd, 0x44, 0xe3, 0xc6, 0xe2, 0x5f, 0x1e, 0xe0, 0xa6, 0x64, 0xfa, 0x13, 0x29, 0xc5,
-	0x0a, 0x4a, 0xe9, 0xfb, 0x91, 0x94, 0x46, 0x84, 0xf1, 0x51, 0x51, 0x1b, 0x7a, 0x53, 0xef, 0xc1,
-	0x4f, 0xad, 0x36, 0x9e, 0x20, 0x21, 0xc3, 0x91, 0xf3, 0x8c, 0xc6, 0x10, 0x6e, 0xf3, 0x92, 0xd5,
-	0x35, 0x1d, 0xc2, 0x27, 0xd6, 0xee, 0x9f, 0xf8, 0x0e, 0xfc, 0x46, 0x2a, 0x9d, 0x71, 0xa6, 0x29,
-	0x1c, 0x4f, 0xbd, 0x87, 0x60, 0x1e, 0x25, 0x2e, 0x4d, 0xd2, 0xa7, 0x49, 0xbe, 0xf4, 0x69, 0xd2,
-	0x67, 0x66, 0xf8, 0x03, 0xd3, 0x14, 0x4f, 0xe0, 0xee, 0xa3, 0x68, 0xf4, 0xcf, 0x2e, 0x51, 0x9c,
-	0xc1, 0xf3, 0xf7, 0xad, 0x64, 0x3c, 0x67, 0xaa, 0x4f, 0x89, 0x2b, 0xb8, 0x33, 0xf5, 0x32, 0xe1,
-	0xde, 0x36, 0x66, 0x30, 0x0f, 0x13, 0xdb, 0xff, 0xb2, 0x4e, 0x1a, 0xe4, 0x7f, 0x3d, 0x9c, 0xc0,
-	0xa8, 0xe2, 0xb6, 0xc5, 0x4d, 0x3a, 0xaa, 0x78, 0x9c, 0xc1, 0x8b, 0x2d, 0x9d, 0x36, 0x2e, 0xf7,
-	0x00, 0x40, 0xcd, 0x04, 0xf5, 0x00, 0x8c, 0xc6, 0x29, 0x04, 0x9c, 0x54, 0xde, 0x56, 0x8d, 0xae,
-	0x64, 0xdd, 0x71, 0x18, 0x5a, 0x78, 0x0f, 0x37, 0xf2, 0x54, 0x53, 0xdb, 0xc1, 0x70, 0x8f, 0x78,
-	0x03, 0x93, 0x2d, 0x9d, 0xbe, 0x2a, 0x6a, 0x1f, 0xbb, 0xfe, 0x1a, 0xa0, 0x12, 0xac, 0xa0, 0xac,
-	0x61, 0xba, 0xec, 0x8e, 0xfb, 0xd6, 0xf9, 0xcc, 0x74, 0x39, 0xff, 0xed, 0x41, 0x60, 0x9a, 0xed,
-	0xa8, 0xfd, 0x51, 0xe5, 0x84, 0x4b, 0xf0, 0xcf, 0x58, 0x10, 0x5d, 0xf3, 0x21, 0xb7, 0xe8, 0xa5,
-	0xf3, 0xfe, 0x65, 0xf7, 0xd6, 0xc3, 0x15, 0x04, 0x3b, 0xaa, 0x79, 0xcf, 0xe3, 0xbf, 0xd8, 0xa2,
-	0x2b, 0x67, 0x71, 0x09, 0xb0, 0xe6, 0xbc, 0xa3, 0x85, 0xaf, 0xdc, 0xc4, 0x05, 0xbf, 0xab, 0xab,
-	0x0b, 0xb8, 0x5d, 0x73, 0x6e, 0x38, 0xe0, 0xfd, 0x79, 0x6f, 0x80, 0xe5, 0xda, 0xd2, 0xfe, 0xa9,
-	0xfd, 0x2c, 0x8b, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x99, 0x6d, 0x3d, 0x71, 0xdc, 0x02, 0x00,
-	0x00,
+	// 364 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0x41, 0x4b, 0xeb, 0x40,
+	0x14, 0x85, 0x49, 0x5f, 0xfb, 0xfa, 0x7a, 0x53, 0xc2, 0x73, 0xe8, 0x22, 0x04, 0xc4, 0x12, 0x5c,
+	0x74, 0x95, 0x4a, 0x5d, 0xb8, 0xe8, 0xce, 0xe8, 0xd2, 0x22, 0xa9, 0xae, 0xc3, 0x34, 0xb9, 0x26,
+	0x81, 0xce, 0x4c, 0xcc, 0x4c, 0x2d, 0xfe, 0x02, 0x97, 0xfe, 0x65, 0x99, 0x99, 0x04, 0x2b, 0xd2,
+	0xee, 0xee, 0x3d, 0x73, 0x19, 0xce, 0xf9, 0x0e, 0x40, 0x56, 0x52, 0x15, 0xd5, 0x8d, 0x50, 0x82,
+	0xf4, 0xf5, 0x1c, 0x5c, 0x14, 0x42, 0x14, 0x5b, 0x9c, 0x1b, 0x6d, 0xb3, 0x7b, 0x99, 0xab, 0x8a,
+	0xa1, 0x54, 0x94, 0xd5, 0xf6, 0x2c, 0xbc, 0x04, 0x2f, 0x16, 0x9c, 0x63, 0xa6, 0x12, 0x7c, 0xdd,
+	0xa1, 0x54, 0x84, 0x40, 0x7f, 0x27, 0xb1, 0xf1, 0x9d, 0xa9, 0x33, 0x1b, 0x25, 0x66, 0x0e, 0x3f,
+	0x1d, 0x20, 0x71, 0x49, 0xd5, 0x03, 0x4a, 0x49, 0x0b, 0x3c, 0x71, 0xaa, 0x35, 0x86, 0x4c, 0xf8,
+	0x3d, 0xab, 0xe9, 0x99, 0xf8, 0x30, 0xcc, 0x4a, 0xca, 0x39, 0x6e, 0xfd, 0x3f, 0x46, 0xee, 0x56,
+	0x72, 0x03, 0xa3, 0x5a, 0x48, 0x95, 0xe6, 0x54, 0xa1, 0xdf, 0x9f, 0x3a, 0x33, 0x77, 0x11, 0x44,
+	0xd6, 0x73, 0xd4, 0x79, 0x8e, 0x9e, 0x3a, 0xcf, 0xc9, 0x3f, 0x7d, 0x7c, 0x47, 0x15, 0x86, 0x1e,
+	0x8c, 0xef, 0x59, 0xad, 0xde, 0x5b, 0x47, 0x61, 0x0a, 0xff, 0x6f, 0x1b, 0x41, 0xf3, 0x8c, 0xca,
+	0xce, 0x25, 0x59, 0xc2, 0x58, 0x43, 0x48, 0x99, 0xdd, 0x8d, 0x4d, 0x77, 0xe1, 0x47, 0x86, 0xd2,
+	0xef, 0x38, 0x89, 0x9b, 0x7d, 0x6b, 0xc4, 0x83, 0x5e, 0x95, 0x9b, 0x14, 0x83, 0xa4, 0x57, 0xe5,
+	0x61, 0x0a, 0x67, 0x2b, 0xdc, 0xc7, 0xd6, 0xf7, 0x01, 0x00, 0x4e, 0x19, 0x76, 0x00, 0xf4, 0x4c,
+	0xa6, 0xe0, 0xe6, 0x28, 0xb3, 0xa6, 0xaa, 0x55, 0x25, 0x78, 0xcb, 0xe1, 0x50, 0x22, 0x13, 0x18,
+	0x88, 0x3d, 0xc7, 0xa6, 0x85, 0x61, 0x97, 0x30, 0x06, 0x6f, 0x85, 0xfb, 0x67, 0x89, 0xcd, 0xa9,
+	0xdf, 0xcf, 0x01, 0x2a, 0x46, 0x0b, 0x4c, 0x6b, 0xaa, 0xca, 0xf6, 0xf3, 0x91, 0x51, 0x1e, 0xa9,
+	0x2a, 0x17, 0x1f, 0x0e, 0xb8, 0x3a, 0xd9, 0x1a, 0x9b, 0xb7, 0x2a, 0xd3, 0x08, 0x86, 0x6d, 0xbd,
+	0x64, 0xd2, 0xe6, 0xfe, 0xd1, 0x76, 0x70, 0x94, 0xc6, 0x95, 0x43, 0x96, 0xe0, 0xae, 0x91, 0xe7,
+	0x1d, 0x91, 0xa3, 0xa7, 0x01, 0xb1, 0x2f, 0x87, 0x85, 0x6c, 0xfe, 0x9a, 0xfa, 0xae, 0xbf, 0x02,
+	0x00, 0x00, 0xff, 0xff, 0xb6, 0xf3, 0x68, 0x39, 0x94, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -321,10 +359,9 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ChatServiceClient interface {
-	Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error)
+	Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (ChatService_ConnectClient, error)
+	// rpc Broadcast(EmptyMessage) returns (EmptyMessage);
 	SendMessage(ctx context.Context, in *ChatMessageRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
-	AddChannel(ctx context.Context, in *NewChannelRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
-	AddUser(ctx context.Context, in *NewUserRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
 }
 
 type chatServiceClient struct {
@@ -335,12 +372,12 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
 }
 
-func (c *chatServiceClient) Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ChatService_serviceDesc.Streams[0], "/chat.ChatService/Broadcast", opts...)
+func (c *chatServiceClient) Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (ChatService_ConnectClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ChatService_serviceDesc.Streams[0], "/chat.ChatService/Connect", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &chatServiceBroadcastClient{stream}
+	x := &chatServiceConnectClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -350,17 +387,17 @@ func (c *chatServiceClient) Broadcast(ctx context.Context, in *EmptyMessage, opt
 	return x, nil
 }
 
-type ChatService_BroadcastClient interface {
-	Recv() (*BroadcastMessage, error)
+type ChatService_ConnectClient interface {
+	Recv() (*ChatMessageRequest, error)
 	grpc.ClientStream
 }
 
-type chatServiceBroadcastClient struct {
+type chatServiceConnectClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatServiceBroadcastClient) Recv() (*BroadcastMessage, error) {
-	m := new(BroadcastMessage)
+func (x *chatServiceConnectClient) Recv() (*ChatMessageRequest, error) {
+	m := new(ChatMessageRequest)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -376,71 +413,46 @@ func (c *chatServiceClient) SendMessage(ctx context.Context, in *ChatMessageRequ
 	return out, nil
 }
 
-func (c *chatServiceClient) AddChannel(ctx context.Context, in *NewChannelRequest, opts ...grpc.CallOption) (*EmptyMessage, error) {
-	out := new(EmptyMessage)
-	err := c.cc.Invoke(ctx, "/chat.ChatService/AddChannel", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *chatServiceClient) AddUser(ctx context.Context, in *NewUserRequest, opts ...grpc.CallOption) (*EmptyMessage, error) {
-	out := new(EmptyMessage)
-	err := c.cc.Invoke(ctx, "/chat.ChatService/AddUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ChatServiceServer is the server API for ChatService service.
 type ChatServiceServer interface {
-	Broadcast(*EmptyMessage, ChatService_BroadcastServer) error
+	Connect(*ConnectRequest, ChatService_ConnectServer) error
+	// rpc Broadcast(EmptyMessage) returns (EmptyMessage);
 	SendMessage(context.Context, *ChatMessageRequest) (*EmptyMessage, error)
-	AddChannel(context.Context, *NewChannelRequest) (*EmptyMessage, error)
-	AddUser(context.Context, *NewUserRequest) (*EmptyMessage, error)
 }
 
 // UnimplementedChatServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedChatServiceServer struct {
 }
 
-func (*UnimplementedChatServiceServer) Broadcast(req *EmptyMessage, srv ChatService_BroadcastServer) error {
-	return status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
+func (*UnimplementedChatServiceServer) Connect(req *ConnectRequest, srv ChatService_ConnectServer) error {
+	return status.Errorf(codes.Unimplemented, "method Connect not implemented")
 }
 func (*UnimplementedChatServiceServer) SendMessage(ctx context.Context, req *ChatMessageRequest) (*EmptyMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
-}
-func (*UnimplementedChatServiceServer) AddChannel(ctx context.Context, req *NewChannelRequest) (*EmptyMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddChannel not implemented")
-}
-func (*UnimplementedChatServiceServer) AddUser(ctx context.Context, req *NewUserRequest) (*EmptyMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddUser not implemented")
 }
 
 func RegisterChatServiceServer(s *grpc.Server, srv ChatServiceServer) {
 	s.RegisterService(&_ChatService_serviceDesc, srv)
 }
 
-func _ChatService_Broadcast_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(EmptyMessage)
+func _ChatService_Connect_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ConnectRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ChatServiceServer).Broadcast(m, &chatServiceBroadcastServer{stream})
+	return srv.(ChatServiceServer).Connect(m, &chatServiceConnectServer{stream})
 }
 
-type ChatService_BroadcastServer interface {
-	Send(*BroadcastMessage) error
+type ChatService_ConnectServer interface {
+	Send(*ChatMessageRequest) error
 	grpc.ServerStream
 }
 
-type chatServiceBroadcastServer struct {
+type chatServiceConnectServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatServiceBroadcastServer) Send(m *BroadcastMessage) error {
+func (x *chatServiceConnectServer) Send(m *ChatMessageRequest) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -462,42 +474,6 @@ func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_AddChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NewChannelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).AddChannel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/chat.ChatService/AddChannel",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).AddChannel(ctx, req.(*NewChannelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ChatService_AddUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NewUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChatServiceServer).AddUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/chat.ChatService/AddUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).AddUser(ctx, req.(*NewUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _ChatService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "chat.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
@@ -506,19 +482,11 @@ var _ChatService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "SendMessage",
 			Handler:    _ChatService_SendMessage_Handler,
 		},
-		{
-			MethodName: "AddChannel",
-			Handler:    _ChatService_AddChannel_Handler,
-		},
-		{
-			MethodName: "AddUser",
-			Handler:    _ChatService_AddUser_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Broadcast",
-			Handler:       _ChatService_Broadcast_Handler,
+			StreamName:    "Connect",
+			Handler:       _ChatService_Connect_Handler,
 			ServerStreams: true,
 		},
 	},

@@ -4,6 +4,8 @@ package chat;
 
 import "google/protobuf/timestamp.proto";
 
+message ConnectRequest { string user = 1; }
+
 message ChatMessageRequest {
   string user = 1;
   string memo = 2;
@@ -30,7 +32,7 @@ message NewUserRequest {
 }
 
 service ChatService {
-  rpc Broadcast(EmptyMessage) returns (stream BroadcastMessage);
+  rpc Connect(ConnectRequest) returns (stream ChatMessageRequest);
   rpc SendMessage(ChatMessageRequest) returns (EmptyMessage);
   rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
   rpc AddUser(NewUserRequest) returns (EmptyMessage);
