@@ -92,9 +92,9 @@ func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string)
 	}
 }
 
-func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.EmptyMessage, error) {
+func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.NewMessageResponse, error) {
 	db := cs.db
-	res := chat.EmptyMessage{}
+	res := chat.NewMessageResponse{}
 	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
 			VALUES($1, $2, $3, $4)
 			RETURNING id;`
@@ -118,6 +118,7 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 		user:     req.User,
 	}
 
+	res.Id = id
 	return &res, nil
 }
 

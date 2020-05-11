@@ -14,6 +14,8 @@ message NewMessageRequest {
   google.protobuf.Timestamp post_date = 4;
 }
 
+message NewMessageResponse { int32 id = 1; }
+
 message NewChannelRequest {
   string name = 1;
   string description = 2;
@@ -33,7 +35,7 @@ message BroadcastMessage {
 
 service ChatService {
   rpc Connect(ConnectRequest) returns (stream BroadcastMessage);
-  rpc AddMessage(NewMessageRequest) returns (EmptyMessage);
+  rpc AddMessage(NewMessageRequest) returns (NewMessageResponse);
   // rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
   // rpc AddUser(NewUserRequest) returns (EmptyMessage);
 }

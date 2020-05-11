@@ -103,10 +103,12 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			User:     "TestUser",
 		}
 
-		_, err = client.AddMessage(ctx, &req)
+		res, err := client.AddMessage(ctx, &req)
 		if err != nil {
 			log.Fatalln("Response error from server:", err)
 		}
+
+		fmt.Println("Messaged added with id:", res.Id)
 	}
 }
 
