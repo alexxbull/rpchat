@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 
 	"github.com/golang/protobuf/ptypes"
 
@@ -218,6 +219,29 @@ func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequ
 	_, err = stmt.Exec(req.NewName, req.Description, req.OldName)
 	if err != nil {
 		return res, fmt.Errorf("Unable to update channel: %v", err)
+	}
+
+	return res, nil
+}
+
+func (cs *chatServer) EditUser(ctx context.Context, req *chat.EditUserRequest) (*chat.EmptyMessage, error) {
+	if cs == nil {
+		log.Fatalln("Nil chatServer pointer")
+	}
+
+	res := &chat.EmptyMessage{}
+	sql := `UPDATE users
+			SET email = $1,
+				user_name  = $2,
+				user_password  = $3
+			WHERE user_name = $4;`
+
+	// TODO: validate user
+
+	stmt, err := cs.db.Prepare(sql)
+	_, err = stmt.Exec(req.Email, req.Name, req.Password, req.OldName)
+	if err != nil {
+		return res, fmt.Errorf("Unable to update user: %v", err)
 	}
 
 	return res, nil

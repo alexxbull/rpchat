@@ -29,6 +29,12 @@ message NewChannelRequest {
 
 message NewChannelResponse { int32 id = 1; }
 
+message EditChannelRequest {
+  string old_name = 1;
+  string new_name = 2;
+  string description = 3;
+}
+
 message NewUserRequest {
   string name = 1;
   string email = 2;
@@ -38,16 +44,18 @@ message NewUserRequest {
 
 message NewUserResponse { int32 id = 1; }
 
+message EditUserRequest {
+  string old_name = 1;
+  string email = 2;
+  string name = 3;
+  string old_password = 4;
+  string password = 5;
+}
+
 message BroadcastMessage {
   NewMessageRequest chat_message = 1;
   NewChannelRequest channel = 2;
   NewUserRequest user = 3;
-}
-
-message EditChannelRequest {
-  string old_name = 1;
-  string new_name = 2;
-  string description = 3;
 }
 
 service ChatService {
@@ -57,4 +65,5 @@ service ChatService {
   rpc AddUser(NewUserRequest) returns (NewUserResponse);
   rpc EditMessage(EditMessageRequest) returns (EmptyMessage);
   rpc EditChannel(EditChannelRequest) returns (EmptyMessage);
+  rpc EditUser(EditUserRequest) returns (EmptyMessage);
 }

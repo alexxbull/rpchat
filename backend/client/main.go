@@ -194,3 +194,22 @@ func editChannel(conn grpc.ClientConnInterface) {
 
 	fmt.Println("Channel updated")
 }
+
+func editUser(conn grpc.ClientConnInterface) {
+	client := chat.NewChatServiceClient(conn)
+	ctx := context.Background()
+	req := &chat.EditUserRequest{
+		Email:       "updated@email.com",
+		Name:        "UpdatedTester",
+		OldName:     "NewTester",
+		OldPassword: "password",
+		Password:    "newpassword",
+	}
+
+	_, err := client.EditUser(ctx, req)
+	if err != nil {
+		log.Fatalln("Response error from server:", err)
+	}
+
+	fmt.Println("User updated")
+}
