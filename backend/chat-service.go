@@ -206,3 +206,19 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 
 	return res, nil
 }
+
+func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequest) (*chat.EmptyMessage, error) {
+	res := &chat.EmptyMessage{}
+	sql := `UPDATE channels
+			SET channel_name = $1,
+				description  = $2
+			WHERE channel_name = $3;`
+
+	stmt, err := cs.db.Prepare(sql)
+	_, err = stmt.Exec(req.NewName, req.Description, req.OldName)
+	if err != nil {
+		return res, fmt.Errorf("Unable to update channel: %v", err)
+	}
+
+	return res, nil
+}
