@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Sidebar from '../Sidebar/Sidebar.js'
+import Settings from '../Settings/Settings.js'
 
 const Toolbar = props => {
     const [showSidebar, setShowSideBar] = useState(false)
@@ -15,7 +16,7 @@ const Toolbar = props => {
             >Sidebar</button>
             {sidebar}
             <h1>Channel name</h1>
-            <button className="settings-btn">Settings</button>
+            <Settings />
         </div>
     )
 }
