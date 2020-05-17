@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
+
+import Backdrop from './components/Backdrop/Backdrop.js'
+
 
 function App() {
   return (
     <div className="App">
-      RPChat
+      <Backdrop />
     </div>
   );
 }
