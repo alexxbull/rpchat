@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Channels from '../../components/Channels/Channels';
+
 const Chat = props => {
     return (
         <div className="chat">
-            <div>Channels Component</div>
+            <Channels />
             <div>Messages components</div>
             <div>Users Component</div>
         </div>
