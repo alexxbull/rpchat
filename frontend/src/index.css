@@ -13,6 +13,14 @@ body {
     height: 100%;
 }
 
+
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: hotpink;
+}
+
 .backdrop {    
   display: none;
   background: rgba(94, 94, 94, 0.267);    

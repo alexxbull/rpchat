@@ -1,0 +1,6 @@
+.Chat {
+    display: flex;
+    overflow-y: auto;
+    background: khaki;
+    height: 100%;
+}
