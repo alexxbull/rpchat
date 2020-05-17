@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import Sidebar from '../Sidebar/Sidebar.js'
+import Sidebar from '../../components/Sidebar/Sidebar.js'
 import Settings from '../Settings/Settings.js'
 
 const Toolbar = props => {
