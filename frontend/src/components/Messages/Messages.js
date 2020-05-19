@@ -22,6 +22,10 @@ const Messages = props => {
     return (
         <div className="messages">
             {messages}
+            <div className="reply-container">
+                <input type="text" className="reply" />
+                <button className="reply-btn">Send</button>
+            </div>
         </div>
     )
 }
