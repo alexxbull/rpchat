@@ -16,7 +16,6 @@ const Channels = props => {
         />
     )
 
-
     return (
         <div className="channels">
             {channels}
