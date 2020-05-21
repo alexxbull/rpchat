@@ -1,0 +1,31 @@
+.Channels {
+    background-color: orange;
+    flex-direction: column;
+    height: 100vh;
+    left: 0;
+    overflow: hidden auto;
+    position: fixed;
+    top: 0;
+    transition: transform 0.3s ease-in-out; 
+    width: 60vw;
+    z-index: 10;
+}
+
+.Open {
+    transform: translate(0);
+}
+
+.Close {
+    transform: translate(-100%);
+}
+
+@media (min-width: 40rem) {
+    .Channels  {
+        display: flex;
+        flex: 1;
+        height: auto;
+        position: relative;
+        transform: none;
+        width: auto;
+    }
+}

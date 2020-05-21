@@ -2,6 +2,8 @@ import React from 'react';
 
 import Channel from './Channel/Channel.js'
 
+import classes from './Channels.module.css'
+
 const Channels = props => {
     const channelsData = [
         { name: "Channel1", id: 1 },
@@ -9,15 +11,22 @@ const Channels = props => {
         { name: "Channel3", id: 3 },
     ]
 
-    const channels = channelsData.map(channel =>
-        <Channel
-            key={channel.id}
-            name={channel.name}
-        />
-    )
+    let attachedClasses = [classes.Channels, classes.Close]
+
+    let channels = null
+    if (props.show) {
+        channels = channelsData.map(channel =>
+            <Channel
+                key={channel.id}
+                name={channel.name}
+            />
+        )
+
+        attachedClasses = [classes.Channels, classes.Open]
+    }
 
     return (
-        <div className="channels">
+        <div className={attachedClasses.join(' ')}>
             {channels}
         </div>
     )
