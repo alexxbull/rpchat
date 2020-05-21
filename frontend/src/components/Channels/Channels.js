@@ -27,7 +27,9 @@ const Channels = props => {
 
     return (
         <div className={attachedClasses.join(' ')}>
-            {channels}
+            <ul className={classes.Channels__list}>
+                {channels}
+            </ul>
         </div>
     )
 }

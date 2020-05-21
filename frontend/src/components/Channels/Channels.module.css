@@ -11,6 +11,13 @@
     z-index: 10;
 }
 
+.Channels__list {
+    list-style: none;
+    padding: 8px;
+    overflow-x: hidden;
+    padding: 0.5rem;
+}
+
 .Open {
     transform: translate(0);
 }
