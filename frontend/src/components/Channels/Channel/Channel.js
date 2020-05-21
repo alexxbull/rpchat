@@ -1,9 +1,11 @@
 import React from 'react';
 
+import classes from './Channel.module.css'
+
 const Channel = props =>
-    <div className="channel">
-        <div className="channel-icon">#</div>
-        <h1 className="channel-name">{props.name}</h1>
-    </div>
+    <li className={classes.Channel}>
+        <span className={classes.Channel__icon}></span>
+        <span>{props.name}</span>
+    </li>
 
 export default Channel;

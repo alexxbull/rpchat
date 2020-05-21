@@ -1,0 +1,12 @@
+.Channel {    
+    margin-bottom: 8px;
+}
+
+.Channel__icon::before {
+    content: "#";
+}
+
+.Channel__icon {    
+    color: grey;
+    margin-right: 4px;
+}
