@@ -1,0 +1,8 @@
+.Backdrop {    
+    display: none;
+    background: rgba(94, 94, 94, 0.267);    
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 1;
+  }
