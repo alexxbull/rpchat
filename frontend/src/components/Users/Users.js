@@ -9,13 +9,17 @@ const Users = props => {
         { name: "User3", id: 3, avatar: 'someImagePath3', },
     ]
 
-    const users = usersData.map(user =>
-        <User
-            key={user.id}
-            name={user.name}
-            avatar={user.avatar}
-        />
-    )
+
+    let users = null
+    if (props.show) {
+        users = usersData.map(user =>
+            <User
+                key={user.id}
+                name={user.name}
+                avatar={user.avatar}
+            />
+        )
+    }
 
     return (
         <div className="users">
