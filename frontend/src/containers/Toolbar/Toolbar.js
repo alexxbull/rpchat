@@ -14,11 +14,12 @@ const Toolbar = props => {
 
     const handleBackdrop = () => {
         setShowChannels(false)
+        setShowUsers(false)
     }
 
     return (
         <BackdropContext.Provider value={showChannels}>
-            <Backdrop show={showChannels} click={handleBackdrop} />
+            <Backdrop show={showChannels || showUsers} click={handleBackdrop} />
             <div className={classes.Toolbar}>
                 <button
                     className={classes.Channels_btn}
