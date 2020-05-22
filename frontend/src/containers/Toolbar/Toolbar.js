@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 
+import classes from './Toolbar.module.css'
+
 import Channels from '../../components/Channels/Channels.js'
 import Backdrop from '../../components/Backdrop/Backdrop.js'
 
-import classes from './Toolbar.module.css'
+import BackdropContext from '../../context/BackdropContext.js'
 
 const Toolbar = props => {
     const [showChannels, setshowChannels] = useState(false)
@@ -13,7 +15,7 @@ const Toolbar = props => {
     }
 
     return (
-        <>
+        <BackdropContext.Provider value={showChannels}>
             <Backdrop show={showChannels} click={handleBackdrop} />
             <div className={classes.Toolbar}>
                 <button
@@ -27,7 +29,7 @@ const Toolbar = props => {
                 <Channels show={showChannels} />
                 <h1 className={classes.Channel_name}>Current Channel</h1>
             </div>
-        </>
+        </BackdropContext.Provider>
     )
 }
 

@@ -2,7 +2,6 @@ import React from 'react'
 
 import classes from './Backdrop.module.css'
 
-
 const Backdrop = props => {
     let backdrop = null
 
