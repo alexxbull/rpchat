@@ -13,8 +13,7 @@ const Toolbar = props => {
     const [showUsers, setShowUsers] = useState(false)
 
     const handleBackdrop = () => {
-        setShowChannels(false)
-        setShowUsers(false)
+        showChannels ? setShowChannels(false) : setShowUsers(false)
     }
 
     return (
