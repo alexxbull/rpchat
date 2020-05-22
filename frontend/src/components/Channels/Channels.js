@@ -4,6 +4,7 @@ import classes from './Channels.module.css'
 
 import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
+import SettingsBar from '../SettingsBar/SettingsBar';
 
 
 const Channels = props => {
@@ -33,6 +34,7 @@ const Channels = props => {
             <ul className={classes.Channels__list}>
                 {channels}
             </ul>
+            <SettingsBar />
         </div>
     )
 }
