@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './Users.module.css';
 
 import User from './User/User.js'
+import UsersHeader from './UsersHeader/UsersHeader';
 
 const Users = props => {
     const usersData = [
@@ -27,6 +28,7 @@ const Users = props => {
 
     return (
         <div className={attachedClasses.join(' ')}>
+            <UsersHeader />
             {users}
         </div>
     )
