@@ -22,3 +22,12 @@
     font-size: 1.1rem;
     margin: 0 auto;
 }
+
+.Users_btn {
+    background: url('../../assets//users-icon.svg') center/2rem no-repeat;
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
