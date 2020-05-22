@@ -1,7 +1,8 @@
 import React from 'react'
 
 import classes from './SettingsBar.module.css'
-import Settings from './Settings/Settings'
+
+import Settings from '../../containers/Settings/Settings.js'
 
 const SettingsBar = props => {
     return (

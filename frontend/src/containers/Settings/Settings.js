@@ -1,18 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 
-import SettingsMenu from './SettingsMenu/SettingsMenu.js'
+import classes from './Settings.module.css'
+
+import BackdropContext from '../../context/BackdropContext.js'
 
 const Settings = props => {
-    const [showSettingsMenu, setshowSettingsMenu] = useState(false)
+    const backdropContext = useContext(BackdropContext)
+    const [showSettingsMenu, setShowSettingsMenu] = useState(false)
 
-    const settingsMenu = showSettingsMenu ? <SettingsMenu /> : null
+    useEffect(() => {
+        if (!backdropContext)
+            setShowSettingsMenu(false)
+    }, [backdropContext])
+
+    let settingsMenu = null
+    if (showSettingsMenu) {
+        settingsMenu =
+            <div className={classes.Settings_menu}>
+                <button className={classes.Settings_menu_item}>About</button>
+                <button className={classes.Settings_menu_item}>Sign Out</button>
+            </div>
+    }
 
     return (
-        <div className="settings">
+        <div className={classes.Settings}>
             <button
-                className="settings-btn"
-                onClick={setshowSettingsMenu.bind(this, !showSettingsMenu)}
-            >Settings</button>
+                className={classes.Settings_btn}
+                onClick={setShowSettingsMenu.bind(this, !showSettingsMenu)}>
+            </button>
             {settingsMenu}
         </div>
     )
