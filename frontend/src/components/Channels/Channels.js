@@ -1,8 +1,10 @@
 import React from 'react';
 
-import Channel from './Channel/Channel.js'
-
 import classes from './Channels.module.css'
+
+import Channel from './Channel/Channel.js'
+import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
+
 
 const Channels = props => {
     const channelsData = [
@@ -27,6 +29,7 @@ const Channels = props => {
 
     return (
         <div className={attachedClasses.join(' ')}>
+            <ChannelsHeader />
             <ul className={classes.Channels__list}>
                 {channels}
             </ul>
