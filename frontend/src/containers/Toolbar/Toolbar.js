@@ -20,9 +20,9 @@ const Toolbar = props => {
                     className={classes.Channels_btn}
                     onClick={setshowChannels.bind(this, !showChannels)}
                 >
-                    <span class={classes.Channels_btn_bar}></span>
-                    <span class={classes.Channels_btn_bar}></span>
-                    <span class={classes.Channels_btn_bar}></span>
+                    <span className={classes.Channels_btn_bar}></span>
+                    <span className={classes.Channels_btn_bar}></span>
+                    <span className={classes.Channels_btn_bar}></span>
                 </button>
                 <Channels show={showChannels} />
                 <h1 className={classes.Channel_name}>Current Channel</h1>
