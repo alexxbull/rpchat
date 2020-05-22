@@ -17,7 +17,16 @@ body {
     font-family: "Open-Sans", sans-serif;
 }
 
-.App {
+
+:focus {
+    outline: none;
+}
+
+::-moz-focus-inner {
+    border: 0;
+ }
+
+ .App {
     display: flex;
     flex-direction: column;
     height: 100%;
