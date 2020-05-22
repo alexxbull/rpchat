@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classes from './Users.module.css';
+
 import User from './User/User.js'
 
 const Users = props => {
@@ -9,6 +11,7 @@ const Users = props => {
         { name: "User3", id: 3, avatar: 'someImagePath3', },
     ]
 
+    let attachedClasses = [classes.Users, classes.Close]
 
     let users = null
     if (props.show) {
@@ -19,10 +22,11 @@ const Users = props => {
                 avatar={user.avatar}
             />
         )
+        attachedClasses = [classes.Users, classes.Open]
     }
 
     return (
-        <div className="users">
+        <div className={attachedClasses.join(' ')}>
             {users}
         </div>
     )
