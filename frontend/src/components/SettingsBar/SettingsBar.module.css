@@ -16,8 +16,7 @@
 }
 
 .User_icon {
-    background: url('../../assets/user-icon.svg') center/2rem no-repeat;  
-    background-color: white;  
+    background: center/2rem no-repeat;  
     border-radius: 50%;
     height: 2rem;
     width: 2rem;

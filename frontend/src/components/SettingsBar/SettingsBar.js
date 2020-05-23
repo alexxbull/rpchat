@@ -8,7 +8,7 @@ const SettingsBar = props => {
     return (
         <div className={classes.SettingsBar}>
             <div className={classes.User}>
-                <div className={classes.User_icon}></div>
+                <img className={classes.User_icon} src={require('../../assets/user-icon.svg')} alt="logged-in-user-icon" />
                 <div className={classes.User_name}>User Name</div>
             </div>
             <Settings />
