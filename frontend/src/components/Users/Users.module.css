@@ -9,7 +9,12 @@
     transition: transform 0.3s; 
     width: 60vw;
     z-index: 10;
+}
+
+.Users ul {
+    list-style: none;
     padding: 8px;
+    overflow-x: hidden;
 }
 
 .Open {

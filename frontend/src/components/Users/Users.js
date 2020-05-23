@@ -30,10 +30,12 @@ const Users = props => {
     }
 
     return (
-        <ul className={attachedClasses.join(' ')}>
+        <div className={attachedClasses.join(' ')}>
             <UsersHeader />
-            {users}
-        </ul>
+            <ul className={classes.Users__list}>
+                {users}
+            </ul>
+        </div>
     )
 }
 
