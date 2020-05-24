@@ -1,0 +1,39 @@
+.ReplyBox {
+    background: none;
+    margin-top: auto;
+    display: flex;
+    padding: 0.5rem;;
+    align-items: center;
+}
+
+.Reply {
+    flex: 1;
+    border: none;
+    border-radius: 25px;    
+    padding: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.ReplyBtn {
+    cursor: pointer;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    background: url(../../assets/send-icon.svg) center/1.5rem no-repeat border-box slategray;
+
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
+
+@media (min-width: 40rem) {
+    .Reply {
+        padding: 0.6rem;
+    }
+
+    .ReplyBtn {
+        height: 2.5rem;
+        width: 2.5rem;
+        background-size: 2rem;
+    }
+}
