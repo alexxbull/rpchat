@@ -26,6 +26,20 @@ const Messages = props => {
         {
             memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
             id: 3,
+            timestamp: 'time2',
+            username: 'user2',
+            avatar: UserIcon
+        },
+        {
+            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
+            id: 4,
+            timestamp: 'time2',
+            username: 'user2',
+            avatar: UserIcon
+        },
+        {
+            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
+            id: 5,
             timestamp: 'time3',
             username: 'user3',
             avatar: UserIcon
