@@ -1,6 +1,6 @@
 .Chat {
     display: flex;
-    overflow-y: auto;
-    background: khaki;
-    height: 100%;
+    flex-direction: column;
+    flex: 5;
+    overflow: auto;
 }
