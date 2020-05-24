@@ -1,13 +1,35 @@
 import React from 'react';
 
+import classes from './Messages.module.css';
+
+import UserIcon from '../../assets/user-icon.svg'
+
 import Message from './Message/Message';
 
 
 const Messages = props => {
     const messagesData = [
-        { memo: "Message1", id: 1, timestamp: "time1", user: "user1" },
-        { memo: "Message2", id: 2, timestamp: "time2", user: "user2" },
-        { memo: "Message3", id: 3, timestamp: "time3", user: "user3" },
+        {
+            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
+            id: 1,
+            timestamp: 'time1',
+            username: 'user1',
+            avatar: UserIcon
+        },
+        {
+            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
+            id: 2,
+            timestamp: 'time2',
+            username: 'user2',
+            avatar: UserIcon
+        },
+        {
+            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
+            id: 3,
+            timestamp: 'time3',
+            username: 'user3',
+            avatar: UserIcon
+        },
     ]
 
     const messages = messagesData.map(message =>
@@ -15,17 +37,14 @@ const Messages = props => {
             key={message.id}
             memo={message.memo}
             timestamp={message.timestamp}
-            user={message.user}
+            username={message.username}
+            avatar={message.avatar}
         />
     )
 
     return (
-        <div className="messages">
+        <div className={classes.Messages}>
             {messages}
-            <div className="reply-container">
-                <input type="text" className="reply" />
-                <button className="reply-btn">Send</button>
-            </div>
         </div>
     )
 }
