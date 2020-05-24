@@ -8,7 +8,7 @@ html, body, #root {
     height: 100%;
 }
 
-body, ul, button, h1 {    
+body, ul, button, h1, ol, p {    
     margin: 0;
     padding: 0;
 }
@@ -25,10 +25,17 @@ body {
 ::-moz-focus-inner {
     border: 0;
  }
-
+ 
  .App {
+    background: khaki;
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: hotpink;
+    overflow-y: auto;
+}
+
+@media (min-width: 40rem) {
+    .App {
+        flex-direction: row;
+    }
 }
