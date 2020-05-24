@@ -16,27 +16,32 @@ const Toolbar = props => {
         showChannels ? setShowChannels(false) : setShowUsers(false)
     }
 
-    return (
-        <BackdropContext.Provider value={showChannels}>
-            <Backdrop show={showChannels || showUsers} click={handleBackdrop} />
-            <div className={classes.Toolbar}>
-                <button
-                    className={classes.Channels_btn}
-                    onClick={setShowChannels.bind(this, !showChannels)}
-                >
-                    <span className={classes.Channels_btn_bar}></span>
-                    <span className={classes.Channels_btn_bar}></span>
-                    <span className={classes.Channels_btn_bar}></span>
-                </button>
-                <Channels show={showChannels} />
+    let toolbar = null
+    if (props.show) {
+        toolbar =
+            <BackdropContext.Provider value={showChannels}>
+                <Backdrop show={showChannels || showUsers} click={handleBackdrop} />
+                <div className={classes.Toolbar}>
+                    <button
+                        className={classes.Channels_btn}
+                        onClick={setShowChannels.bind(this, !showChannels)}
+                    >
+                        <span className={classes.Channels_btn_bar}></span>
+                        <span className={classes.Channels_btn_bar}></span>
+                        <span className={classes.Channels_btn_bar}></span>
+                    </button>
+                    <Channels show={showChannels} />
 
-                <h1 className={classes.Channel_name}>Current Channel</h1>
+                    <h1 className={classes.Channel_name}>Current Channel</h1>
 
-                <button className={classes.Users_btn} onClick={setShowUsers.bind(this, !showUsers)}></button>
-                <Users show={showUsers} />
-            </div>
-        </BackdropContext.Provider>
-    )
+                    <button className={classes.Users_btn} onClick={setShowUsers.bind(this, !showUsers)}></button>
+                    <Users show={showUsers} />
+                </div>
+            </BackdropContext.Provider>
+    }
+
+    return toolbar
+
 }
 
 export default Toolbar
