@@ -17,15 +17,13 @@ function App() {
     return () => window.removeEventListener('resize', updateView)
   })
 
-  const toolbar = isDesktop ? null : <Toolbar />
-
   return (
     <div className="App">
       <Backdrop />
-      {toolbar}
-      <Channels />
+      <Toolbar show={!isDesktop} />
+      <Channels show={isDesktop} />
       <Chat />
-      <Users />
+      <Users show={isDesktop} />
     </div>
   );
 }
