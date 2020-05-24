@@ -43,9 +43,12 @@ const Messages = props => {
     )
 
     return (
-        <div className={classes.Messages}>
-            {messages}
-        </div>
+        <>
+            <h1 className={classes.ChannelName}>Current Channel</h1>
+            <div className={classes.Messages}>
+                {messages}
+            </div>
+        </>
     )
 }
 

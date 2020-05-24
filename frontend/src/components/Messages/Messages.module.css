@@ -4,6 +4,14 @@
     font-size: 0.9rem;
 }
 
+.ChannelName {    
+    background-color: rgb(119, 119, 119);
+    display: none;
+    font-size: 1.1rem;
+    text-align: center;
+    width: 100%;
+}
+
 .Message {
     padding: 5px;
     display: flex;
@@ -47,4 +55,10 @@
 .Message_text_item {
     position: relative;
     padding: 0 0.7rem 0.7rem 0.7rem;
+}
+
+@media (min-width: 40rem) {
+    .ChannelName {
+        display: block;
+    }
 }
