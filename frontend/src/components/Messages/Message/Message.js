@@ -2,21 +2,30 @@ import React from 'react';
 
 import classes from '../Messages.module.css';
 
-const Message = props =>
-    < div className={classes.Message} >
-        <img className={classes.User_icon} src={props.avatar} alt={`${props.user} avatar`} />
-        <div className={classes.Message_content}>
+const Message = props => {
+    const attachedClasses = [classes.Message]
+    let userIcon = classes.Invisible
+    let metadata = null
+
+    if (!props.group) {
+        attachedClasses.push(classes.TopMargin)
+        userIcon = classes.Visible
+        metadata =
             <span className={classes.User_name}>{props.username}
-                <span className={classes.Message_date}>{'date ' + props.timestamp}</span>
-                <span className={classes.Message_date}>{'time ' + props.timestamp}</span>
+                <span className={classes.Message_timestamp}>{'datetime ' + props.timestamp}</span>
             </span>
-            <ol className={classes.Message_text_list}>
-                <li className={classes.Message_text_item}>
-                    <p className={classes.Message_text}>{props.memo}</p>
-                    <div className={classes.Message_time}>{props.timestamp}</div>
-                </li>
-            </ol>
+    }
+
+    return < div className={attachedClasses.join(' ')} >
+        <div className={userIcon}>
+            <img className={classes.User_icon} src={props.avatar} alt={`${props.user} avatar`} />
+        </div>
+        <div className={classes.Message_content}>
+            {metadata}
+            <p className={classes.Message_text}>{props.memo}</p>
+            <div className={classes.Message_time}>{props.timestamp}</div>
         </div>
     </div >
+}
 
 export default Message;

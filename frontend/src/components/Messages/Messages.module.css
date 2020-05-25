@@ -13,7 +13,7 @@
 }
 
 .Message {
-    padding: 5px;
+    padding: 2px;
     display: flex;
     position: relative;
 }
@@ -37,7 +37,7 @@
     padding: 0 0.7rem;
 }
 
-.Message_date {
+.Message_timestamp {
     font-size: 0.9rem;
     font-weight: normal;
     margin-left: 8px;
@@ -47,14 +47,22 @@
     display: none;
 }
 
-.Message_text_list {
-    list-style: none;
-    
+.Message_text {
+    position: relative;
+    padding: 0 0.7rem;
 }
 
-.Message_text_item {
-    position: relative;
-    padding: 0 0.7rem 0.7rem 0.7rem;
+.TopMargin {
+    margin-top: 8px;
+}
+
+.Visible {
+    visibility: visible;
+}
+
+.Invisible {
+    visibility: hidden;
+    height: 0;
 }
 
 @media (min-width: 40rem) {

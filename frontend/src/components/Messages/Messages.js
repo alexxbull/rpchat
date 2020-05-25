@@ -46,15 +46,27 @@ const Messages = props => {
         },
     ]
 
-    const messages = messagesData.map(message =>
-        <Message
-            key={message.id}
-            memo={message.memo}
-            timestamp={message.timestamp}
-            username={message.username}
-            avatar={message.avatar}
-        />
-    )
+    const messages = messagesData.map((message, index) => {
+        if (index > 0 && index < messagesData.length - 1 && message.username === messagesData[index - 1].username)
+            return <Message
+                group={true}
+                key={message.id}
+                memo={message.memo}
+                timestamp={message.timestamp}
+                username={message.username}
+                avatar={message.avatar}
+            />
+        else
+            return <Message
+                group={false}
+                key={message.id}
+                memo={message.memo}
+                timestamp={message.timestamp}
+                username={message.username}
+                avatar={message.avatar}
+            />
+
+    })
 
     return (
         <>
