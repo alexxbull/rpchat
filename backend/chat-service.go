@@ -107,8 +107,8 @@ func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string)
 	}
 }
 
-func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.NewChannelResponse, error) {
-	res := &chat.NewChannelResponse{}
+func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.EmptyMessage, error) {
+	res := &chat.EmptyMessage{}
 	sql := `INSERT INTO channels(channel_name, description, channel_owner) 
 			VALUES($1, $2, $3)
 			RETURNING id;`
@@ -130,7 +130,6 @@ func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelReques
 		owner: req.Owner,
 	}
 
-	res.Id = id
 	return res, nil
 }
 
@@ -164,9 +163,9 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 	return res, nil
 }
 
-func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*chat.NewUserResponse, error) {
+func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*chat.EmptyMessage, error) {
 	db := cs.db
-	res := &chat.NewUserResponse{}
+	res := &chat.EmptyMessage{}
 	sql := `INSERT INTO users(user_name, email, user_password, image_path)
 			VALUES($1, $2, $3, $4)
 			RETURNING id;`
@@ -189,7 +188,6 @@ func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*c
 		imagePath: req.ImagePath,
 	}
 
-	res.Id = id
 	return res, nil
 }
 
