@@ -110,16 +110,14 @@ func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string)
 func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
 	sql := `INSERT INTO channels(channel_name, description, channel_owner) 
-			VALUES($1, $2, $3)
-			RETURNING id;`
+			VALUES($1, $2, $3)`
 
 	stmt, err := cs.db.Prepare(sql)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Prepare new channel insertion: %v", err)
 	}
 
-	var id int32
-	err = stmt.QueryRow(req.Name, req.Description, req.Owner).Scan(&id)
+	_, err = stmt.Exec(req.Name, req.Description, req.Owner)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
 	}
@@ -167,16 +165,14 @@ func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*c
 	db := cs.db
 	res := &chat.EmptyMessage{}
 	sql := `INSERT INTO users(user_name, email, user_password, image_path)
-			VALUES($1, $2, $3, $4)
-			RETURNING id;`
+			VALUES($1, $2, $3, $4)`
 
 	stmt, err := db.Prepare(sql)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
 	}
 
-	var id int32
-	err = stmt.QueryRow(req.Name, req.Email, req.Password, req.ImagePath).Scan(&id)
+	_, err = stmt.Exec(req.Name, req.Email, req.Password, req.ImagePath)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
 	}
