@@ -1,0 +1,17 @@
+.UsersHeader {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.UsersIcon {
+    background: url('../../../assets/users-icon.svg');
+    min-height: 2rem;
+    min-width: 2rem;
+    background-size: 2rem 2rem;
+}
+
+.UsersHeader_title {
+    font-size: 1.2rem;
+    margin-left: 4px;
+}

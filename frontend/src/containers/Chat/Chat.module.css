@@ -1,0 +1,6 @@
+.Chat {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+    overflow: auto;
+}

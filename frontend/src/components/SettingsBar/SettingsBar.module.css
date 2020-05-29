@@ -1,0 +1,28 @@
+.SettingsBar {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    padding: 0.5rem;
+    bottom: 0;
+    margin: auto 0 0.5rem 0; 
+    align-items: center;
+}
+
+.User {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.User_icon {
+    background: center/2rem no-repeat;  
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+}
+
+.User_name {    
+    font-size: 0.9rem;
+    margin-left: 0.4rem;
+}

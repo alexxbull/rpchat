@@ -1,0 +1,33 @@
+.Toolbar {
+    display: flex;
+    align-items: center;
+    background-color: rgb(119, 119, 119);
+}
+
+.Channels_btn {
+    width: 2.5rem;
+    background: none;
+    cursor: pointer;
+    border: none;
+}
+
+.Channels_btn_bar {
+    height: 0.2rem;
+    background: black;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.Channel_name {
+    font-size: 1.1rem;
+    margin: 0 auto;
+}
+
+.Users_btn {
+    background: url('../../assets//users-icon.svg') center/2rem no-repeat;
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}

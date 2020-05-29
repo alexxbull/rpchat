@@ -1,0 +1,72 @@
+.Messages {
+    overflow-y: auto;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.ChannelName {    
+    background-color: rgb(119, 119, 119);
+    display: none;
+    font-size: 1.1rem;
+    text-align: center;
+    width: 100%;
+}
+
+.Message {
+    padding: 2px;
+    display: flex;
+    position: relative;
+}
+
+.Message_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.User_icon {
+    border-radius: 50%;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+    background: white
+}
+
+.User_name {
+    font-weight: bold;
+    padding: 0 0.7rem;
+}
+
+.Message_timestamp {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.Message_time {
+    display: none;
+}
+
+.Message_text {
+    position: relative;
+    padding: 0 0.7rem;
+}
+
+.TopMargin {
+    margin-top: 8px;
+}
+
+.Visible {
+    visibility: visible;
+}
+
+.Invisible {
+    visibility: hidden;
+    height: 0;
+}
+
+@media (min-width: 40rem) {
+    .ChannelName {
+        display: block;
+    }
+}

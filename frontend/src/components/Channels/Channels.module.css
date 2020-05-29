@@ -1,0 +1,37 @@
+.Channels {
+    background-color: orange;
+    flex-direction: column;
+    height: 100vh;
+    left: 0;
+    overflow: hidden auto;
+    position: fixed;
+    top: 0;
+    transition: transform 0.3s; 
+    width: 60vw;
+    z-index: 10;
+}
+
+.Channels__list {
+    list-style: none;
+    padding: 8px;
+    overflow-x: hidden;
+}
+
+.Open {
+    transform: translate(0);
+}
+
+.Close {
+    transform: translate(-100%);
+}
+
+@media (min-width: 40rem) {
+    .Channels  {
+        display: flex;
+        flex: 1;
+        height: auto;
+        position: relative;
+        transform: none;
+        width: auto;
+    }
+}

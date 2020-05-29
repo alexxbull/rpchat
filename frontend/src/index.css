@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+body, ul, button, h1, ol, p {    
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Open-Sans", sans-serif;
+}
+
+
+:focus {
+    outline: none;
+}
+
+::-moz-focus-inner {
+    border: 0;
+ }
+ 
+ .App {
+    background: khaki;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+@media (min-width: 40rem) {
+    .App {
+        flex-direction: row;
+    }
+}

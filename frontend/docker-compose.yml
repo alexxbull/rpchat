@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+
+    grpchat:
+        container_name: grpchat-frontend
+        build: 
+            context: ./
+            dockerfile: ./docker/Dockerfile
+        ports:
+            - "3000:3000"
+        stdin_open: true
+        restart: on-failure
+        volumes: 
+            - "./src:/usr/src/grpchat-frontend/src"
+        # environment:
+        #     - CHOKIDAR_USEPOLLING=true
