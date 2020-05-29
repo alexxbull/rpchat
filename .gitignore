@@ -13,3 +13,7 @@
 
 # go module misc. files
 go.sum
+
+# docker
+db-data
+.env
