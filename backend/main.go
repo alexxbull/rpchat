@@ -15,21 +15,21 @@ import (
 )
 
 const (
-	addr       = "localhost:8080"
-	network    = "tcp"
-	dbConnInfo = "dbname=grpchat user=alexx password=admin sslmode=disable"
+	addr    = ":9090"
+	network = "tcp"
 )
 
 func main() {
 	// connect to database
-	db, err := connectDatabase()
+	dbConnInfo := fmt.Sprintf("host=db dbname=%s user=%s password=%s sslmode=disable", os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
+	db, err := connectDatabase(dbConnInfo)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v", err)
 	}
 	defer db.Close()
 
 	// run postgres listener for deleted records in images table
-	go dbListener()
+	go dbListener(dbConnInfo)
 
 	// create grpc server
 	var opts []grpc.ServerOption
@@ -60,7 +60,7 @@ func main() {
 	server.Serve(lis)
 }
 
-func connectDatabase() (*sql.DB, error) {
+func connectDatabase(dbConnInfo string) (*sql.DB, error) {
 	db, err := sql.Open("postgres", dbConnInfo)
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ func connectDatabase() (*sql.DB, error) {
 	return db, nil
 }
 
-func dbListener() {
+func dbListener(dbConnInfo string) {
 	reportConnError := func(event pq.ListenerEventType, err error) {
 		if err != nil {
 			fmt.Println("Connection error while listening to database:", err)
