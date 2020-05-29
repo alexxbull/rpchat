@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	chat "github.com/alexxbull/rpchat/backend/protos"
+	chat "github.com/alexxbull/rpchat/backend/proto"
 	"github.com/lib/pq"
 	"google.golang.org/grpc"
 )
