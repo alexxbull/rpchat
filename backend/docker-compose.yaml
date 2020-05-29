@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    image: postgres:alpine
+    ports: 
+        - "5430:5432"
+    restart: on-failure
+    volumes:
+      - "./db-data:/var/lib/postgresql/data"
+      - "./sql/init.sql:/docker-entrypoint-initdb.d/init.sql"
+
+  proxy:
+      container_name: envoy
+      build: 
+        context: ./
+        dockerfile: ./docker/envoy.Dockerfile
+      ports:
+        - "8080:8080"
+      restart: always
+    
+  server:
+    build: 
+      context: ./
+      dockerfile: ./docker/server.Dockerfile
+    container_name: grpchat-server
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      
+    depends_on:
+      - db
+    ports:
+      - "9090:9090"
+    restart: on-failure
+    volumes: 
+      - "./attachments:/usr/src/rpchat-backend/attachments"
+      - "./:/usr/src/rpchat-backend"
