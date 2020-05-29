@@ -24,7 +24,7 @@ services:
         - "8080:8080"
       restart: always
     
-  server:
+  grpchat:
     build: 
       context: ./
       dockerfile: ./docker/server.Dockerfile
@@ -39,5 +39,5 @@ services:
       - "9090:9090"
     restart: on-failure
     volumes: 
-      - "./attachments:/usr/src/rpchat-backend/attachments"
-      - "./:/usr/src/rpchat-backend"
+      - "./attachments:/usr/src/grpchat-backend/attachments"
+      - "./:/usr/src/grpchat-backend"
