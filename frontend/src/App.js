@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import Backdrop from './components/Backdrop/Backdrop.js'
 import Toolbar from './containers/Toolbar/Toolbar.js'
 import Chat from './containers/Chat/Chat.js';
 import Channels from './components/Channels/Channels.js';
@@ -19,7 +18,6 @@ function App() {
 
   return (
     <div className="App">
-      <Backdrop />
       <Toolbar show={!isDesktop} />
       <Channels show={isDesktop} />
       <Chat />
