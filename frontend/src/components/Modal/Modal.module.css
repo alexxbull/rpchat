@@ -1,0 +1,40 @@
+.Modal {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    background: white;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.Modal button {    
+    border: none;
+    cursor: pointer;
+}
+
+.CloseBtn {
+    background: hotpink;
+    margin-left: auto;
+    width: 2rem;
+    font-size: 1.5rem;
+}
+
+.OkayBtn {
+    background: yellowgreen;
+    height: 3rem;
+    margin-top: auto;
+    width: 100%;   
+}
+
+@media (min-width: 40rem) {
+    .Modal {
+        height: 25vh;
+        width: 50vh;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -75%);
+    }
+}

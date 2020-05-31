@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import classes from './Channels.module.css'
 
@@ -6,8 +6,9 @@ import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
 import SettingsBar from '../SettingsBar/SettingsBar';
 
-
 const Channels = props => {
+    const [modal, setModal] = useState(null)
+
     const channelsData = [
         { name: "Channel1", id: 1 },
         { name: "Channel2", id: 2 },
@@ -29,13 +30,16 @@ const Channels = props => {
     }
 
     return (
-        <div className={attachedClasses.join(' ')}>
-            <ChannelsHeader />
-            <ul className={classes.Channels__list}>
-                {channels}
-            </ul>
-            <SettingsBar />
-        </div>
+        <>
+            <div className={attachedClasses.join(' ')}>
+                <ChannelsHeader showModal={setModal} />
+                <ul className={classes.Channels__list}>
+                    {channels}
+                </ul>
+                <SettingsBar />
+            </div>
+            {modal}
+        </>
     )
 }
 
