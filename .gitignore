@@ -16,10 +16,6 @@ db-data
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# go module misc. files
-
-.sum
-
 #----------> create-react-app <----------
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
