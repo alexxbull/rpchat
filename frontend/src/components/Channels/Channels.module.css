@@ -33,5 +33,6 @@
         position: relative;
         transform: none;
         width: auto;
+        z-index: 0;
     }
 }
