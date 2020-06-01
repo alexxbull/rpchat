@@ -10,20 +10,35 @@
     z-index: 100;
 }
 
+.Modal header {
+    display: flex;
+    align-items: center;
+    background: cornflowerblue;
+}
+
+.Title {
+    font-size: 1rem;
+    margin: 0 auto;
+}
+
 .Modal button {    
     border: none;
     cursor: pointer;
 }
 
+.Close {
+    padding: 4px;
+}
+
 .CloseBtn {
-    background: hotpink;
-    margin-left: auto;
-    width: 2rem;
-    font-size: 1.5rem;
+    background: url('../../assets/close-icon.svg') center/2.5rem no-repeat border-box border-box;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .OkayBtn {
     background: yellowgreen;
+    border: none;
     height: 3rem;
     margin-top: auto;
     width: 100%;   
@@ -36,5 +51,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -75%);
+        border-radius: 20px;
+        overflow: hidden;
     }
 }
