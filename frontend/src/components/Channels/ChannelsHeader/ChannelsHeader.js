@@ -11,7 +11,7 @@ const ChannelsHeader = props => {
 
     const handleAddChannel = () => {
         props.showModal(
-            <Modal exit={handleModalClose} submitText={"Submit"}>
+            <Modal title={"Create Channel"} exit={handleModalClose} submitText={"Submit"}>
                 <form className={classes.AddChannelForm}>
                     <label htmlFor="Channel Name">Name:</label>
                     <input type="text" name={"ChannelName"} placeholder={"Channel name"} />
