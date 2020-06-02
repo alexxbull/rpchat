@@ -14,23 +14,21 @@ const Users = props => {
         { name: "User3", id: 3, avatar: UserIcon, },
     ]
 
+    const users = usersData.map(user =>
+        <User
+            key={user.id}
+            name={user.name}
+            avatar={user.avatar}
+        />
+    )
 
-    let attachedClasses = [classes.Users, classes.Close]
-
-    let users = null
+    const usersClasses = [classes.Users]
     if (props.show) {
-        users = usersData.map(user =>
-            <User
-                key={user.id}
-                name={user.name}
-                avatar={user.avatar}
-            />
-        )
-        attachedClasses = [classes.Users, classes.Open]
+        usersClasses.push(classes.Open)
     }
 
     return (
-        <div className={attachedClasses.join(' ')}>
+        <div className={usersClasses.join(' ')}>
             <UsersHeader />
             <ul className={classes.Users__list}>
                 {users}
