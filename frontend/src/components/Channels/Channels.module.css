@@ -9,6 +9,7 @@
     transition: transform 0.3s; 
     width: 60vw;
     z-index: 10;
+    transform: translate(-100%);
 }
 
 .Channels__list {
@@ -21,8 +22,15 @@
     transform: translate(0);
 }
 
-.Close {
-    transform: translate(-100%);
+.AddChannelForm {
+    padding: 0 16px;
+}
+
+.AddChannelForm input {
+    display: inline-block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 8px;
 }
 
 @media (min-width: 40rem) {
