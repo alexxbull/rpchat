@@ -7,7 +7,9 @@
     width: 100%;
     left: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 100;    
+    transform: translate(-200%, 0%);
+    transition: transform 0.4s;
 }
 
 .Modal header {
@@ -26,7 +28,11 @@
     cursor: pointer;
 }
 
-.Close {
+.Open {
+    transform: translate(0%);
+}
+
+.CloseBtnContainer {
     padding: 4px;
 }
 
@@ -50,8 +56,11 @@
         width: 50vh;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -75%);
         border-radius: 20px;
         overflow: hidden;
+    }
+
+    .Open {
+        transform: translate(-50%, -75%);
     }
 }
