@@ -27,13 +27,3 @@
     cursor: pointer;
 }
 
-.AddChannelForm {
-    padding: 0 16px;
-}
-
-.AddChannelForm input {
-    display: inline-block;
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-}
