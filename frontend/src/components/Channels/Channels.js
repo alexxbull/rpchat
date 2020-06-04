@@ -4,8 +4,8 @@ import classes from './Channels.module.css'
 
 import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
-import SettingsBar from '../SettingsBar/SettingsBar';
-import Modal from '../Modal/Modal.js';
+import SettingsBar from '../SettingsBar/SettingsBar.js';
+import NewChannelModal from './NewChannelModal/NewChannelModal.js';
 
 const Channels = props => {
     const [showModal, setShowModal] = useState(false)
@@ -37,21 +37,7 @@ const Channels = props => {
                 </ul>
                 <SettingsBar />
             </div>
-            <Modal
-                show={showModal}
-                title={"Create Channel"}
-                exit={setShowModal.bind(this, false)}
-                submitText={"Submit"}
-                isDesktop={props.isDesktop}
-            >
-                <form className={classes.AddChannelForm}>
-                    <label htmlFor="Channel Name">Name:</label>
-                    <input type="text" name={"ChannelName"} placeholder={"Channel name"} />
-
-                    <label htmlFor="Channel Description">Description:</label>
-                    <input type="text" name={"Channel Description"} placeholder={"Describe the topics of this channel"} />
-                </form>
-            </Modal>
+            <NewChannelModal show={showModal} close={setShowModal.bind(this, false)} isDesktop={props.isDesktop} />
         </>
     )
 }
