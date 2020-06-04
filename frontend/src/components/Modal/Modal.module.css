@@ -50,6 +50,7 @@
     height: 3rem;
     margin-top: auto;
     width: 100%;   
+    cursor: pointer;
 }
 
 @media (min-width: 40rem) {
