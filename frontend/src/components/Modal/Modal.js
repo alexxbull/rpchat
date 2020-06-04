@@ -1,6 +1,7 @@
 import React from 'react'
 
 import classes from './Modal.module.css'
+
 import Backdrop from '../Backdrop/Backdrop'
 
 
@@ -10,8 +11,12 @@ const Modal = props => {
 
     if (props.show) {
         modalClasses.push(classes.Open)
-        backdrop = <Backdrop click={props.exit} show={props.show && props.isDesktop} />
+        backdrop = <Backdrop click={props.close} show={props.show && props.isDesktop} />
     }
+
+    let okayBtn = <button className={classes.OkayBtn} onClick={props.close}>OK</button>
+    if (props.okayBtn)
+        okayBtn = props.okayBtn
 
     return (
         <>
@@ -19,10 +24,10 @@ const Modal = props => {
             <div className={modalClasses.join(' ')}>
                 <header>
                     <h1 className={classes.Title}>{props.title}</h1>
-                    <div className={classes.CloseBtnContainer}><button className={classes.CloseBtn} onClick={props.exit}></button></div>
+                    <div className={classes.CloseBtnContainer}><button className={classes.CloseBtn} onClick={props.close}></button></div>
                 </header>
                 <div>{props.children}</div>
-                <button className={classes.OkayBtn} onClick={props.click}>{props.submitText}</button>
+                {okayBtn}
             </div>
         </>
     )
