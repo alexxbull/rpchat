@@ -61,6 +61,7 @@ const NewChannelModal = props => {
         >
             <form id={classes.NewChannelModal} onSubmit={handleSubmit}>
                 <label htmlFor="Channel Name">Name:</label>
+                {/* FIXME  fix required highlight showing on input box after modal closes*/}
                 <input required type="text" placeholder={"Channel name"} name={"name"} value={newChannel.name} onChange={inputChangeHandler} pattern={"^(?!\\s*$).+"} title={"Channel name cannot only be whitespace"} />
 
                 <label htmlFor="Channel Description">Description:</label>
