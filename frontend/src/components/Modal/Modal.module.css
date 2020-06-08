@@ -58,7 +58,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: red;
+    background: #fc2f2f;
     transform: translateY(-100%);
     transition: transform 0.5s;
     height: 3rem;
