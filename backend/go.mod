@@ -11,7 +11,7 @@ require (
 	github.com/lib/pq v1.5.2
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
-	golang.org/x/sys v0.0.0-20200602225109-6fdc65e7d980 // indirect
+	golang.org/x/sys v0.0.0-20200615200032-f1bc736245b1 // indirect
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.22.0
 )
