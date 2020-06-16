@@ -1,4 +1,6 @@
 /* eslint-disable */
+// @ts-nocheck
+
 // source: chat.proto
 /**
  * @fileoverview

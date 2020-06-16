@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import classes from './Login.module.css'
+import { ChatServiceClient } from '../../proto/chat_grpc_web_pb.js'
+import { ConnectRequest } from '../../proto/chat_pb.js'
 
+const hostname = 'https://localhost:443'
 
 const Login = props => {
     const [error, setError] = useState('')
@@ -34,7 +37,14 @@ const Login = props => {
             setPassword({ ...password, styles: [classes.Password, classes.InputError] })
 
         if (username.value && password.value) {
+            console.log('attempt login')
+            const client = new ChatServiceClient(hostname)
+            const req = new ConnectRequest()
+
+            req.setUser("TestUser")
+            const stream = client.connect(req, {})
             console.log('login')
+            console.log(stream)
         }
         else {
             setError('Invalid login')

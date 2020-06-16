@@ -12,14 +12,18 @@ import (
 	chat "github.com/alexxbull/rpchat/backend/proto"
 	"github.com/lib/pq"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 const (
-	addr    = ":9090"
-	network = "tcp"
+	addr     = ":9090"
+	network  = "tcp"
+	certFile = "./cert.pem"
+	keyFile  = "./key.pem"
 )
 
 func main() {
+	fmt.Println("connect to db")
 	// connect to database
 	dbConnInfo := fmt.Sprintf("host=db dbname=%s user=%s password=%s sslmode=disable", os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
 	db, err := connectDatabase(dbConnInfo)
@@ -34,7 +38,9 @@ func main() {
 	// create grpc server
 	var opts []grpc.ServerOption
 
-	// TODO: add tls security
+	// add tls
+	creds, _ := credentials.NewServerTLSFromFile(certFile, keyFile)
+	opts = append(opts, grpc.Creds(creds))
 
 	server := grpc.NewServer(opts...)
 

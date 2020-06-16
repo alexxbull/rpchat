@@ -10,15 +10,24 @@ import (
 
 	"github.com/golang/protobuf/ptypes"
 
-	chat "github.com/alexxbull/rpchat/backend/protos"
+	chat "github.com/alexxbull/rpchat/backend/proto"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
-const addr = "localhost:8080"
+const addr = "localhost:443"
 
 func main() {
-	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	// add tls
+	var opts []grpc.DialOption
+	creds, err := credentials.NewClientTLSFromFile("../cert.pem", "localhost")
+	if err != nil {
+		log.Fatalf("Unable to load credential file: %v", err)
+	}
+	opts = append(opts, grpc.WithTransportCredentials(creds))
+
+	conn, err := grpc.Dial(addr, opts...)
 	if err != nil {
 		log.Fatalf("Unable to connect to %v: %v", addr, err)
 	}
@@ -131,17 +140,15 @@ func addChannel(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
 	req := &chat.NewChannelRequest{
-		Name:        "NewTestChannel",
+		Name:        "TestChannel",
 		Description: "Test channel made by TestUser",
 		Owner:       "TestUser",
 	}
 
-	res, err := client.AddChannel(ctx, req)
+	_, err := client.AddChannel(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
-
-	fmt.Println("Channel added with id:", res.Id)
 }
 
 func addUser(conn grpc.ClientConnInterface) {
@@ -154,12 +161,11 @@ func addUser(conn grpc.ClientConnInterface) {
 		ImagePath: "newUser image path",
 	}
 
-	res, err := client.AddUser(ctx, req)
+	_, err := client.AddUser(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
 
-	fmt.Println("Channel added with id:", res.Id)
 }
 
 func editMessage(conn grpc.ClientConnInterface) {
