@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Route path="/" exact component={Login} />
-      <Route path="/signup" exact component={Register} />
+      <Route path="/register" exact component={Register} />
       <Route path="/chat" exact component={App} />
     </BrowserRouter>
   </React.StrictMode>,
