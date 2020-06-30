@@ -31,7 +31,7 @@ proto.chat = require('./chat_pb.js');
 proto.chat.ChatServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'binary';
+  options['format'] = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -57,7 +57,7 @@ proto.chat.ChatServiceClient =
 proto.chat.ChatServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'binary';
+  options['format'] = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -75,16 +75,16 @@ proto.chat.ChatServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chat.ConnectRequest,
+ *   !proto.chat.EmptyMessage,
  *   !proto.chat.BroadcastMessage>}
  */
-const methodDescriptor_ChatService_Connect = new grpc.web.MethodDescriptor(
-  '/chat.ChatService/Connect',
+const methodDescriptor_ChatService_Broadcast = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/Broadcast',
   grpc.web.MethodType.SERVER_STREAMING,
-  proto.chat.ConnectRequest,
+  proto.chat.EmptyMessage,
   proto.chat.BroadcastMessage,
   /**
-   * @param {!proto.chat.ConnectRequest} request
+   * @param {!proto.chat.EmptyMessage} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -97,13 +97,13 @@ const methodDescriptor_ChatService_Connect = new grpc.web.MethodDescriptor(
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.ConnectRequest,
+ *   !proto.chat.EmptyMessage,
  *   !proto.chat.BroadcastMessage>}
  */
-const methodInfo_ChatService_Connect = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_ChatService_Broadcast = new grpc.web.AbstractClientBase.MethodInfo(
   proto.chat.BroadcastMessage,
   /**
-   * @param {!proto.chat.ConnectRequest} request
+   * @param {!proto.chat.EmptyMessage} request
    * @return {!Uint8Array}
    */
   function(request) {
@@ -114,36 +114,36 @@ const methodInfo_ChatService_Connect = new grpc.web.AbstractClientBase.MethodInf
 
 
 /**
- * @param {!proto.chat.ConnectRequest} request The request proto
+ * @param {!proto.chat.EmptyMessage} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
  *     The XHR Node Readable Stream
  */
-proto.chat.ChatServiceClient.prototype.connect =
+proto.chat.ChatServiceClient.prototype.broadcast =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/chat.ChatService/Connect',
+      '/chat.ChatService/Broadcast',
       request,
       metadata || {},
-      methodDescriptor_ChatService_Connect);
+      methodDescriptor_ChatService_Broadcast);
 };
 
 
 /**
- * @param {!proto.chat.ConnectRequest} request The request proto
+ * @param {!proto.chat.EmptyMessage} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
  *     The XHR Node Readable Stream
  */
-proto.chat.ChatServicePromiseClient.prototype.connect =
+proto.chat.ChatServicePromiseClient.prototype.broadcast =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/chat.ChatService/Connect',
+      '/chat.ChatService/Broadcast',
       request,
       metadata || {},
-      methodDescriptor_ChatService_Connect);
+      methodDescriptor_ChatService_Broadcast);
 };
 
 

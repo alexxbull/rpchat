@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import classes from './Login.module.css'
-import { ChatServiceClient } from '../../proto/chat_grpc_web_pb.js'
-import { ConnectRequest } from '../../proto/chat_pb.js'
-
-const hostname = 'https://localhost:443'
+import { AuthClient } from '../../client/grpc_clients.js'
+import { LoginRequest } from '../../proto/auth/auth_pb.js'
 
 const Login = props => {
     const [error, setError] = useState('')
@@ -27,7 +25,7 @@ const Login = props => {
             setError('')
     }
 
-    const handleLogin = event => {
+    const handleLogin = async (event) => {
         event.preventDefault()
 
         if (!username.value)
@@ -37,17 +35,21 @@ const Login = props => {
             setPassword({ ...password, styles: [classes.Password, classes.InputError] })
 
         if (username.value && password.value) {
-            console.log('attempt login')
-            const client = new ChatServiceClient(hostname)
-            const req = new ConnectRequest()
+            try {
+                const req = new LoginRequest()
 
-            req.setUser("TestUser")
-            const stream = client.connect(req, {})
-            console.log('login')
-            console.log(stream)
+                req.setUsername(username.value)
+                req.setPassword(password.value)
+                await AuthClient.login(req, {})
+                props.history.push('/chat')
+            }
+            catch (err) {
+                console.log('login err', err)
+                setError(err.message)
+            }
         }
         else {
-            setError('Invalid login')
+            setError('Invalid login information')
         }
     }
 
@@ -69,7 +71,7 @@ const Login = props => {
 
                     <input className={classes.LoginBtn} type="submit" value="LOG IN" />
                 </form>
-                <div className={classes.RegisterLink}><Link to="/signup">Create an account</Link></div>
+                <div className={classes.RegisterLink}><Link to="/register">Create an account</Link></div>
             </div>
         </div>
     )

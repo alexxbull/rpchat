@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 
 import classes from './Register.module.css'
 
+import { RegisterRequest } from '../../proto/auth/auth_pb.js'
+import { AuthClient } from '../../client/grpc_clients.js'
+
 const Register = props => {
     const [error, setError] = useState('')
     const [email, setEmail] = useState({ value: '', styles: [classes.Email] })
@@ -27,7 +30,7 @@ const Register = props => {
             setError('')
     }
 
-    const handleRegister = event => {
+    const handleRegister = async (event) => {
         event.preventDefault()
 
         if (!email.value)
@@ -40,10 +43,22 @@ const Register = props => {
             setPassword({ ...password, styles: [classes.Password, classes.InputError] })
 
         if (email.value && username.value && password.value) {
-            console.log('registered')
+            try {
+                const req = new RegisterRequest()
+                req.setEmail(email.value)
+                req.setUsername(username.value)
+                req.setPassword(password.value)
+
+                await AuthClient.register(req, {})
+                props.history.push('/chat')
+            }
+            catch (err) {
+                console.log('reg err', err)
+                setError(err.message)
+            }
         }
         else {
-            setError('Invalid registration')
+            setError('Invalid registration information')
         }
     }
 

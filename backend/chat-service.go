@@ -5,21 +5,20 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
+	"golang.org/x/crypto/bcrypt"
+
+	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/golang/protobuf/ptypes"
-
-	"google.golang.org/protobuf/types/known/timestamppb"
-
-	chat "github.com/alexxbull/rpchat/backend/proto"
 	_ "github.com/lib/pq"
 )
 
 type message struct {
-	channel  string
-	id       int32
-	memo     string
-	postDate *timestamppb.Timestamp
-	user     string
+	channel string
+	id      int32
+	memo    string
+	user    string
 }
 
 type channel struct {
@@ -40,18 +39,18 @@ type chatServer struct {
 	newMessage   chan message
 	newChannel   chan channel
 	newUser      chan user
-	streams      []chat.ChatService_ConnectServer
+	streams      []chat.ChatService_BroadcastServer
 	broadcastErr chan error
 }
 
-func (cs *chatServer) Connect(req *chat.ConnectRequest, stream chat.ChatService_ConnectServer) error {
-	// save client's stream for future broadcasting
-	cs.streams = append(cs.streams, stream)
-
+func (cs *chatServer) Broadcast(req *chat.EmptyMessage, stream chat.ChatService_BroadcastServer) error {
 	err := stream.Send(&chat.BroadcastMessage{})
 	if err != nil {
-		return fmt.Errorf("Unable to connect to client: %v", err)
+		return fmt.Errorf("unable to broadcast to user: %v", err)
 	}
+
+	// add client's stream for broadcasting updates
+	cs.streams = append(cs.streams, stream)
 
 	return <-cs.broadcastErr
 }
@@ -63,10 +62,9 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastMessage{
 				Channel: nil,
 				ChatMessage: &chat.NewMessageRequest{
-					Channel:  msg.channel,
-					Memo:     msg.memo,
-					PostDate: msg.postDate,
-					User:     msg.user,
+					Channel: msg.channel,
+					Memo:    msg.memo,
+					User:    msg.user,
 				},
 			}
 			cs.broadcastObject(res, "message")
@@ -109,10 +107,10 @@ func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string)
 
 func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
-	sql := `INSERT INTO channels(channel_name, description, channel_owner) 
+	sqlStmt := `INSERT INTO channels(channel_name, description, channel_owner) 
 			VALUES($1, $2, $3)`
 
-	stmt, err := cs.db.Prepare(sql)
+	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Prepare new channel insertion: %v", err)
 	}
@@ -134,45 +132,59 @@ func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelReques
 func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.NewMessageResponse, error) {
 	db := cs.db
 	res := &chat.NewMessageResponse{}
-	sql := `INSERT INTO messages(user_name, channel_name, message, post_date) 
-			VALUES($1, $2, $3, $4)
-			RETURNING id;`
+	sqlStmt := `INSERT INTO messages(user_name, channel_name, message) 
+			VALUES($1, $2, $3)
+			RETURNING id, post_date;`
 
-	stmt, err := db.Prepare(sql)
+	stmt, err := db.Prepare(sqlStmt)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
 	}
 
 	var id int32
-	err = stmt.QueryRow(req.User, req.Channel, req.Memo, ptypes.TimestampString(req.PostDate)).Scan(&id)
+	var postDate time.Time
+	err = stmt.QueryRow(req.User, req.Channel, req.Memo).Scan(&id, &postDate)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
 	}
 
+	fmt.Println("Message added to db")
+
 	cs.newMessage <- message{
-		channel:  req.Channel,
-		id:       id,
-		postDate: req.PostDate,
-		memo:     req.Memo,
-		user:     req.User,
+		channel: req.Channel,
+		id:      id,
+		memo:    req.Memo,
+		user:    req.User,
 	}
 
 	res.Id = id
+	res.PostDate, _ = ptypes.TimestampProto(postDate)
 	return res, nil
 }
 
 func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*chat.EmptyMessage, error) {
+	if req == nil {
+		return nil, fmt.Errorf("Empty request")
+	}
+
+	// hash password
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, fmt.Errorf("Unable to hash password: %v", err)
+	}
+
+	// add user to database
 	db := cs.db
 	res := &chat.EmptyMessage{}
-	sql := `INSERT INTO users(user_name, email, user_password, image_path)
+	sqlStmt := `INSERT INTO users(user_name, email, user_password, image_path)
 			VALUES($1, $2, $3, $4)`
 
-	stmt, err := db.Prepare(sql)
+	stmt, err := db.Prepare(sqlStmt)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
 	}
 
-	_, err = stmt.Exec(req.Name, req.Email, req.Password, req.ImagePath)
+	_, err = stmt.Exec(req.Name, req.Email, hashedPassword, req.ImagePath)
 	if err != nil {
 		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
 	}
@@ -180,7 +192,7 @@ func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*c
 	cs.newUser <- user{
 		name:      req.Name,
 		email:     req.Email,
-		password:  req.Password,
+		password:  string(hashedPassword),
 		imagePath: req.ImagePath,
 	}
 
@@ -189,11 +201,11 @@ func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*c
 
 func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
-	sql := `UPDATE messages
+	sqlStmt := `UPDATE messages
 			SET message = $1
 			WHERE id = $2;`
 
-	stmt, err := cs.db.Prepare(sql)
+	stmt, err := cs.db.Prepare(sqlStmt)
 	_, err = stmt.Exec(req.Memo, req.Id)
 	if err != nil {
 		return res, fmt.Errorf("Unable to update message: %v", err)
@@ -204,12 +216,12 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 
 func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
-	sql := `UPDATE channels
+	sqlStmt := `UPDATE channels
 			SET channel_name = $1,
 				description  = $2
 			WHERE channel_name = $3;`
 
-	stmt, err := cs.db.Prepare(sql)
+	stmt, err := cs.db.Prepare(sqlStmt)
 	_, err = stmt.Exec(req.NewName, req.Description, req.OldName)
 	if err != nil {
 		return res, fmt.Errorf("Unable to update channel: %v", err)
@@ -224,7 +236,7 @@ func (cs *chatServer) EditUser(ctx context.Context, req *chat.EditUserRequest) (
 	}
 
 	res := &chat.EmptyMessage{}
-	sql := `UPDATE users
+	sqlStmt := `UPDATE users
 			SET email = $1,
 				user_name  = $2,
 				user_password  = $3
@@ -232,7 +244,7 @@ func (cs *chatServer) EditUser(ctx context.Context, req *chat.EditUserRequest) (
 
 	// TODO: validate user
 
-	stmt, err := cs.db.Prepare(sql)
+	stmt, err := cs.db.Prepare(sqlStmt)
 	_, err = stmt.Exec(req.Email, req.Name, req.Password, req.OldName)
 	if err != nil {
 		return res, fmt.Errorf("Unable to update user: %v", err)

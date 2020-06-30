@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -9,7 +10,8 @@ import (
 	"os"
 	"time"
 
-	chat "github.com/alexxbull/rpchat/backend/proto"
+	auth "github.com/alexxbull/rpchat/backend/proto/auth"
+	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -42,6 +44,12 @@ func main() {
 	creds, _ := credentials.NewServerTLSFromFile(certFile, keyFile)
 	opts = append(opts, grpc.Creds(creds))
 
+	// add unary intercepter
+	opts = append(opts, grpc.UnaryInterceptor(unaryIntercepter))
+
+	// add stream intercepter
+	opts = append(opts, grpc.StreamInterceptor(streamIntercpeter))
+
 	server := grpc.NewServer(opts...)
 
 	lis, err := net.Listen(network, addr)
@@ -49,6 +57,10 @@ func main() {
 		log.Fatalf("Unable to listen on %v: %v", addr, err)
 	}
 
+	// authentication services server
+	as := authServer{db}
+
+	// chat services server
 	cs := chatServer{
 		db:           db,
 		newMessage:   make(chan message),
@@ -59,6 +71,7 @@ func main() {
 	go cs.broadcast()
 
 	// register services
+	auth.RegisterAuthServiceServer(server, &as)
 	chat.RegisterChatServiceServer(server, &cs)
 
 	// start grpc server
@@ -121,4 +134,26 @@ func dbListener(dbConnInfo string) {
 
 		fmt.Println("File deleted:", imgDelete.Path)
 	}
+}
+
+func unaryIntercepter(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	fmt.Println("Unary intercepter:", info.FullMethod)
+
+	// authenticate user
+	if err := authenticate(ctx, info.FullMethod); err != nil {
+		return nil, err
+	}
+
+	return handler(ctx, req)
+}
+
+func streamIntercpeter(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+	fmt.Println("Stream intercepter:", info.FullMethod)
+
+	// authenticate user
+	if err := authenticate(stream.Context(), info.FullMethod); err != nil {
+		return err
+	}
+
+	return handler(srv, stream)
 }
