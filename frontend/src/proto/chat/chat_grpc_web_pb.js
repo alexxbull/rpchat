@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * @fileoverview gRPC-Web generated client stub for chat
  * @enhanceable
@@ -6,6 +5,10 @@
  */
 
 // GENERATED CODE -- DO NOT EDIT!
+
+
+/* eslint-disable */
+// @ts-nocheck
 
 
 
@@ -26,21 +29,21 @@ proto.chat = require('./chat_pb.js');
  * @final
  */
 proto.chat.ChatServiceClient =
-  function (hostname, credentials, options) {
-    if (!options) options = {};
-    options['format'] = 'text';
+    function(hostname, credentials, options) {
+  if (!options) options = {};
+  options['format'] = 'text';
 
-    /**
-     * @private @const {!grpc.web.GrpcWebClientBase} The client
-     */
-    this.client_ = new grpc.web.GrpcWebClientBase(options);
+  /**
+   * @private @const {!grpc.web.GrpcWebClientBase} The client
+   */
+  this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-    /**
-     * @private @const {string} The hostname
-     */
-    this.hostname_ = hostname;
+  /**
+   * @private @const {string} The hostname
+   */
+  this.hostname_ = hostname;
 
-  };
+};
 
 
 /**
@@ -52,39 +55,39 @@ proto.chat.ChatServiceClient =
  * @final
  */
 proto.chat.ChatServicePromiseClient =
-  function (hostname, credentials, options) {
-    if (!options) options = {};
-    options['format'] = 'text';
+    function(hostname, credentials, options) {
+  if (!options) options = {};
+  options['format'] = 'text';
 
-    /**
-     * @private @const {!grpc.web.GrpcWebClientBase} The client
-     */
-    this.client_ = new grpc.web.GrpcWebClientBase(options);
+  /**
+   * @private @const {!grpc.web.GrpcWebClientBase} The client
+   */
+  this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-    /**
-     * @private @const {string} The hostname
-     */
-    this.hostname_ = hostname;
+  /**
+   * @private @const {string} The hostname
+   */
+  this.hostname_ = hostname;
 
-  };
+};
 
 
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chat.ConnectRequest,
+ *   !proto.chat.EmptyMessage,
  *   !proto.chat.BroadcastMessage>}
  */
-const methodDescriptor_ChatService_Connect = new grpc.web.MethodDescriptor(
-  '/chat.ChatService/Connect',
+const methodDescriptor_ChatService_Broadcast = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/Broadcast',
   grpc.web.MethodType.SERVER_STREAMING,
-  proto.chat.ConnectRequest,
+  proto.chat.EmptyMessage,
   proto.chat.BroadcastMessage,
   /**
-   * @param {!proto.chat.ConnectRequest} request
+   * @param {!proto.chat.EmptyMessage} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.BroadcastMessage.deserializeBinary
@@ -94,16 +97,16 @@ const methodDescriptor_ChatService_Connect = new grpc.web.MethodDescriptor(
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.ConnectRequest,
+ *   !proto.chat.EmptyMessage,
  *   !proto.chat.BroadcastMessage>}
  */
-const methodInfo_ChatService_Connect = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_ChatService_Broadcast = new grpc.web.AbstractClientBase.MethodInfo(
   proto.chat.BroadcastMessage,
   /**
-   * @param {!proto.chat.ConnectRequest} request
+   * @param {!proto.chat.EmptyMessage} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.BroadcastMessage.deserializeBinary
@@ -111,37 +114,37 @@ const methodInfo_ChatService_Connect = new grpc.web.AbstractClientBase.MethodInf
 
 
 /**
- * @param {!proto.chat.ConnectRequest} request The request proto
+ * @param {!proto.chat.EmptyMessage} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
  *     The XHR Node Readable Stream
  */
-proto.chat.ChatServiceClient.prototype.connect =
-  function (request, metadata) {
-    return this.client_.serverStreaming(this.hostname_ +
-      '/chat.ChatService/Connect',
+proto.chat.ChatServiceClient.prototype.broadcast =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/chat.ChatService/Broadcast',
       request,
       metadata || {},
-      methodDescriptor_ChatService_Connect);
-  };
+      methodDescriptor_ChatService_Broadcast);
+};
 
 
 /**
- * @param {!proto.chat.ConnectRequest} request The request proto
+ * @param {!proto.chat.EmptyMessage} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
  *     The XHR Node Readable Stream
  */
-proto.chat.ChatServicePromiseClient.prototype.connect =
-  function (request, metadata) {
-    return this.client_.serverStreaming(this.hostname_ +
-      '/chat.ChatService/Connect',
+proto.chat.ChatServicePromiseClient.prototype.broadcast =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/chat.ChatService/Broadcast',
       request,
       metadata || {},
-      methodDescriptor_ChatService_Connect);
-  };
+      methodDescriptor_ChatService_Broadcast);
+};
 
 
 /**
@@ -159,7 +162,7 @@ const methodDescriptor_ChatService_AddMessage = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.NewMessageRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.NewMessageResponse.deserializeBinary
@@ -178,7 +181,7 @@ const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.Method
    * @param {!proto.chat.NewMessageRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.NewMessageResponse.deserializeBinary
@@ -196,14 +199,14 @@ const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.Method
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.addMessage =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/AddMessage',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddMessage,
       callback);
-  };
+};
 
 
 /**
@@ -215,13 +218,13 @@ proto.chat.ChatServiceClient.prototype.addMessage =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addMessage =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/AddMessage',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddMessage);
-  };
+};
 
 
 /**
@@ -239,7 +242,7 @@ const methodDescriptor_ChatService_AddChannel = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.NewChannelRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -258,7 +261,7 @@ const methodInfo_ChatService_AddChannel = new grpc.web.AbstractClientBase.Method
    * @param {!proto.chat.NewChannelRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -276,14 +279,14 @@ const methodInfo_ChatService_AddChannel = new grpc.web.AbstractClientBase.Method
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.addChannel =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/AddChannel',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddChannel,
       callback);
-  };
+};
 
 
 /**
@@ -295,13 +298,13 @@ proto.chat.ChatServiceClient.prototype.addChannel =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addChannel =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/AddChannel',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddChannel);
-  };
+};
 
 
 /**
@@ -319,7 +322,7 @@ const methodDescriptor_ChatService_AddUser = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.NewUserRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -338,7 +341,7 @@ const methodInfo_ChatService_AddUser = new grpc.web.AbstractClientBase.MethodInf
    * @param {!proto.chat.NewUserRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -356,14 +359,14 @@ const methodInfo_ChatService_AddUser = new grpc.web.AbstractClientBase.MethodInf
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.addUser =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/AddUser',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddUser,
       callback);
-  };
+};
 
 
 /**
@@ -375,13 +378,13 @@ proto.chat.ChatServiceClient.prototype.addUser =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addUser =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/AddUser',
       request,
       metadata || {},
       methodDescriptor_ChatService_AddUser);
-  };
+};
 
 
 /**
@@ -399,7 +402,7 @@ const methodDescriptor_ChatService_EditMessage = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.EditMessageRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -418,7 +421,7 @@ const methodInfo_ChatService_EditMessage = new grpc.web.AbstractClientBase.Metho
    * @param {!proto.chat.EditMessageRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -436,14 +439,14 @@ const methodInfo_ChatService_EditMessage = new grpc.web.AbstractClientBase.Metho
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.editMessage =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/EditMessage',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditMessage,
       callback);
-  };
+};
 
 
 /**
@@ -455,13 +458,13 @@ proto.chat.ChatServiceClient.prototype.editMessage =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.editMessage =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/EditMessage',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditMessage);
-  };
+};
 
 
 /**
@@ -479,7 +482,7 @@ const methodDescriptor_ChatService_EditChannel = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.EditChannelRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -498,7 +501,7 @@ const methodInfo_ChatService_EditChannel = new grpc.web.AbstractClientBase.Metho
    * @param {!proto.chat.EditChannelRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -516,14 +519,14 @@ const methodInfo_ChatService_EditChannel = new grpc.web.AbstractClientBase.Metho
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.editChannel =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/EditChannel',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditChannel,
       callback);
-  };
+};
 
 
 /**
@@ -535,13 +538,13 @@ proto.chat.ChatServiceClient.prototype.editChannel =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.editChannel =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/EditChannel',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditChannel);
-  };
+};
 
 
 /**
@@ -559,7 +562,7 @@ const methodDescriptor_ChatService_EditUser = new grpc.web.MethodDescriptor(
    * @param {!proto.chat.EditUserRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -578,7 +581,7 @@ const methodInfo_ChatService_EditUser = new grpc.web.AbstractClientBase.MethodIn
    * @param {!proto.chat.EditUserRequest} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
   proto.chat.EmptyMessage.deserializeBinary
@@ -596,14 +599,14 @@ const methodInfo_ChatService_EditUser = new grpc.web.AbstractClientBase.MethodIn
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.editUser =
-  function (request, metadata, callback) {
-    return this.client_.rpcCall(this.hostname_ +
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
       '/chat.ChatService/EditUser',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditUser,
       callback);
-  };
+};
 
 
 /**
@@ -615,13 +618,13 @@ proto.chat.ChatServiceClient.prototype.editUser =
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.editUser =
-  function (request, metadata) {
-    return this.client_.unaryCall(this.hostname_ +
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
       '/chat.ChatService/EditUser',
       request,
       metadata || {},
       methodDescriptor_ChatService_EditUser);
-  };
+};
 
 
 module.exports = proto.chat;

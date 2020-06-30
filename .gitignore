@@ -1,6 +1,7 @@
 #----------> docker <----------
 db-data
 .env
+*.pem
 
 #----------> go <----------
 # Binaries for programs and plugins

@@ -1,11 +1,14 @@
+SET TIMEZONE='America/Los_angeles';
+
 -- Tables
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,	
 	email TEXT UNIQUE NOT NULL,
-	image_path TEXT UNIQUE NOT NULL,
+	image_path TEXT NOT NULL,
 	join_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	user_name TEXT UNIQUE NOT NULL,
-	user_password TEXT NOT NULL
+	user_password TEXT NOT NULL,
+	refresh_token TEXT
 );
 
 CREATE TABLE channels (
@@ -21,7 +24,7 @@ CREATE TABLE messages (
 	user_name TEXT REFERENCES users(user_name) ON UPDATE CASCADE,
 	channel_name TEXT REFERENCES channels(channel_name) ON UPDATE CASCADE ON DELETE CASCADE,
 	message TEXT NOT NULL CHECK (message !~ '^(|\s.*)$'), --do not allow empty or messages with only spaces
-	post_date TIMESTAMPTZ NOT NULL
+	post_date TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
 CREATE TABLE images (
@@ -54,11 +57,3 @@ CREATE TRIGGER image_deleted
 AFTER DELETE ON images
 FOR EACH ROW
 EXECUTE PROCEDURE delete_server_image();
-
---default user
-INSERT INTO users(email, image_path, user_name, user_password)
-VALUES ('admin@admin.com', 'admin.jpeg', 'Admin', 'admin');
-
---test user
-INSERT INTO users(email, image_path, user_name, user_password)
-VALUES ('test@test.com', 'test.jpeg', 'TestUser', 'test');

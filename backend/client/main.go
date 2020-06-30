@@ -7,50 +7,149 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
+	"time"
 
-	"github.com/golang/protobuf/ptypes"
-
-	chat "github.com/alexxbull/rpchat/backend/protos"
+	auth "github.com/alexxbull/rpchat/backend/proto/auth"
+	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
-const addr = "localhost:8080"
+const addr = "localhost:443"
+
+var (
+	refreshToken string
+	accessToken  string
+)
 
 func main() {
-	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	// add tls
+	var opts []grpc.DialOption
+	creds, err := credentials.NewClientTLSFromFile("../cert.pem", "localhost")
+	if err != nil {
+		log.Fatalf("Unable to load credential file: %v", err)
+	}
+	opts = append(opts, grpc.WithTransportCredentials(creds))
+
+	authConn, err := grpc.Dial(addr, opts...)
+
 	if err != nil {
 		log.Fatalf("Unable to connect to %v: %v", addr, err)
 	}
 
-	stream, err := connect(conn)
+	accessToken, refreshToken, err = login(authConn)
 	if err != nil {
-		log.Fatalln("Unable to connect to server:", err)
+		log.Fatalln("Unable to log in to server:", err)
+	}
+	accessToken = "Bearer " + accessToken
+
+	// add unary intercepter
+	opts = append(opts, grpc.WithUnaryInterceptor(unaryIntercepter(accessToken, refreshToken)))
+
+	// add stream intercepter
+	opts = append(opts, grpc.WithStreamInterceptor(streamIntercepter(accessToken, refreshToken)))
+
+	chatConn, err := grpc.Dial(addr, opts...)
+	if err != nil {
+		log.Fatalf("Unable to connect to %v: %v", addr, err)
 	}
 
-	go broadcastListen(stream)
-	sendMessageShell(conn)
+	go broadcastListen(chatConn)
+	sendMessageShell(chatConn)
 }
 
-func connect(conn grpc.ClientConnInterface) (chat.ChatService_ConnectClient, error) {
+func unaryIntercepter(accessToken, refreshToken string) grpc.UnaryClientInterceptor {
+	return func(
+		ctx context.Context,
+		method string,
+		req, reply interface{},
+		cc *grpc.ClientConn,
+		invoker grpc.UnaryInvoker,
+		opts ...grpc.CallOption,
+	) error {
+		fmt.Println("--> unary interceptor:", method)
+
+		md := metadata.AppendToOutgoingContext(ctx, "authorization", accessToken, "refresh_token", refreshToken)
+
+		return invoker(md, method, req, reply, cc, opts...)
+	}
+}
+
+func streamIntercepter(accessToken, refreshToken string) grpc.StreamClientInterceptor {
+	return func(
+		ctx context.Context,
+		desc *grpc.StreamDesc,
+		cc *grpc.ClientConn,
+		method string,
+		streamer grpc.Streamer,
+		opts ...grpc.CallOption,
+	) (grpc.ClientStream, error) {
+		fmt.Println("--> stream interceptor:", method)
+
+		md := metadata.AppendToOutgoingContext(ctx, "authorization", accessToken, "refresh_token", refreshToken)
+
+		return streamer(md, desc, cc, method, opts...)
+	}
+}
+
+func login(conn grpc.ClientConnInterface) (string, string, error) {
+	client := auth.NewAuthServiceClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	req := &auth.LoginRequest{
+		Username: "newUser",
+		Password: "newUser",
+	}
+
+	var header metadata.MD
+	fmt.Println("blank md", header)
+	res, err := client.Login(ctx, req, grpc.Header(&header))
+	if err != nil {
+		return "", "", err
+	}
+
+	// extract refresh token from cookie
+	fmt.Println("header", header)
+	if header == nil {
+		return "", "", status.Errorf(codes.FailedPrecondition, "metadata not provided")
+	}
+
+	cookies, ok := header["set-cookie"]
+	if !ok || len(cookies) == 0 {
+		return "", "", status.Errorf(codes.FailedPrecondition, "missing cookies")
+	}
+
+	var refreshToken string
+	for _, cookie := range cookies {
+		if strings.HasPrefix(cookie, "refresh_token") {
+			refreshToken = strings.Split(cookie, "=")[1]
+			break
+		}
+	}
+	if refreshToken == "" {
+		return "", "", status.Errorf(codes.FailedPrecondition, "refresh token not provided")
+	}
+
+	return res.Token.AccessToken, refreshToken, nil
+}
+
+func broadcastListen(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
-	req := &chat.ConnectRequest{User: "TestUser"}
+	req := &chat.EmptyMessage{}
 
-	stream, err := client.Connect(ctx, req)
+	stream, err := client.Broadcast(ctx, req)
 	if err != nil {
-		return stream, err
+		log.Fatalln("Unable to receive broadcast from server: %w", err)
 	}
 
-	_, err = stream.Recv()
-	if err != nil {
-		return stream, err
-	}
-
-	return stream, nil
-}
-
-func broadcastListen(stream chat.ChatService_ConnectClient) {
 	res, err := stream.Recv()
 	for err == nil {
 		switch {
@@ -64,9 +163,8 @@ func broadcastListen(stream chat.ChatService_ConnectClient) {
 			msg := res.ChatMessage
 			channel := msg.Channel
 			message := msg.Memo
-			postDate := ptypes.TimestampString(msg.PostDate)
 			user := msg.User
-			fmt.Printf("%v @ %v on %v: %v\n", user, postDate, channel, message)
+			fmt.Printf("%v @ on %v: %v\n", user, channel, message)
 
 		case res.User != nil:
 			user := res.User
@@ -97,10 +195,9 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 		}
 
 		req := &chat.NewMessageRequest{
-			Channel:  "TestChannel",
-			Memo:     message,
-			PostDate: ptypes.TimestampNow(),
-			User:     "TestUser",
+			Channel: "TestChannel",
+			Memo:    message,
+			User:    "TestUser",
 		}
 
 		res, err := client.AddMessage(ctx, req)
@@ -108,7 +205,7 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 			log.Fatalln("Response error from server:", err)
 		}
 
-		fmt.Println("Messaged added with id:", res.Id)
+		fmt.Printf("Messaged added with id %v @ %v:", res.Id, res.PostDate)
 	}
 }
 
@@ -121,27 +218,26 @@ func sendMessage(conn grpc.ClientConnInterface) {
 		User:    "TestUser",
 	}
 
-	_, err := client.AddMessage(ctx, req)
+	res, err := client.AddMessage(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
+	fmt.Println("Message id:", res.Id, "Post Date:", res.PostDate)
 }
 
 func addChannel(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
 	req := &chat.NewChannelRequest{
-		Name:        "NewTestChannel",
+		Name:        "TestChannel",
 		Description: "Test channel made by TestUser",
 		Owner:       "TestUser",
 	}
 
-	res, err := client.AddChannel(ctx, req)
+	_, err := client.AddChannel(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
-
-	fmt.Println("Channel added with id:", res.Id)
 }
 
 func addUser(conn grpc.ClientConnInterface) {
@@ -154,12 +250,11 @@ func addUser(conn grpc.ClientConnInterface) {
 		ImagePath: "newUser image path",
 	}
 
-	res, err := client.AddUser(ctx, req)
+	_, err := client.AddUser(ctx, req)
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
 
-	fmt.Println("Channel added with id:", res.Id)
 }
 
 func editMessage(conn grpc.ClientConnInterface) {

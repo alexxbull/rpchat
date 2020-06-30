@@ -26,7 +26,7 @@ const Modal = props => {
         <>
             {backdrop}
             <div className={modalClasses.join(' ')}>
-                <p className={errorClasses.join(' ')}>{props.error}</p>
+                <div className={errorClasses.join(' ')}>{props.error}</div>
                 <header>
                     <h1 className={classes.Title}>{props.title}</h1>
                     <div className={classes.CloseBtnContainer}><button className={classes.CloseBtn} onClick={props.close}></button></div>

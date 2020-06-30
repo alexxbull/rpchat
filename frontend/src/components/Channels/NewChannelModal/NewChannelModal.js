@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import classes from './NewChannelModal.module.css'
 
 import Modal from '../../Modal/Modal.js'
-import { NewChannelRequest } from '../../../proto/chat_pb.js'
-import { ChatServiceClient } from '../../../proto/chat_grpc_web_pb.js'
+import { NewChannelRequest } from '../../../proto/chat/chat_pb.js'
+import { ChatServiceClient } from '../../../proto/chat/chat_grpc_web_pb.js'
 
-const hostname = 'http://localhost:8080'
+const hostname = 'https://localhost:443'
 
 const NewChannelModal = props => {
     const blankChannel = {
