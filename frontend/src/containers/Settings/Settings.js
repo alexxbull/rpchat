@@ -16,6 +16,8 @@ const Settings = props => {
     }, [backdropContext])
 
     const handleLogout = () => {
+        window.accessToken = null
+        window.username = null
         history.push('/')
     }
 
