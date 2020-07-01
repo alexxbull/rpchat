@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import jwtDecode from 'jwt-decode'
 
+// grpc
+import { AuthClient } from './client/grpc_clients.js'
+import { EmptyMessage } from './proto/auth/auth_pb.js'
+
+// components
 import Toolbar from './containers/Toolbar/Toolbar.js'
 import Chat from './containers/Chat/Chat.js';
 import Channels from './components/Channels/Channels.js';
@@ -8,7 +14,25 @@ import Backdrop from './components/Backdrop/Backdrop.js';
 
 const rem = 16
 
-function App() {
+const App = props => {
+  // authenticate user
+  const getAccessToken = async () => {
+    try {
+      const req = new EmptyMessage()
+      const res = await AuthClient.refresh(req, {})
+      window.accessToken = res.getAccessToken()
+      const decodedToken = jwtDecode(window.accessToken)
+      window.username = decodedToken.username
+    }
+    catch (err) {
+      props.history.push('/')
+    }
+  }
+
+  if (!window.accessToken) {
+    getAccessToken()
+  }
+
   const [isDesktop, setDesktop] = useState(window.innerWidth > 40 * rem) // +641px = desktop
   const updateView = () => setDesktop(window.innerWidth > 40 * rem)
 
