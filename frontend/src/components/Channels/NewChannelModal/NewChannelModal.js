@@ -2,17 +2,15 @@ import React, { useState } from 'react'
 
 import classes from './NewChannelModal.module.css'
 
+import { ChatClient } from '../../../client/grpc_clients.js'
+
 import Modal from '../../Modal/Modal.js'
 import { NewChannelRequest } from '../../../proto/chat/chat_pb.js'
-import { ChatServiceClient } from '../../../proto/chat/chat_grpc_web_pb.js'
-
-const hostname = 'https://localhost:443'
 
 const NewChannelModal = props => {
     const blankChannel = {
         name: '',
         desc: '',
-        owner: 'TestUser',
         error: ''
     }
     const [newChannel, setNewChannel] = useState(blankChannel)
@@ -27,26 +25,20 @@ const NewChannelModal = props => {
         props.close()
     }
 
-    const handleSubmit = event => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log('attempting to add new channel')
+        try {
+            const req = new NewChannelRequest()
+            req.setName(newChannel.name)
+            req.setDescription(newChannel.desc)
+            req.setOwner(window.username)
 
-        const client = new ChatServiceClient(hostname)
-        const req = new NewChannelRequest()
-        req.setName(newChannel.name)
-        req.setDescription(newChannel.desc)
-        req.setOwner(newChannel.owner)
-
-        client.addChannel(req, {}, (err, res) => {
-            if (err) {
-                console.log(err)
-                setNewChannel({ ...newChannel, error: err.message })
-            }
-            if (res) {
-                console.log('form submitted')
-                handleModalClose()
-            }
-        })
+            await ChatClient.addChannel(req, {})
+            handleModalClose()
+        }
+        catch (err) {
+            setNewChannel({ ...newChannel, error: err.message })
+        }
     }
 
     return (
@@ -57,7 +49,7 @@ const NewChannelModal = props => {
             close={handleModalClose}
             isDesktop={props.isDesktop}
             formID={classes.NewChannelModal}
-            okayBtn={<input className={classes.SubmitBtn} type="submit" onSubmit={props.click} value={props.submitText} form={classes.NewChannelModal} />}
+            okayBtn={<input className={classes.SubmitBtn} type="submit" onSubmit={props.click} value={"Submit"} form={classes.NewChannelModal} />}
         >
             <form id={classes.NewChannelModal} onSubmit={handleSubmit}>
                 <label htmlFor="Channel Name">Name:</label>
