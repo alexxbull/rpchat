@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/golang/protobuf/ptypes"
@@ -145,7 +147,19 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 	var postDate time.Time
 	err = stmt.QueryRow(req.User, req.Channel, req.Memo).Scan(&id, &postDate)
 	if err != nil {
-		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+		errMsg := err.Error()
+
+		switch errMsg {
+		case `pq: insert or update on table "messages" violates foreign key constraint "messages_channel_name_fkey"`:
+			err = status.Errorf(codes.InvalidArgument, "channel '%s' does not exist", req.Channel)
+		case `pq: insert or update on table "messages" violates foreign key constraint "messages_user_name_fkey"`:
+			err = status.Errorf(codes.InvalidArgument, "user '%s' does not exist", req.User)
+		default:
+			fmt.Println("Error in Execute sql for inserting new user in Register service:", err)
+			err = status.Errorf(codes.Internal, "Unable to send message. Please try again later.")
+		}
+
+		return res, err
 	}
 
 	fmt.Println("Message added to db")

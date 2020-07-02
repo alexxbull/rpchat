@@ -137,7 +137,7 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 			err = status.Errorf(codes.InvalidArgument, "This username is already taken")
 		default:
 			fmt.Println("Error in Execute sql for inserting new user in Register service:", err)
-			return nil, status.Errorf(codes.Internal, "Unable to register account. Please try again later.")
+			err = status.Errorf(codes.Internal, "Unable to register account. Please try again later.")
 		}
 
 		return nil, err
