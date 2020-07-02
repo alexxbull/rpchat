@@ -10,7 +10,7 @@ const ReplyBox = props => {
     const [error, setError] = useState('')
 
     const inputChangeHandler = event => {
-        setNewMessage(event.target.value)
+        setMemo(event.target.value)
         if (error)
             setError('')
     }
