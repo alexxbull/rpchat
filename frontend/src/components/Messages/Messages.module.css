@@ -5,7 +5,7 @@
 }
 
 .ChannelName {    
-    background-color: rgb(119, 119, 119);
+    background-color: var(--gray);
     display: none;
     font-size: 1.1rem;
     text-align: center;
@@ -29,7 +29,7 @@
     min-width: 2.5rem;
     max-height: 2.5rem;
     max-width: 2.5rem;
-    background: white
+    background: var(--userBackground)
 }
 
 .User_name {

@@ -3,7 +3,7 @@
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;;
+    padding: 0.5rem;
     align-items: center;
 }
 
@@ -18,6 +18,8 @@
     border-radius: 25px;    
     padding: 0.4rem;
     font-size: 0.9rem;
+    border: 2px solid var(--gray);
+    background: var(--white);
 }
 
 .ReplyBtn {
@@ -25,14 +27,14 @@
     border: none;
     width: 2rem;
     height: 2rem;
-    background: url(../../assets/send-icon.svg) center/1.5rem no-repeat border-box slategray;
+    background: url(../../assets/send-icon.svg) center/1.5rem no-repeat border-box var(--gray);
 
     border-radius: 50%;
     margin-left: 0.5rem;
 }
 
 .Error {
-    color: red;
+    color: var(--red);
     font-size: 0.8rem;
     overflow: hidden;
     width: 100%;

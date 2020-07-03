@@ -7,6 +7,6 @@
 }
 
 .Channel__icon {    
-    color: grey;
+    color: var(--white);
     margin-right: 4px;
 }

@@ -1,5 +1,5 @@
 .Users {
-    background: greenyellow;
+    background: var(--lightBlue);
     flex-direction: column;
     height: 100vh;
     overflow: hidden auto;
@@ -34,7 +34,7 @@
     min-width: 2rem;
     max-height: 2rem;
     max-width: 2rem;
-    background: white
+    background: var(--userBackground)
 }
 
 .User__icon img {

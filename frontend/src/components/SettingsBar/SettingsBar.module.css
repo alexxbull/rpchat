@@ -16,7 +16,7 @@
 }
 
 .User_icon {
-    background: center/2rem no-repeat;  
+    background: var(--userBackground) center/2rem no-repeat;  
     border-radius: 50%;
     height: 2rem;
     width: 2rem;

@@ -1,5 +1,5 @@
 .Container {
-    background: #5996c9;
+    background: var(--lightBlue);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,14 +23,14 @@
 }
 
 .Register h1 {
-    color: white;
+    color: var(--white);
     font-size: 3rem;
     font-family: 'Lobster', cursive;
     margin: 3rem auto;
 }
 
 .Register_Form label  {
-    color: white;
+    color: var(--white);
     display: block;
     width: 100%;
     font-size: 0.9rem;
@@ -39,7 +39,7 @@
 .Email, .Username, .Password {
     border: none;
     background: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--black);
     display: block;    
     margin-bottom: 32px;
     height: 2rem;
@@ -47,10 +47,10 @@
 }
 
 .RegisterBtn {
-    background: white;
+    background: var(--white);
     border: none;
     border-radius: 50px;
-    color: black;
+    color: var(--black);
     cursor: pointer;
     font-size: 1rem;
     height: 3rem;
@@ -68,7 +68,7 @@
 }
 
 .LoginLink a:hover {
-    color: black;
+    color: var(--black);
     font-style: bold;
     text-decoration: underline 2px;
 }
@@ -78,14 +78,14 @@
 }
 
 .InputError {
-    border-bottom: 2px solid #fc2f2f; 
+    border-bottom: 2px solid var(--red); 
 }
 
 .Error {
     position: absolute;
     top: 0;
     left: 0;
-    background: #fc2f2f;
+    background: var(--red);
     transform: translateY(-100%);
     transition: transform 0.5s;
     height: 3rem;
@@ -100,8 +100,8 @@
 
 @media(min-width: 40rem) {
     .Register {
-        background: white;
-        border: 1px solid black;
+        background: var(--white);
+        border: 1px solid var(--black);
         border-radius: 5px;
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);
         height: 80%;
@@ -114,15 +114,15 @@
     }
 
     .Register_Form label  {
-        color: black;
+        color: var(--black);
     }
 
     .Register_Form input {
-        color: black;
+        color: var(--black);
     }
 
     .Register_Form .RegisterBtn  {
-        background: #5996c9;
-        color: white;
+        background: var(--lightBlue);
+        color: var(--white);
     }
 }

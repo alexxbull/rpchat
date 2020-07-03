@@ -15,7 +15,7 @@
 }
 
 .SubmitBtn {
-    background: yellowgreen;
+    background: var(--okayGreen);
     border: none;
     height: 3rem;
     margin-top: auto;

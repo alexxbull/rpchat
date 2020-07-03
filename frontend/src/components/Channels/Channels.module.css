@@ -1,5 +1,5 @@
 .Channels {
-    background-color: orange;
+    background-color: var(--lightBlue);
     flex-direction: column;
     height: 100vh;
     left: 0;

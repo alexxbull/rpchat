@@ -1,3 +1,4 @@
+@import url('./variables.css');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
@@ -16,8 +17,13 @@ body, ul, button, h1, ol, p {
 
 body {
     font-family: "Open-Sans", sans-serif;
+    color: var(--black);
+    background: var(--white);
 }
 
+button {
+    color: var(--black);
+}
 
 :focus {
     outline: none;
@@ -28,7 +34,7 @@ body {
  }
  
  .App {
-    background: khaki;
+    background: var(--white);
     display: flex;
     flex-direction: column;
     height: 100%;
