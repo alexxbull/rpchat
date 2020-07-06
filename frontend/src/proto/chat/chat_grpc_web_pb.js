@@ -627,5 +627,85 @@ proto.chat.ChatServicePromiseClient.prototype.editUser =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.EmptyMessage,
+ *   !proto.chat.GetChannelsResponse>}
+ */
+const methodDescriptor_ChatService_GetChannels = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/GetChannels',
+  grpc.web.MethodType.UNARY,
+  proto.chat.EmptyMessage,
+  proto.chat.GetChannelsResponse,
+  /**
+   * @param {!proto.chat.EmptyMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetChannelsResponse.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.chat.EmptyMessage,
+ *   !proto.chat.GetChannelsResponse>}
+ */
+const methodInfo_ChatService_GetChannels = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.chat.GetChannelsResponse,
+  /**
+   * @param {!proto.chat.EmptyMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetChannelsResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.EmptyMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.chat.GetChannelsResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.GetChannelsResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.ChatServiceClient.prototype.getChannels =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.ChatService/GetChannels',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetChannels,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.EmptyMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.GetChannelsResponse>}
+ *     A native promise that resolves to the response
+ */
+proto.chat.ChatServicePromiseClient.prototype.getChannels =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.ChatService/GetChannels',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetChannels);
+};
+
+
 module.exports = proto.chat;
 

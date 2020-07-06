@@ -266,3 +266,48 @@ func (cs *chatServer) EditUser(ctx context.Context, req *chat.EditUserRequest) (
 
 	return res, nil
 }
+
+func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (*chat.GetChannelsResponse, error) {
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
+	}
+
+	sqlStmt := `
+	SELECT id, channel_name, description, channel_owner
+	FROM channels
+	`
+
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for selecting channels:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load channels. Please try again later.")
+	}
+
+	rows, err := stmt.Query()
+	if err != nil {
+		fmt.Println("Unable to Query channels", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load channels. Please try again later.")
+	}
+	defer rows.Close()
+
+	var channels []*chat.GetChannelsMessage
+	for rows.Next() {
+		var channelName, channelDesc, channelOwner string
+		var id int32
+		err = rows.Scan(&id, &channelName, &channelDesc, &channelOwner)
+		if err != nil {
+			fmt.Println("Unable to read row returned by Query selecting channels:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load channels. Please try again later.")
+		}
+		channel := &chat.GetChannelsMessage{
+			Id:          id,
+			Name:        channelName,
+			Description: channelDesc,
+			Owner:       channelOwner,
+		}
+		channels = append(channels, channel)
+	}
+
+	res := &chat.GetChannelsResponse{Channels: channels}
+	return res, nil
+}
