@@ -11,10 +11,11 @@ import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
 import SettingsBar from '../SettingsBar/SettingsBar.js';
 import NewChannelModal from './NewChannelModal/NewChannelModal.js';
+import Spinner from '../Spinner/Spinner';
 
 const Channels = props => {
     const [showModal, setShowModal] = useState(false)
-    const [channels, setChannels] = useState(null)
+    const [channels, setChannels] = useState({ list: [], loading: true })
 
     const getChannels = async () => {
         // load channels
@@ -22,7 +23,8 @@ const Channels = props => {
             const req = new EmptyMessage()
             const res = await ChatClient.getChannels(req, {})
             console.log(res.getChannelsList())
-            const newChannels = res.getChannelsList().map(channel =>
+            const newChannels = { list: [], loading: false }
+            newChannels.list = res.getChannelsList().map(channel =>
                 <Channel
                     key={channel.getId()}
                     name={channel.getName()}
@@ -49,12 +51,18 @@ const Channels = props => {
         channelsClasses.push(classes.Open)
     }
 
+    let spinner = null
+    if (channels.loading) {
+        spinner = <Spinner />
+    }
+
     return (
         <>
             <div className={channelsClasses.join(' ')}>
                 <ChannelsHeader displayModal={setShowModal.bind(this, true)} />
                 <ul className={classes.Channels__list}>
-                    {channels}
+                    {spinner}
+                    {channels.list}
                 </ul>
                 <SettingsBar />
             </div>
