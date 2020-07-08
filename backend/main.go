@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"time"
 
@@ -74,8 +75,20 @@ func main() {
 	auth.RegisterAuthServiceServer(server, &as)
 	chat.RegisterChatServiceServer(server, &cs)
 
+	// start file server
+	go func() {
+		http.Handle("/", http.FileServer(http.Dir("./static")))
+		fmt.Println("Starting file server")
+		err := http.ListenAndServeTLS(":4430", certFile, keyFile, nil)
+		// err := http.ListenAndServe(":4430", nil)
+		if err != nil {
+			fmt.Println("File server error", err)
+			log.Fatal(err)
+		}
+	}()
+
 	// start grpc server
-	fmt.Println("Starting server...")
+	fmt.Println("Starting grpc server...")
 	server.Serve(lis)
 }
 

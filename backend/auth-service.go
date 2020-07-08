@@ -125,7 +125,7 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 	}
 
 	// add user to database
-	imagePath := "/attachments/default/user-icon.svg" // default avatar for new users
+	imagePath := "attachments/default/user-icon.svg" // default avatar for new users
 	_, err = stmt.Exec(req.Email, req.Username, passwordHash, imagePath, refreshToken)
 	if err != nil {
 		errMsg := err.Error()

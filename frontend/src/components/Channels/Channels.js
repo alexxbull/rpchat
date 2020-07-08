@@ -22,7 +22,6 @@ const Channels = props => {
         try {
             const req = new EmptyMessage()
             const res = await ChatClient.getChannels(req, {})
-            console.log(res.getChannelsList())
             const newChannels = { list: [], loading: false }
             newChannels.list = res.getChannelsList().map(channel =>
                 <Channel
@@ -33,7 +32,6 @@ const Channels = props => {
                 />
             )
             setChannels(newChannels)
-            console.log('cd', newChannels)
         }
         catch (err) {
             console.log('error loading channels:', err)

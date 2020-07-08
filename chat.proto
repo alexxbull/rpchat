@@ -64,6 +64,14 @@ message GetChannelsMessage {
 
 message GetChannelsResponse { repeated GetChannelsMessage channels = 1; }
 
+message GetUsersMessage {
+  int32 id = 1;
+  string name = 2;
+  string avatar = 3;
+}
+
+message GetUsersResponse { repeated GetUsersMessage users = 1; }
+
 service ChatService {
   // broadcast
   rpc Broadcast(EmptyMessage) returns (stream BroadcastMessage);
@@ -71,13 +79,12 @@ service ChatService {
   // add new object
   rpc AddMessage(NewMessageRequest) returns (NewMessageResponse);
   rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
-  rpc AddUser(NewUserRequest) returns (EmptyMessage);
 
   // edit object
   rpc EditMessage(EditMessageRequest) returns (EmptyMessage);
   rpc EditChannel(EditChannelRequest) returns (EmptyMessage);
-  rpc EditUser(EditUserRequest) returns (EmptyMessage);
 
   // get object
   rpc GetChannels(EmptyMessage) returns (GetChannelsResponse);
+  rpc GetUsers(EmptyMessage) returns (GetUsersResponse);
 }

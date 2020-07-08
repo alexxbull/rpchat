@@ -310,86 +310,6 @@ proto.chat.ChatServicePromiseClient.prototype.addChannel =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chat.NewUserRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodDescriptor_ChatService_AddUser = new grpc.web.MethodDescriptor(
-  '/chat.ChatService/AddUser',
-  grpc.web.MethodType.UNARY,
-  proto.chat.NewUserRequest,
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.NewUserRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.NewUserRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_AddUser = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.NewUserRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
- * @param {!proto.chat.NewUserRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
- *     The XHR Node Readable Stream
- */
-proto.chat.ChatServiceClient.prototype.addUser =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/chat.ChatService/AddUser',
-      request,
-      metadata || {},
-      methodDescriptor_ChatService_AddUser,
-      callback);
-};
-
-
-/**
- * @param {!proto.chat.NewUserRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
- */
-proto.chat.ChatServicePromiseClient.prototype.addUser =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/chat.ChatService/AddUser',
-      request,
-      metadata || {},
-      methodDescriptor_ChatService_AddUser);
-};
-
-
-/**
- * @const
- * @type {!grpc.web.MethodDescriptor<
  *   !proto.chat.EditMessageRequest,
  *   !proto.chat.EmptyMessage>}
  */
@@ -550,86 +470,6 @@ proto.chat.ChatServicePromiseClient.prototype.editChannel =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chat.EditUserRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodDescriptor_ChatService_EditUser = new grpc.web.MethodDescriptor(
-  '/chat.ChatService/EditUser',
-  grpc.web.MethodType.UNARY,
-  proto.chat.EditUserRequest,
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.EditUserRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EditUserRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_EditUser = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.EditUserRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
- * @param {!proto.chat.EditUserRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
- *     The XHR Node Readable Stream
- */
-proto.chat.ChatServiceClient.prototype.editUser =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/chat.ChatService/EditUser',
-      request,
-      metadata || {},
-      methodDescriptor_ChatService_EditUser,
-      callback);
-};
-
-
-/**
- * @param {!proto.chat.EditUserRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
- */
-proto.chat.ChatServicePromiseClient.prototype.editUser =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/chat.ChatService/EditUser',
-      request,
-      metadata || {},
-      methodDescriptor_ChatService_EditUser);
-};
-
-
-/**
- * @const
- * @type {!grpc.web.MethodDescriptor<
  *   !proto.chat.EmptyMessage,
  *   !proto.chat.GetChannelsResponse>}
  */
@@ -704,6 +544,86 @@ proto.chat.ChatServicePromiseClient.prototype.getChannels =
       request,
       metadata || {},
       methodDescriptor_ChatService_GetChannels);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.EmptyMessage,
+ *   !proto.chat.GetUsersResponse>}
+ */
+const methodDescriptor_ChatService_GetUsers = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/GetUsers',
+  grpc.web.MethodType.UNARY,
+  proto.chat.EmptyMessage,
+  proto.chat.GetUsersResponse,
+  /**
+   * @param {!proto.chat.EmptyMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetUsersResponse.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.chat.EmptyMessage,
+ *   !proto.chat.GetUsersResponse>}
+ */
+const methodInfo_ChatService_GetUsers = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.chat.GetUsersResponse,
+  /**
+   * @param {!proto.chat.EmptyMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetUsersResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.EmptyMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.chat.GetUsersResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.GetUsersResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.ChatServiceClient.prototype.getUsers =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.ChatService/GetUsers',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetUsers,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.EmptyMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.GetUsersResponse>}
+ *     A native promise that resolves to the response
+ */
+proto.chat.ChatServicePromiseClient.prototype.getUsers =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.ChatService/GetUsers',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetUsers);
 };
 
 

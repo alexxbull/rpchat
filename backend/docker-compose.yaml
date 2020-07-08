@@ -38,7 +38,8 @@ services:
       - db
     ports:
       - "9090:9090"
+      - "4430:4430"
     restart: on-failure
     volumes: 
-      - "./attachments:/usr/src/grpchat-backend/attachments"
+      - "./static/attachments:/usr/src/grpchat-backend/static/attachments"
       - "./:/usr/src/grpchat-backend"

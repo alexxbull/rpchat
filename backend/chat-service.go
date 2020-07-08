@@ -4,10 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -176,43 +174,6 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 	return res, nil
 }
 
-func (cs *chatServer) AddUser(ctx context.Context, req *chat.NewUserRequest) (*chat.EmptyMessage, error) {
-	if req == nil {
-		return nil, fmt.Errorf("Empty request")
-	}
-
-	// hash password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return nil, fmt.Errorf("Unable to hash password: %v", err)
-	}
-
-	// add user to database
-	db := cs.db
-	res := &chat.EmptyMessage{}
-	sqlStmt := `INSERT INTO users(user_name, email, user_password, image_path)
-			VALUES($1, $2, $3, $4)`
-
-	stmt, err := db.Prepare(sqlStmt)
-	if err != nil {
-		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
-	}
-
-	_, err = stmt.Exec(req.Name, req.Email, hashedPassword, req.ImagePath)
-	if err != nil {
-		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
-	}
-
-	cs.newUser <- user{
-		name:      req.Name,
-		email:     req.Email,
-		password:  string(hashedPassword),
-		imagePath: req.ImagePath,
-	}
-
-	return res, nil
-}
-
 func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
 	sqlStmt := `UPDATE messages
@@ -239,29 +200,6 @@ func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequ
 	_, err = stmt.Exec(req.NewName, req.Description, req.OldName)
 	if err != nil {
 		return res, fmt.Errorf("Unable to update channel: %v", err)
-	}
-
-	return res, nil
-}
-
-func (cs *chatServer) EditUser(ctx context.Context, req *chat.EditUserRequest) (*chat.EmptyMessage, error) {
-	if cs == nil {
-		log.Fatalln("Nil chatServer pointer")
-	}
-
-	res := &chat.EmptyMessage{}
-	sqlStmt := `UPDATE users
-			SET email = $1,
-				user_name  = $2,
-				user_password  = $3
-			WHERE user_name = $4;`
-
-	// TODO: validate user
-
-	stmt, err := cs.db.Prepare(sqlStmt)
-	_, err = stmt.Exec(req.Email, req.Name, req.Password, req.OldName)
-	if err != nil {
-		return res, fmt.Errorf("Unable to update user: %v", err)
 	}
 
 	return res, nil
@@ -299,6 +237,7 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 			fmt.Println("Unable to read row returned by Query selecting channels:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load channels. Please try again later.")
 		}
+
 		channel := &chat.GetChannelsMessage{
 			Id:          id,
 			Name:        channelName,
@@ -309,5 +248,50 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 	}
 
 	res := &chat.GetChannelsResponse{Channels: channels}
+	return res, nil
+}
+
+func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*chat.GetUsersResponse, error) {
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
+	}
+
+	sqlStmt := `
+	SELECT id, user_name, image_path
+	FROM users
+	`
+
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for selecting users:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
+	}
+
+	rows, err := stmt.Query()
+	if err != nil {
+		fmt.Println("Unable to Query users", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
+	}
+	defer rows.Close()
+
+	var users []*chat.GetUsersMessage
+	for rows.Next() {
+		var username, avatar string
+		var id int32
+		err = rows.Scan(&id, &username, &avatar)
+		if err != nil {
+			fmt.Println("Unable to read row returned by Query selecting users:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load users. Please try again later.")
+		}
+
+		user := &chat.GetUsersMessage{
+			Id:     id,
+			Name:   username,
+			Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+		}
+		users = append(users, user)
+	}
+
+	res := &chat.GetUsersResponse{Users: users}
 	return res, nil
 }
