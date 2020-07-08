@@ -4,14 +4,6 @@
     font-size: 0.9rem;
 }
 
-.ChannelName {    
-    background-color: var(--gray);
-    display: none;
-    font-size: 1.1rem;
-    text-align: center;
-    width: 100%;
-}
-
 .Message {
     padding: 2px;
     display: flex;
@@ -63,10 +55,4 @@
 .Invisible {
     visibility: hidden;
     height: 0;
-}
-
-@media (min-width: 40rem) {
-    .ChannelName {
-        display: block;
-    }
 }

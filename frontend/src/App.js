@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode'
 
 // grpc
 import { AuthClient } from './client/grpc_clients.js'
 import { EmptyMessage } from './proto/auth/auth_pb.js'
+
+// context
+import { StoreProvider } from './context/Store.js';
 
 // components
 import Toolbar from './containers/Toolbar/Toolbar.js'
@@ -49,18 +52,20 @@ const App = props => {
   })
 
   return (
-    <div className="App">
-      <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
-      <Toolbar
-        show={!isDesktop}
-        isDesktop={isDesktop}
-        showChannels={setShowChannels.bind(this, true)}
-        showUsers={setShowUsers.bind(this, true)}
-      />
-      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
-      <Chat />
-      <Users show={isDesktop || showUsers} />
-    </div>
+    <StoreProvider>
+      <div className="App">
+        <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
+        <Toolbar
+          show={!isDesktop}
+          isDesktop={isDesktop}
+          showChannels={setShowChannels.bind(this, true)}
+          showUsers={setShowUsers.bind(this, true)}
+        />
+        <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
+        <Chat />
+        <Users show={isDesktop || showUsers} />
+      </div>
+    </StoreProvider>
   );
 }
 

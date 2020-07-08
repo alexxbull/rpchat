@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import classes from './Toolbar.module.css'
 
+// context
+import { StoreContext } from '../../context/Store'
+
 const Toolbar = props => {
+    const { state } = useContext(StoreContext)
+    const currentChannel = state.currentChannel
+
     let toolbar = null
 
     if (props.show) {
@@ -18,7 +24,7 @@ const Toolbar = props => {
 
         toolbar = <div className={classes.Toolbar}>
             {channelsButton}
-            <h1 className={classes.Channel_name}>Current Channel</h1>
+            <h1 className={classes.Channel_name}>{currentChannel.name}</h1>
             <button className={classes.Users_btn} onClick={props.showUsers}></button>
         </div>
     }

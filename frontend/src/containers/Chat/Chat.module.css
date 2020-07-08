@@ -4,3 +4,37 @@
     flex: 5;
     overflow: auto;
 }
+
+.ChannelHeader {
+    background-color: var(--gray);
+    color: var(--black);
+    display: none;
+    height: 2rem;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+}
+
+.Hashtag {
+    margin: 0 8px;
+    color: var(--white);
+}
+
+.ChannelName {    
+    font-size: 1rem;
+}
+
+.Divider {
+    margin: 0 8px;
+    color: var(--white);
+}
+
+.ChannelDesc {    
+    font-size: 0.9rem;
+}
+
+@media (min-width: 40rem) {
+    .ChannelHeader {
+        display: flex;
+    }
+}

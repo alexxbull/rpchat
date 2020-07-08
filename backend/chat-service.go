@@ -213,6 +213,7 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 	sqlStmt := `
 	SELECT id, channel_name, description, channel_owner
 	FROM channels
+	ORDER BY id
 	`
 
 	stmt, err := cs.db.Prepare(sqlStmt)

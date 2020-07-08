@@ -3,17 +3,9 @@ import { useHistory } from 'react-router-dom'
 
 import classes from './Settings.module.css'
 
-import BackdropContext from '../../context/BackdropContext.js'
-
 const Settings = props => {
     const history = useHistory()
-    const backdropContext = useContext(BackdropContext)
     const [showSettingsMenu, setShowSettingsMenu] = useState(false)
-
-    useEffect(() => {
-        if (!backdropContext)
-            setShowSettingsMenu(false)
-    }, [backdropContext])
 
     const handleLogout = () => {
         window.accessToken = null
