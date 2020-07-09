@@ -5,6 +5,7 @@ const StoreContext = createContext({})
 const initialState = {
     channels: [],
     currentChannel: {},
+    messages: [],
     users: [],
 }
 
@@ -20,6 +21,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 currentChannel: action.payload,
+            }
+        case 'set-messages':
+            return {
+                ...state,
+                messages: action.payload,
             }
         case 'set-users':
             return {
