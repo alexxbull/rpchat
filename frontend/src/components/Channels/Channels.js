@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import classes from './Channels.module.css'
 
@@ -16,71 +16,74 @@ import SettingsBar from '../SettingsBar/SettingsBar.js';
 import NewChannelModal from './NewChannelModal/NewChannelModal.js';
 import Spinner from '../Spinner/Spinner';
 
-
 const Channels = props => {
     const { state, dispatch } = useContext(StoreContext)
     const [showModal, setShowModal] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    // load channels on initial render
+    // load channels after initial render
     useEffect(() => {
-        const getChannels = async () => {
-            // load channels
-            try {
-                const req = new EmptyMessage()
-                const res = await ChatClient.getChannels(req, {})
-                const newChannels = res.getChannelsList().map((channel, index) => {
-                    return {
-                        id: channel.getId(),
-                        name: channel.getName(),
-                        desc: channel.getDescription(),
-                        owner: channel.getOwner(),
-                        active: index === 0 ? true : false // set the first channel as the current channel
-                    }
-                })
-                dispatch({ type: 'set-channels', payload: newChannels })
-                setLoading(false)
+        (
+            async () => {
+                // load channels
+                try {
+                    const req = new EmptyMessage()
+                    const res = await ChatClient.getChannels(req, {})
+                    let currentChannel = null
+                    const newChannels = res.getChannelsList().map((channel, index) => {
+                        const ch = {
+                            id: channel.getId(),
+                            name: channel.getName(),
+                            desc: channel.getDescription(),
+                            owner: channel.getOwner(),
+                            active: index === 0 ? true : false // set the first channel as the current channel
+                        }
+                        if (ch.active)
+                            currentChannel = ch
+
+                        return ch
+                    })
+
+                    dispatch({ type: 'set-channels', payload: { channels: newChannels, currentChannel: currentChannel } })
+                    setLoading(false)
+                }
+                catch (err) {
+                    console.log('error loading channels:', err)
+                    // send to 404 page
+                }
             }
-            catch (err) {
-                console.log('error loading channels:', err)
-                // send to 404 page
-            }
-        }
-        getChannels()
+        )()
     }, [dispatch])
 
-    return useMemo(() => {
-        const channelsClasses = [classes.Channels]
-        if (props.show) {
-            channelsClasses.push(classes.Open)
-        }
+    const channelsClasses = [classes.Channels]
+    if (props.show)
+        channelsClasses.push(classes.Open)
 
-        let spinner = null
-        if (loading) {
-            spinner = <Spinner />
-        }
-        return (
-            <>
-                <div className={channelsClasses.join(' ')}>
-                    <ChannelsHeader displayModal={setShowModal.bind(this, true)} />
-                    <ul className={classes.Channels__list}>
-                        {spinner}
-                        {state.channels.map(channel =>
-                            <Channel
-                                key={channel.id}
-                                name={channel.name}
-                                desc={channel.desc}
-                                owner={channel.owner}
-                                active={channel.active}
-                            />
-                        )}
-                    </ul>
-                    <SettingsBar />
-                </div>
-                <NewChannelModal show={showModal} close={setShowModal.bind(this, false)} isDesktop={props.isDesktop} />
-            </>
-        )
-    }, [props.show, state.channels, loading, props.isDesktop, showModal])
+    let spinner = null
+    if (loading)
+        spinner = <Spinner />
+
+    return (
+        <>
+            <div className={channelsClasses.join(' ')}>
+                <ChannelsHeader displayModal={setShowModal.bind(this, true)} />
+                <ul className={classes.Channels__list}>
+                    {spinner}
+                    {state.channels.map(channel =>
+                        <Channel
+                            key={channel.id}
+                            name={channel.name}
+                            desc={channel.desc}
+                            owner={channel.owner}
+                            active={channel.active}
+                        />
+                    )}
+                </ul>
+                <SettingsBar />
+            </div>
+            <NewChannelModal show={showModal} close={setShowModal.bind(this, false)} isDesktop={props.isDesktop} />
+        </>
+    )
 }
 
 export default Channels;
