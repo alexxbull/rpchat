@@ -9,6 +9,7 @@
 
 .ReplyContainer {
     display: flex;
+    align-items: center;
     width: 100%;
 }
 
@@ -28,7 +29,6 @@
     width: 2rem;
     height: 2rem;
     background: url(../../assets/send-icon.svg) center/1.5rem no-repeat border-box var(--gray);
-
     border-radius: 50%;
     margin-left: 0.5rem;
 }

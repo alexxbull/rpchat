@@ -1,7 +1,7 @@
 .Toolbar {
     display: flex;
     align-items: center;
-    background-color: var(--gray);
+    background-color: var(--lightBlue);
 }
 
 .Channels_btn {
