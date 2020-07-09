@@ -21,6 +21,11 @@ const reducer = (state, action) => {
                 ...state,
                 currentChannel: action.payload,
             }
+        case 'set-users':
+            return {
+                ...state,
+                users: action.payload,
+            }
         default:
             return state
     }
