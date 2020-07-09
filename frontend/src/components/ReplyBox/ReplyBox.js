@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import classes from './ReplyBox.module.css'
 
+// grpc
 import { ChatClient } from '../../client/grpc_clients.js'
 import { NewMessageRequest } from '../../proto/chat/chat_pb.js'
 
+// context
+import { StoreContext } from '../../context/Store'
+
 const ReplyBox = props => {
+    const { state } = useContext(StoreContext)
     const [memo, setMemo] = useState('')
     const [error, setError] = useState('')
 
@@ -16,17 +21,16 @@ const ReplyBox = props => {
     }
 
     const handleReply = async (event) => {
+        event.preventDefault()
+
         const req = new NewMessageRequest()
         req.setMemo(memo)
         req.setUser(window.username)
-        req.setChannel(window.currentChannel)
+        req.setChannel(state.currentChannel.name)
 
         try {
             const res = await ChatClient.addMessage(req, {})
-            console.log('msg add res', res)
-            console.log('msg id', res.getId())
-            console.log('msg date', res.getPostDate().toDate())
-            console.log('form submitted')
+            setMemo('')
         }
         catch (err) {
             console.log('send message error', err)
@@ -45,10 +49,10 @@ const ReplyBox = props => {
     return (
         <div className={classes.ReplyBox}>
             {errorJSX}
-            <div className={classes.ReplyContainer}>
+            <form className={classes.ReplyContainer} onSubmit={handleReply}>
                 <input type="text" className={classes.Reply} onChange={inputChangeHandler} name={"memo"} value={memo} />
-                <button className={classes.ReplyBtn} onClick={handleReply}></button>
-            </div>
+                <input type="submit" className={classes.ReplyBtn} value={""} />
+            </form>
         </div>
     )
 }
