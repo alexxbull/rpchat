@@ -252,6 +252,63 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 	return res, nil
 }
 
+func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequest) (*chat.GetMessagesResponse, error) {
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
+	}
+
+	sqlStmt := `
+	SELECT m.id, m.channel_name, m.message, m.post_date, m.user_name, u.image_path
+	FROM messages m
+	JOIN users u ON u.user_name = m.user_name
+	WHERE m.channel_name = $1
+	`
+
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for selecting messages:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
+	}
+
+	rows, err := stmt.Query(req.Channel)
+	if err != nil {
+		fmt.Println("Unable to Query messages", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
+	}
+	defer rows.Close()
+
+	var messages []*chat.GetMessagesMessage
+	for rows.Next() {
+		var avatar, channel, memo, username string
+		var date time.Time
+		var id int32
+		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar)
+		if err != nil {
+			fmt.Println("Unable to read row returned by Query selecting messages:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
+		}
+
+		ts, err := ptypes.TimestampProto(date)
+		if err != nil {
+			fmt.Println("Unable to convert database time value to proto timestamp:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later")
+		}
+
+		message := &chat.GetMessagesMessage{
+			Id:        id,
+			Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+			Channel:   channel,
+			Timestamp: ts,
+			Memo:      memo,
+			User:      username,
+		}
+		messages = append(messages, message)
+	}
+
+	res := &chat.GetMessagesResponse{Messages: messages}
+	return res, nil
+}
+
 func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*chat.GetUsersResponse, error) {
 	if req == nil {
 		return nil, status.Errorf(codes.InvalidArgument, "Empty request")

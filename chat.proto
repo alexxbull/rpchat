@@ -72,6 +72,19 @@ message GetUsersMessage {
 
 message GetUsersResponse { repeated GetUsersMessage users = 1; }
 
+message GetMessagesRequest { string channel = 1; }
+
+message GetMessagesMessage {
+  int32 id = 1;
+  string memo = 2;
+  string channel = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  string user = 5;
+  string avatar = 6;
+}
+
+message GetMessagesResponse { repeated GetMessagesMessage messages = 1; }
+
 service ChatService {
   // broadcast
   rpc Broadcast(EmptyMessage) returns (stream BroadcastMessage);
@@ -87,4 +100,5 @@ service ChatService {
   // get object
   rpc GetChannels(EmptyMessage) returns (GetChannelsResponse);
   rpc GetUsers(EmptyMessage) returns (GetUsersResponse);
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
 }

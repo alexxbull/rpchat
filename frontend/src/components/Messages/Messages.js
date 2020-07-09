@@ -1,76 +1,78 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import classes from './Messages.module.css';
 
-import UserIcon from '../../assets/user-icon.svg'
+import moment from 'moment'
 
+// grpc
+import { ChatClient } from '../../client/grpc_clients.js'
+import { GetMessagesRequest } from '../../proto/chat/chat_pb.js'
+
+// context
+import { StoreContext } from '../../context/Store';
+
+// components
 import Message from './Message/Message';
 
 
 const Messages = props => {
-    const messagesData = [
-        {
-            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
-            id: 1,
-            timestamp: 'time1',
-            username: 'user1',
-            avatar: UserIcon
-        },
-        {
-            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
-            id: 2,
-            timestamp: 'time2',
-            username: 'user2',
-            avatar: UserIcon
-        },
-        {
-            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
-            id: 3,
-            timestamp: 'time2',
-            username: 'user2',
-            avatar: UserIcon
-        },
-        {
-            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
-            id: 4,
-            timestamp: 'time2',
-            username: 'user2',
-            avatar: UserIcon
-        },
-        {
-            memo: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nemo sequi corporis in inventore sunt totam quaerat! Fugiat ipsam magnam placeat voluptatem quam! Mollitia voluptatibus eius deleniti vero libero sint!',
-            id: 5,
-            timestamp: 'time3',
-            username: 'user3',
-            avatar: UserIcon
-        },
-    ]
+    const { dispatch, state } = useContext(StoreContext)
 
-    const messages = messagesData.map((message, index) => {
-        if (index > 0 && index < messagesData.length - 1 && message.username === messagesData[index - 1].username)
-            return <Message
-                group={true}
-                key={message.id}
-                memo={message.memo}
-                timestamp={message.timestamp}
-                username={message.username}
-                avatar={message.avatar}
-            />
-        else
-            return <Message
-                group={false}
-                key={message.id}
-                memo={message.memo}
-                timestamp={message.timestamp}
-                username={message.username}
-                avatar={message.avatar}
-            />
-
-    })
+    // load messages after initial render
+    useEffect(() => {
+        // load messages
+        (
+            async () => {
+                const req = new GetMessagesRequest()
+                req.setChannel(state.currentChannel.name)
+                const res = await ChatClient.getMessages(req, {})
+                const newMessages = res.getMessagesList().map(message => {
+                    return {
+                        id: message.getId(),
+                        memo: message.getMemo(),
+                        timestamp: message.getTimestamp().toDate(),
+                        username: message.getUser(),
+                        avatar: message.getAvatar(),
+                    }
+                })
+                dispatch({ type: 'set-messages', payload: newMessages })
+            }
+        )()
+    }, [dispatch, state.currentChannel])
 
     return (
         <div className={classes.Messages}>
-            {messages}
+            {
+                state.messages.map((message, index) => {
+                    if (index > 0) {
+                        const prevMessage = state.messages[index - 1]
+                        const messageDate = moment(message.timestamp).format('L').toString
+                        const prevMessageDate = moment(prevMessage.timestamp).format('L').toString
+
+                        // group consecutive messages from the same user on the same day
+                        if (message.username === prevMessage.username && messageDate === prevMessageDate) {
+                            return <Message
+                                group={true}
+                                key={message.id}
+                                memo={message.memo}
+                                timestamp={moment(message.timestamp).format('L').toString()}
+                                username={message.username}
+                                avatar={message.avatar}
+                            />
+                        }
+                    }
+
+                    // do not group this message
+                    return <Message
+                        group={false}
+                        key={message.id}
+                        memo={message.memo}
+                        timestamp={moment(message.timestamp).format('L').toString()}
+                        username={message.username}
+                        avatar={message.avatar}
+                    />
+                })
+            }
         </div>
     )
 }

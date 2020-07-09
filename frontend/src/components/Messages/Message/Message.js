@@ -12,7 +12,7 @@ const Message = props => {
         userIcon = classes.Visible
         metadata =
             <span className={classes.User_name}>{props.username}
-                <span className={classes.Message_timestamp}>{'datetime ' + props.timestamp}</span>
+                <span className={classes.Message_timestamp}>{props.timestamp}</span>
             </span>
     }
 
