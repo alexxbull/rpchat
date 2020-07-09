@@ -29,7 +29,7 @@ const ReplyBox = props => {
         req.setChannel(state.currentChannel.name)
 
         try {
-            const res = await ChatClient.addMessage(req, {})
+            await ChatClient.addMessage(req, {})
             setMemo('')
         }
         catch (err) {
