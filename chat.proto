@@ -12,11 +12,6 @@ message NewMessageRequest {
   string channel = 3;
 }
 
-message NewMessageResponse {
-  int32 id = 1;
-  google.protobuf.Timestamp post_date = 2;
-}
-
 message EditMessageRequest {
   int32 id = 1;
   string memo = 2;
@@ -49,12 +44,6 @@ message EditUserRequest {
   string password = 5;
 }
 
-message BroadcastMessage {
-  NewMessageRequest chat_message = 1;
-  NewChannelRequest channel = 2;
-  NewUserRequest user = 3;
-}
-
 message GetChannelsMessage {
   int32 id = 1;
   string name = 2;
@@ -85,12 +74,22 @@ message GetMessagesMessage {
 
 message GetMessagesResponse { repeated GetMessagesMessage messages = 1; }
 
+message BroadcastRequest { string username = 1; }
+
+message BroadcastResponse {
+  GetChannelsMessage channel = 2;
+  GetMessagesMessage chat_message = 1;
+  GetUsersMessage user = 3;
+  GetUsersResponse users = 4;
+}
+
 service ChatService {
   // broadcast
-  rpc Broadcast(EmptyMessage) returns (stream BroadcastMessage);
+  rpc Broadcast(BroadcastRequest) returns (stream BroadcastResponse);
+  rpc CloseBroadcast(BroadcastRequest) returns (EmptyMessage);
 
   // add new object
-  rpc AddMessage(NewMessageRequest) returns (NewMessageResponse);
+  rpc AddMessage(NewMessageRequest) returns (EmptyMessage);
   rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
 
   // edit object

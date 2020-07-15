@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import classes from './NewChannelModal.module.css'
 
-import { ChatClient } from '../../../client/grpc_clients.js'
+// context
+import { StoreContext } from '../../../context/Store'
 
-import Modal from '../../Modal/Modal.js'
+// grpc
+import { ChatClient } from '../../../client/grpc_clients.js'
 import { NewChannelRequest } from '../../../proto/chat/chat_pb.js'
 
+// copmponents
+import Modal from '../../Modal/Modal.js'
+
 const NewChannelModal = props => {
+    const { dispatch, state } = useContext(StoreContext)
     const blankChannel = {
         name: '',
         desc: '',
@@ -31,9 +37,10 @@ const NewChannelModal = props => {
             const req = new NewChannelRequest()
             req.setName(newChannel.name)
             req.setDescription(newChannel.desc)
-            req.setOwner(window.username)
+            req.setOwner(state.username)
 
-            await ChatClient.addChannel(req, {})
+            const chatClient = ChatClient(dispatch)
+            await chatClient.addChannel(req, {})
             handleModalClose()
         }
         catch (err) {

@@ -16,6 +16,7 @@ import (
 	"github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/keepalive"
 )
 
 const (
@@ -23,6 +24,11 @@ const (
 	network  = "tcp"
 	certFile = "./cert.pem"
 	keyFile  = "./key.pem"
+)
+
+var (
+	authSrvr authServer
+	chatSrvr chatServer
 )
 
 func main() {
@@ -51,6 +57,17 @@ func main() {
 	// add stream intercepter
 	opts = append(opts, grpc.StreamInterceptor(streamIntercpeter))
 
+	// add keepalive ping
+	// var kaep = keepalive.EnforcementPolicy{
+	// 	MinTime:             5 * time.Second, // If a client pings more than once every 5 seconds, terminate the connection
+	// 	PermitWithoutStream: true,            // Allow pings even when there are no active streams
+	// }
+	var kasp = keepalive.ServerParameters{
+		Time:    100 * time.Millisecond, // Ping the client if it is idle for 5 seconds to ensure the connection is still active
+		Timeout: 1 * time.Second,        // Wait 1 second for the ping ack before assuming the connection is dead
+	}
+	opts = append(opts, grpc.KeepaliveParams(kasp))
+
 	server := grpc.NewServer(opts...)
 
 	lis, err := net.Listen(network, addr)
@@ -59,21 +76,22 @@ func main() {
 	}
 
 	// authentication services server
-	as := authServer{db}
+	authSrvr = authServer{db}
 
 	// chat services server
-	cs := chatServer{
-		db:           db,
-		newMessage:   make(chan message),
-		newChannel:   make(chan channel),
-		newUser:      make(chan user),
-		broadcastErr: make(chan error),
+	chatSrvr = chatServer{
+		db:                db,
+		getUsersResponse:  make(chan *chat.GetUsersResponse),
+		newChatMessage:    make(chan *chat.GetMessagesMessage),
+		newChannelMessage: make(chan *chat.GetChannelsMessage),
+		newUserMessage:    make(chan *chat.GetUsersMessage),
+		users:             make(map[string]user),
 	}
-	go cs.broadcast()
+	go chatSrvr.broadcast()
 
 	// register services
-	auth.RegisterAuthServiceServer(server, &as)
-	chat.RegisterChatServiceServer(server, &cs)
+	auth.RegisterAuthServiceServer(server, &authSrvr)
+	chat.RegisterChatServiceServer(server, &chatSrvr)
 
 	// start file server
 	go func() {

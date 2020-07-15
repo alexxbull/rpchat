@@ -75,49 +75,49 @@ proto.chat.ChatServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chat.EmptyMessage,
- *   !proto.chat.BroadcastMessage>}
+ *   !proto.chat.BroadcastRequest,
+ *   !proto.chat.BroadcastResponse>}
  */
 const methodDescriptor_ChatService_Broadcast = new grpc.web.MethodDescriptor(
   '/chat.ChatService/Broadcast',
   grpc.web.MethodType.SERVER_STREAMING,
-  proto.chat.EmptyMessage,
-  proto.chat.BroadcastMessage,
+  proto.chat.BroadcastRequest,
+  proto.chat.BroadcastResponse,
   /**
-   * @param {!proto.chat.EmptyMessage} request
+   * @param {!proto.chat.BroadcastRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.chat.BroadcastMessage.deserializeBinary
+  proto.chat.BroadcastResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EmptyMessage,
- *   !proto.chat.BroadcastMessage>}
+ *   !proto.chat.BroadcastRequest,
+ *   !proto.chat.BroadcastResponse>}
  */
 const methodInfo_ChatService_Broadcast = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.BroadcastMessage,
+  proto.chat.BroadcastResponse,
   /**
-   * @param {!proto.chat.EmptyMessage} request
+   * @param {!proto.chat.BroadcastRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.chat.BroadcastMessage.deserializeBinary
+  proto.chat.BroadcastResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.chat.EmptyMessage} request The request proto
+ * @param {!proto.chat.BroadcastRequest} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastResponse>}
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.broadcast =
@@ -131,10 +131,10 @@ proto.chat.ChatServiceClient.prototype.broadcast =
 
 
 /**
- * @param {!proto.chat.EmptyMessage} request The request proto
+ * @param {!proto.chat.BroadcastRequest} request The request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastMessage>}
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastResponse>}
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServicePromiseClient.prototype.broadcast =
@@ -150,14 +150,94 @@ proto.chat.ChatServicePromiseClient.prototype.broadcast =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.BroadcastRequest,
+ *   !proto.chat.EmptyMessage>}
+ */
+const methodDescriptor_ChatService_CloseBroadcast = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/CloseBroadcast',
+  grpc.web.MethodType.UNARY,
+  proto.chat.BroadcastRequest,
+  proto.chat.EmptyMessage,
+  /**
+   * @param {!proto.chat.BroadcastRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.EmptyMessage.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.chat.BroadcastRequest,
+ *   !proto.chat.EmptyMessage>}
+ */
+const methodInfo_ChatService_CloseBroadcast = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.chat.EmptyMessage,
+  /**
+   * @param {!proto.chat.BroadcastRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.EmptyMessage.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.BroadcastRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.ChatServiceClient.prototype.closeBroadcast =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.ChatService/CloseBroadcast',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_CloseBroadcast,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.BroadcastRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.EmptyMessage>}
+ *     A native promise that resolves to the response
+ */
+proto.chat.ChatServicePromiseClient.prototype.closeBroadcast =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.ChatService/CloseBroadcast',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_CloseBroadcast);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.chat.NewMessageRequest,
- *   !proto.chat.NewMessageResponse>}
+ *   !proto.chat.EmptyMessage>}
  */
 const methodDescriptor_ChatService_AddMessage = new grpc.web.MethodDescriptor(
   '/chat.ChatService/AddMessage',
   grpc.web.MethodType.UNARY,
   proto.chat.NewMessageRequest,
-  proto.chat.NewMessageResponse,
+  proto.chat.EmptyMessage,
   /**
    * @param {!proto.chat.NewMessageRequest} request
    * @return {!Uint8Array}
@@ -165,7 +245,7 @@ const methodDescriptor_ChatService_AddMessage = new grpc.web.MethodDescriptor(
   function(request) {
     return request.serializeBinary();
   },
-  proto.chat.NewMessageResponse.deserializeBinary
+  proto.chat.EmptyMessage.deserializeBinary
 );
 
 
@@ -173,10 +253,10 @@ const methodDescriptor_ChatService_AddMessage = new grpc.web.MethodDescriptor(
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.chat.NewMessageRequest,
- *   !proto.chat.NewMessageResponse>}
+ *   !proto.chat.EmptyMessage>}
  */
 const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.NewMessageResponse,
+  proto.chat.EmptyMessage,
   /**
    * @param {!proto.chat.NewMessageRequest} request
    * @return {!Uint8Array}
@@ -184,7 +264,7 @@ const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.Method
   function(request) {
     return request.serializeBinary();
   },
-  proto.chat.NewMessageResponse.deserializeBinary
+  proto.chat.EmptyMessage.deserializeBinary
 );
 
 
@@ -193,9 +273,9 @@ const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.Method
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.NewMessageResponse)}
+ * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.chat.NewMessageResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.chat.ChatServiceClient.prototype.addMessage =
@@ -214,7 +294,7 @@ proto.chat.ChatServiceClient.prototype.addMessage =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.chat.NewMessageResponse>}
+ * @return {!Promise<!proto.chat.EmptyMessage>}
  *     A native promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addMessage =

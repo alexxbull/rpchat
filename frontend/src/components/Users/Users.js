@@ -25,7 +25,8 @@ const Users = props => {
                 // load users
                 try {
                     const req = new EmptyMessage()
-                    const res = await ChatClient.getUsers(req, {})
+                    const chatClient = ChatClient(dispatch)
+                    const res = await chatClient.getUsers(req, {})
                     const newUsers = res.getUsersList().map(user => {
                         return {
                             id: user.getId(),
@@ -42,7 +43,7 @@ const Users = props => {
                 }
             }
         )()
-    }, [dispatch])
+    }, [dispatch, state.accessToken, state.listening])
 
     const usersClasses = [classes.Users]
     if (props.show)

@@ -10,7 +10,7 @@ import { NewMessageRequest } from '../../proto/chat/chat_pb.js'
 import { StoreContext } from '../../context/Store'
 
 const ReplyBox = props => {
-    const { state } = useContext(StoreContext)
+    const { dispatch, state } = useContext(StoreContext)
     const [memo, setMemo] = useState('')
     const [error, setError] = useState('')
 
@@ -25,15 +25,15 @@ const ReplyBox = props => {
 
         const req = new NewMessageRequest()
         req.setMemo(memo)
-        req.setUser(window.username)
+        req.setUser(state.username)
         req.setChannel(state.currentChannel.name)
 
         try {
-            await ChatClient.addMessage(req, {})
+            const chatClient = ChatClient(dispatch)
+            await chatClient.addMessage(req, {})
             setMemo('')
         }
         catch (err) {
-            console.log('send message error', err)
             setError(err.message)
         }
     }

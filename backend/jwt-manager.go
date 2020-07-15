@@ -14,14 +14,16 @@ import (
 )
 
 var (
-	accessSecretKey      = os.Getenv("JWT_ACCESS_SECRET")
-	accessTokenDuration  = 10 * time.Minute // 10 minutes
+	accessSecretKey     = os.Getenv("JWT_ACCESS_SECRET")
+	accessTokenDuration = 25 * time.Second
+	// accessTokenDuration  = 10 * time.Minute // 10 minutes
 	refreshSecretKey     = os.Getenv("JWT_REFRESH_SECRET")
 	refreshTokenDuration = 14 * (24 * time.Hour) // 14 days
 	ignoredRoutes        = []string{
 		"/auth.AuthService/Login",
 		"/auth.AuthService/Refresh",
 		"/auth.AuthService/Register",
+		"/chat.ChatService/Broadcast",
 	}
 )
 

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode'
+import React, { useContext, useEffect, useState } from 'react';
 
 // grpc
 import { AuthClient } from './client/grpc_clients.js'
 import { EmptyMessage } from './proto/auth/auth_pb.js'
 
 // context
-import { StoreProvider } from './context/Store.js';
+import { StoreContext } from './context/Store.js';
 
 // components
 import Toolbar from './containers/Toolbar/Toolbar.js'
@@ -14,28 +13,13 @@ import Chat from './containers/Chat/Chat.js';
 import Channels from './components/Channels/Channels.js';
 import Users from './components/Users/Users.js';
 import Backdrop from './components/Backdrop/Backdrop.js';
+import { broadcastListener } from './components/BroadcastListener/BroadcastListener.js';
+import RefreshHandlder from './components/RefreshHandler/RefreshHandler.js';
 
 const rem = 16
 
 const App = props => {
-  // authenticate user
-  const getAccessToken = async () => {
-    try {
-      const req = new EmptyMessage()
-      const res = await AuthClient.refresh(req, {})
-      window.accessToken = res.getAccessToken()
-      const decodedToken = jwtDecode(window.accessToken)
-      window.username = decodedToken.username
-    }
-    catch (err) {
-      props.history.push('/')
-    }
-  }
-
-  if (!window.accessToken) {
-    getAccessToken()
-  }
-
+  const { dispatch, state } = useContext(StoreContext)
   const [isDesktop, setDesktop] = useState(window.innerWidth > 40 * rem) // +641px = desktop
   const updateView = () => setDesktop(window.innerWidth > 40 * rem)
 
@@ -46,27 +30,49 @@ const App = props => {
     showChannels ? setShowChannels(false) : setShowUsers(false)
   }
 
+  // authenticate user
+  const getAccessToken = async () => {
+    try {
+      const req = new EmptyMessage()
+      const authClient = AuthClient(dispatch)
+      await authClient.refresh(req, {})
+    }
+    catch (err) {
+      props.history.push('/')
+    }
+  }
+
+  if (!window.accessToken) {
+    getAccessToken()
+  }
+
+  // listen for broadcasted responses 
+  useEffect(() => {
+    if (!state.listening && window.accessToken)
+      broadcastListener(state.username, dispatch)
+  }, [state.listening, state.username, dispatch])
+
+  // re-render on window resize
   useEffect(() => {
     window.addEventListener('resize', updateView)
     return () => window.removeEventListener('resize', updateView)
   })
 
   return (
-    <StoreProvider>
-      <div className="App">
-        <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
-        <Toolbar
-          show={!isDesktop}
-          isDesktop={isDesktop}
-          showChannels={setShowChannels.bind(this, true)}
-          showUsers={setShowUsers.bind(this, true)}
-        />
-        <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
-        <Chat />
-        <Users show={isDesktop || showUsers} />
-      </div>
-    </StoreProvider>
-  );
+    <div className="App">
+      <RefreshHandlder />
+      <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
+      <Toolbar
+        show={!isDesktop}
+        isDesktop={isDesktop}
+        showChannels={setShowChannels.bind(this, true)}
+        showUsers={setShowUsers.bind(this, true)}
+      />
+      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
+      <Chat />
+      <Users show={isDesktop || showUsers} />
+    </div>
+  )
 }
 
-export default App;
+export default App

@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import classes from './Register.module.css'
 
+// grpc
 import { RegisterRequest } from '../../proto/auth/auth_pb.js'
 import { AuthClient } from '../../client/grpc_clients.js'
 
+// context
+import { StoreContext } from '../../context/Store'
+
 const Register = props => {
+    const { dispatch } = useContext(StoreContext)
     const [error, setError] = useState('')
     const [email, setEmail] = useState({ value: '', styles: [classes.Email] })
     const [username, setUsername] = useState({ value: '', styles: [classes.Username] })
@@ -49,11 +54,12 @@ const Register = props => {
                 req.setUsername(username.value)
                 req.setPassword(password.value)
 
-                await AuthClient.register(req, {})
+                const authClient = AuthClient(dispatch)
+                await authClient.register(req, {})
                 props.history.push('/chat')
             }
             catch (err) {
-                console.log('reg err', err)
+                console.error('reg err', err)
                 setError(err.message)
             }
         }

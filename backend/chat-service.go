@@ -11,139 +11,187 @@ import (
 
 	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/golang/protobuf/ptypes"
-	_ "github.com/lib/pq"
+	"github.com/lib/pq"
 )
 
-type message struct {
-	channel string
-	id      int32
-	memo    string
-	user    string
-}
-
-type channel struct {
-	name  string
-	desc  string
-	owner string
-}
-
 type user struct {
-	name      string
-	email     string
-	password  string
-	imagePath string
+	broadcastErr chan error
+	name         string
+	stream       chat.ChatService_BroadcastServer
 }
 
 type chatServer struct {
-	db           *sql.DB
-	newMessage   chan message
-	newChannel   chan channel
-	newUser      chan user
-	streams      []chat.ChatService_BroadcastServer
-	broadcastErr chan error
+	db                *sql.DB
+	getUsersResponse  chan *chat.GetUsersResponse
+	newChatMessage    chan *chat.GetMessagesMessage
+	newChannelMessage chan *chat.GetChannelsMessage
+	newUserMessage    chan *chat.GetUsersMessage
+	users             map[string]user
 }
 
-func (cs *chatServer) Broadcast(req *chat.EmptyMessage, stream chat.ChatService_BroadcastServer) error {
-	err := stream.Send(&chat.BroadcastMessage{})
+func (cs *chatServer) CloseBroadcast(ctx context.Context, req *chat.BroadcastRequest) (*chat.EmptyMessage, error) {
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
+	}
+
+	// close stream for disconnected user
+	if user, ok := cs.users[req.Username]; ok {
+		fmt.Println("Closing broadcast for user", req.Username)
+		user.broadcastErr <- nil
+	} else {
+		fmt.Println("no stream for user:", req.Username)
+		return nil, status.Errorf(codes.InvalidArgument, "User: '%s' does not have an active stream", req.Username)
+	}
+
+	res := &chat.EmptyMessage{}
+	return res, nil
+}
+
+func (cs *chatServer) Broadcast(req *chat.BroadcastRequest, stream chat.ChatService_BroadcastServer) error {
+	err := stream.Send(&chat.BroadcastResponse{})
 	if err != nil {
 		return fmt.Errorf("unable to broadcast to user: %v", err)
 	}
 
-	// add client's stream for broadcasting updates
-	cs.streams = append(cs.streams, stream)
+	// create a hash representation of the user's name
+	fmt.Println("user:", req.Username)
 
-	return <-cs.broadcastErr
+	newUser := user{
+		broadcastErr: make(chan error),
+		name:         req.Username,
+		stream:       stream,
+	}
+
+	fmt.Printf("stream for user %s: %v\n", req.Username, stream)
+
+	// add user's stream for broadcasting updates if they don't have an open stream
+	if _, hasUser := cs.users[req.Username]; !hasUser {
+		cs.users[req.Username] = newUser
+	}
+
+	// block until user disconnects
+	err = <-newUser.broadcastErr
+
+	// remove disconnected user
+	delete(cs.users, req.Username)
+	fmt.Printf("Removed user %s\n", req.Username)
+
+	getUsersResponse, getUsersErr := cs.GetUsers(context.Background(), &chat.EmptyMessage{})
+	if getUsersErr != nil {
+		fmt.Printf("User %s disconnected but unable to reload user's list", req.Username)
+	}
+	fmt.Println("getUsersResponse received", getUsersResponse)
+	cs.getUsersResponse <- getUsersResponse
+
+	if err != nil {
+		fmt.Printf("Broadcast err with user %s: %v\n", req.Username, err)
+		return status.Errorf(codes.DataLoss, "Lost connection with server")
+	}
+
+	return nil
 }
 
 func (cs *chatServer) broadcast() {
 	for {
 		select {
-		case msg := <-cs.newMessage:
-			res := &chat.BroadcastMessage{
-				Channel: nil,
-				ChatMessage: &chat.NewMessageRequest{
-					Channel: msg.channel,
-					Memo:    msg.memo,
-					User:    msg.user,
-				},
+		case msg := <-cs.newChatMessage:
+			res := &chat.BroadcastResponse{
+				Channel:     nil,
+				ChatMessage: msg,
+				User:        nil,
+				Users:       nil,
 			}
-			cs.broadcastObject(res, "message")
+			cs.broadcastObject(res, "add-message")
 
-		case ch := <-cs.newChannel:
-			res := &chat.BroadcastMessage{
-				Channel: &chat.NewChannelRequest{
-					Name:        ch.name,
-					Description: ch.desc,
-					Owner:       ch.owner,
-				},
+		case ch := <-cs.newChannelMessage:
+			res := &chat.BroadcastResponse{
+				Channel:     ch,
 				ChatMessage: nil,
+				User:        nil,
+				Users:       nil,
 			}
-			cs.broadcastObject(res, "channel")
-		case usr := <-cs.newUser:
-			res := &chat.BroadcastMessage{
+			cs.broadcastObject(res, "add-channel")
+		case user := <-cs.newUserMessage:
+			res := &chat.BroadcastResponse{
 				Channel:     nil,
 				ChatMessage: nil,
-				User: &chat.NewUserRequest{
-					Name:      usr.name,
-					ImagePath: usr.imagePath,
-				},
+				User:        user,
+				Users:       nil,
 			}
-			cs.broadcastObject(res, "user")
+			cs.broadcastObject(res, "add-user")
+		case usersList := <-cs.getUsersResponse:
+			res := &chat.BroadcastResponse{
+				Channel:     nil,
+				ChatMessage: nil,
+				User:        nil,
+				Users:       usersList,
+			}
+			cs.broadcastObject(res, "users-list")
 		}
 	}
 }
 
-// broadcastObject
 // Broadcast object to all clients
-func (cs *chatServer) broadcastObject(res *chat.BroadcastMessage, origin string) {
-	for _, stream := range cs.streams {
-		err := stream.Send(res)
+func (cs *chatServer) broadcastObject(res *chat.BroadcastResponse, origin string) {
+	fmt.Println("total users", len(cs.users), cs.users)
+	for _, user := range cs.users {
+		err := user.stream.Send(res)
+		fmt.Println("broadcast object to", user.name)
 		if err != nil {
-			cs.broadcastErr <- fmt.Errorf("Unable to Broadcast %v: %v", origin, err)
-			return
+			fmt.Println("err broadcasting", err)
+			user.broadcastErr <- fmt.Errorf("Unable to Broadcast %v: %v", origin, err)
 		}
 	}
 }
 
 func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
-	sqlStmt := `INSERT INTO channels(channel_name, description, channel_owner) 
-			VALUES($1, $2, $3)`
+	sqlStmt := `
+		INSERT INTO channels(channel_name, description, channel_owner) 
+		VALUES($1, $2, $3)
+		RETURNING id;
+	`
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		return res, fmt.Errorf("Unable to Prepare new channel insertion: %v", err)
+		fmt.Printf("Unable to Prepare new channel insertion: %v", err)
+		return nil, status.Errorf(codes.Internal, "Unable to add channel. Please try agaain later.")
 	}
 
-	_, err = stmt.Exec(req.Name, req.Description, req.Owner)
+	var id int32
+	err = stmt.QueryRow(req.Name, req.Description, req.Owner).Scan(&id)
 	if err != nil {
-		return res, fmt.Errorf("Unable to Execute new message insertion: %v", err)
+		fmt.Printf("Unable to Execute new channel insertion: %v", err)
+		return nil, status.Errorf(codes.Internal, "Unable to add channel. Please try agaain later.")
 	}
 
-	cs.newChannel <- channel{
-		name:  req.Name,
-		desc:  req.Description,
-		owner: req.Owner,
+	cs.newChannelMessage <- &chat.GetChannelsMessage{
+		Description: req.Description,
+		Id:          id,
+		Name:        req.Name,
+		Owner:       req.Owner,
 	}
 
 	return res, nil
 }
 
-func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.NewMessageResponse, error) {
+func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageRequest) (*chat.EmptyMessage, error) {
 	db := cs.db
-	res := &chat.NewMessageResponse{}
-	sqlStmt := `INSERT INTO messages(user_name, channel_name, message) 
-			VALUES($1, $2, $3)
-			RETURNING id, post_date;`
+	sqlStmt := `
+		INSERT INTO messages(user_name, channel_name, message) 
+		VALUES($1, $2, $3)
+		RETURNING id, post_date;
+	`
 
 	stmt, err := db.Prepare(sqlStmt)
 	if err != nil {
-		return res, fmt.Errorf("Unable to Prepare new message insertion: %v", err)
+		fmt.Printf("Unable to Prepare new message insertion: %v", err)
+		return nil, status.Errorf(codes.Internal, "Unable to send message. Please try agaain later.")
 	}
 
 	var id int32
-	var postDate time.Time
-	err = stmt.QueryRow(req.User, req.Channel, req.Memo).Scan(&id, &postDate)
+	var date time.Time
+	err = stmt.QueryRow(req.User, req.Channel, req.Memo).Scan(&id, &date)
 	if err != nil {
 		errMsg := err.Error()
 
@@ -157,20 +205,47 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 			err = status.Errorf(codes.Internal, "Unable to send message. Please try again later.")
 		}
 
-		return res, err
+		return nil, err
 	}
 
 	fmt.Println("Message added to db")
 
-	cs.newMessage <- message{
-		channel: req.Channel,
-		id:      id,
-		memo:    req.Memo,
-		user:    req.User,
+	// query sender's avatar
+	sqlStmt = `
+		SELECT image_path
+		FROM users 
+		WHERE user_name = $1
+	`
+
+	stmt, err = cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for selecting sender's avatar:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to broadcast message. Please try again later.")
 	}
 
-	res.Id = id
-	res.PostDate, _ = ptypes.TimestampProto(postDate)
+	var avatar string
+	err = stmt.QueryRow(req.User).Scan(&avatar)
+	if err != nil {
+		fmt.Println("Unable to Query sender's avatar:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to broadcast message. Please try again later.")
+	}
+
+	ts, err := ptypes.TimestampProto(date)
+	if err != nil {
+		fmt.Println("Unable to convert database time value to proto timestamp:", err)
+		return nil, status.Errorf(codes.Internal, "Unable to add messages. Please try again later")
+	}
+
+	cs.newChatMessage <- &chat.GetMessagesMessage{
+		Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Channel:   req.Channel,
+		Id:        id,
+		Memo:      req.Memo,
+		Timestamp: ts,
+		User:      req.User,
+	}
+
+	res := &chat.EmptyMessage{}
 	return res, nil
 }
 
@@ -314,9 +389,16 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
 	}
 
+	// get string list of user names currently logged in
+	var usersNameList []string
+	for _, user := range cs.users {
+		usersNameList = append(usersNameList, user.name)
+	}
+
 	sqlStmt := `
-	SELECT id, user_name, image_path
-	FROM users
+		SELECT id, user_name, image_path
+		FROM users
+		WHERE user_name = ANY($1)
 	`
 
 	stmt, err := cs.db.Prepare(sqlStmt)
@@ -325,7 +407,7 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
 	}
 
-	rows, err := stmt.Query()
+	rows, err := stmt.Query(pq.Array(usersNameList))
 	if err != nil {
 		fmt.Println("Unable to Query users", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
@@ -333,7 +415,9 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 	defer rows.Close()
 
 	var users []*chat.GetUsersMessage
+	var count int
 	for rows.Next() {
+		count++
 		var username, avatar string
 		var id int32
 		err = rows.Scan(&id, &username, &avatar)
@@ -349,6 +433,7 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		}
 		users = append(users, user)
 	}
+	fmt.Println("returning users list of size", count)
 
 	res := &chat.GetUsersResponse{Users: users}
 	return res, nil

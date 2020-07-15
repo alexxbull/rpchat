@@ -4,16 +4,21 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+// context
+import { StoreProvider } from './context/Store';
+
+// components
 import App from './App.js';
 import Login from './containers/Login/Login.js'
 import Register from './containers/Register/Register';
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Route path="/" exact component={Login} />
-      <Route path="/register" exact component={Register} />
-      <Route path="/chat" exact component={App} />
+      <StoreProvider>
+        <Route path="/" exact component={Login} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/chat" exact component={App} />
+      </StoreProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

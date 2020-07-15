@@ -1,5 +1,7 @@
+// js libraries
 import React, { useContext, useEffect, useState } from 'react';
 
+// css
 import classes from './Channels.module.css'
 
 // grpc
@@ -28,7 +30,8 @@ const Channels = props => {
                 // load channels
                 try {
                     const req = new EmptyMessage()
-                    const res = await ChatClient.getChannels(req, {})
+                    const chatClient = ChatClient(dispatch)
+                    const res = await chatClient.getChannels(req, {})
                     let currentChannel = null
                     const newChannels = res.getChannelsList().map((channel, index) => {
                         const ch = {
@@ -53,7 +56,7 @@ const Channels = props => {
                 }
             }
         )()
-    }, [dispatch])
+    }, [dispatch, state.accessToken])
 
     const channelsClasses = [classes.Channels]
     if (props.show)

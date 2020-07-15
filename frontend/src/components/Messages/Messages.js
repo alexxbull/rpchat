@@ -14,7 +14,6 @@ import { StoreContext } from '../../context/Store';
 // components
 import Message from './Message/Message';
 
-
 const Messages = props => {
     const { dispatch, state } = useContext(StoreContext)
 
@@ -23,19 +22,27 @@ const Messages = props => {
         // load messages
         (
             async () => {
-                const req = new GetMessagesRequest()
-                req.setChannel(state.currentChannel.name)
-                const res = await ChatClient.getMessages(req, {})
-                const newMessages = res.getMessagesList().map(message => {
-                    return {
-                        id: message.getId(),
-                        memo: message.getMemo(),
-                        timestamp: message.getTimestamp().toDate(),
-                        username: message.getUser(),
-                        avatar: message.getAvatar(),
-                    }
-                })
-                dispatch({ type: 'set-messages', payload: newMessages })
+                try {
+                    const req = new GetMessagesRequest()
+                    req.setChannel(state.currentChannel.name)
+
+                    const chatClient = ChatClient(dispatch)
+                    const res = await chatClient.getMessages(req, {})
+                    const newMessages = res.getMessagesList().map(message => {
+                        return {
+                            avatar: message.getAvatar(),
+                            channel: message.getChannel(),
+                            id: message.getId(),
+                            memo: message.getMemo(),
+                            timestamp: message.getTimestamp().toDate(),
+                            username: message.getUser(),
+                        }
+                    })
+                    dispatch({ type: 'set-messages', payload: newMessages })
+                } catch (err) {
+                    console.error('error loading messages:', err.message)
+                    // send to 404 page
+                }
             }
         )()
     }, [dispatch, state.currentChannel])

@@ -111,53 +111,6 @@ func (m *NewMessageRequest) GetChannel() string {
 	return ""
 }
 
-type NewMessageResponse struct {
-	Id                   int32                `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	PostDate             *timestamp.Timestamp `protobuf:"bytes,2,opt,name=post_date,json=postDate,proto3" json:"post_date,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *NewMessageResponse) Reset()         { *m = NewMessageResponse{} }
-func (m *NewMessageResponse) String() string { return proto.CompactTextString(m) }
-func (*NewMessageResponse) ProtoMessage()    {}
-func (*NewMessageResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{2}
-}
-
-func (m *NewMessageResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_NewMessageResponse.Unmarshal(m, b)
-}
-func (m *NewMessageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_NewMessageResponse.Marshal(b, m, deterministic)
-}
-func (m *NewMessageResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NewMessageResponse.Merge(m, src)
-}
-func (m *NewMessageResponse) XXX_Size() int {
-	return xxx_messageInfo_NewMessageResponse.Size(m)
-}
-func (m *NewMessageResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_NewMessageResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_NewMessageResponse proto.InternalMessageInfo
-
-func (m *NewMessageResponse) GetId() int32 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
-
-func (m *NewMessageResponse) GetPostDate() *timestamp.Timestamp {
-	if m != nil {
-		return m.PostDate
-	}
-	return nil
-}
-
 type EditMessageRequest struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Memo                 string   `protobuf:"bytes,2,opt,name=memo,proto3" json:"memo,omitempty"`
@@ -170,7 +123,7 @@ func (m *EditMessageRequest) Reset()         { *m = EditMessageRequest{} }
 func (m *EditMessageRequest) String() string { return proto.CompactTextString(m) }
 func (*EditMessageRequest) ProtoMessage()    {}
 func (*EditMessageRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{3}
+	return fileDescriptor_8c585a45e2093e54, []int{2}
 }
 
 func (m *EditMessageRequest) XXX_Unmarshal(b []byte) error {
@@ -218,7 +171,7 @@ func (m *NewChannelRequest) Reset()         { *m = NewChannelRequest{} }
 func (m *NewChannelRequest) String() string { return proto.CompactTextString(m) }
 func (*NewChannelRequest) ProtoMessage()    {}
 func (*NewChannelRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{4}
+	return fileDescriptor_8c585a45e2093e54, []int{3}
 }
 
 func (m *NewChannelRequest) XXX_Unmarshal(b []byte) error {
@@ -273,7 +226,7 @@ func (m *EditChannelRequest) Reset()         { *m = EditChannelRequest{} }
 func (m *EditChannelRequest) String() string { return proto.CompactTextString(m) }
 func (*EditChannelRequest) ProtoMessage()    {}
 func (*EditChannelRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{5}
+	return fileDescriptor_8c585a45e2093e54, []int{4}
 }
 
 func (m *EditChannelRequest) XXX_Unmarshal(b []byte) error {
@@ -329,7 +282,7 @@ func (m *NewUserRequest) Reset()         { *m = NewUserRequest{} }
 func (m *NewUserRequest) String() string { return proto.CompactTextString(m) }
 func (*NewUserRequest) ProtoMessage()    {}
 func (*NewUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{6}
+	return fileDescriptor_8c585a45e2093e54, []int{5}
 }
 
 func (m *NewUserRequest) XXX_Unmarshal(b []byte) error {
@@ -393,7 +346,7 @@ func (m *EditUserRequest) Reset()         { *m = EditUserRequest{} }
 func (m *EditUserRequest) String() string { return proto.CompactTextString(m) }
 func (*EditUserRequest) ProtoMessage()    {}
 func (*EditUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{7}
+	return fileDescriptor_8c585a45e2093e54, []int{6}
 }
 
 func (m *EditUserRequest) XXX_Unmarshal(b []byte) error {
@@ -449,61 +402,6 @@ func (m *EditUserRequest) GetPassword() string {
 	return ""
 }
 
-type BroadcastMessage struct {
-	ChatMessage          *NewMessageRequest `protobuf:"bytes,1,opt,name=chat_message,json=chatMessage,proto3" json:"chat_message,omitempty"`
-	Channel              *NewChannelRequest `protobuf:"bytes,2,opt,name=channel,proto3" json:"channel,omitempty"`
-	User                 *NewUserRequest    `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
-}
-
-func (m *BroadcastMessage) Reset()         { *m = BroadcastMessage{} }
-func (m *BroadcastMessage) String() string { return proto.CompactTextString(m) }
-func (*BroadcastMessage) ProtoMessage()    {}
-func (*BroadcastMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{8}
-}
-
-func (m *BroadcastMessage) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BroadcastMessage.Unmarshal(m, b)
-}
-func (m *BroadcastMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BroadcastMessage.Marshal(b, m, deterministic)
-}
-func (m *BroadcastMessage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BroadcastMessage.Merge(m, src)
-}
-func (m *BroadcastMessage) XXX_Size() int {
-	return xxx_messageInfo_BroadcastMessage.Size(m)
-}
-func (m *BroadcastMessage) XXX_DiscardUnknown() {
-	xxx_messageInfo_BroadcastMessage.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_BroadcastMessage proto.InternalMessageInfo
-
-func (m *BroadcastMessage) GetChatMessage() *NewMessageRequest {
-	if m != nil {
-		return m.ChatMessage
-	}
-	return nil
-}
-
-func (m *BroadcastMessage) GetChannel() *NewChannelRequest {
-	if m != nil {
-		return m.Channel
-	}
-	return nil
-}
-
-func (m *BroadcastMessage) GetUser() *NewUserRequest {
-	if m != nil {
-		return m.User
-	}
-	return nil
-}
-
 type GetChannelsMessage struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -518,7 +416,7 @@ func (m *GetChannelsMessage) Reset()         { *m = GetChannelsMessage{} }
 func (m *GetChannelsMessage) String() string { return proto.CompactTextString(m) }
 func (*GetChannelsMessage) ProtoMessage()    {}
 func (*GetChannelsMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{9}
+	return fileDescriptor_8c585a45e2093e54, []int{7}
 }
 
 func (m *GetChannelsMessage) XXX_Unmarshal(b []byte) error {
@@ -578,7 +476,7 @@ func (m *GetChannelsResponse) Reset()         { *m = GetChannelsResponse{} }
 func (m *GetChannelsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetChannelsResponse) ProtoMessage()    {}
 func (*GetChannelsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{10}
+	return fileDescriptor_8c585a45e2093e54, []int{8}
 }
 
 func (m *GetChannelsResponse) XXX_Unmarshal(b []byte) error {
@@ -619,7 +517,7 @@ func (m *GetUsersMessage) Reset()         { *m = GetUsersMessage{} }
 func (m *GetUsersMessage) String() string { return proto.CompactTextString(m) }
 func (*GetUsersMessage) ProtoMessage()    {}
 func (*GetUsersMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{11}
+	return fileDescriptor_8c585a45e2093e54, []int{9}
 }
 
 func (m *GetUsersMessage) XXX_Unmarshal(b []byte) error {
@@ -672,7 +570,7 @@ func (m *GetUsersResponse) Reset()         { *m = GetUsersResponse{} }
 func (m *GetUsersResponse) String() string { return proto.CompactTextString(m) }
 func (*GetUsersResponse) ProtoMessage()    {}
 func (*GetUsersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{12}
+	return fileDescriptor_8c585a45e2093e54, []int{10}
 }
 
 func (m *GetUsersResponse) XXX_Unmarshal(b []byte) error {
@@ -711,7 +609,7 @@ func (m *GetMessagesRequest) Reset()         { *m = GetMessagesRequest{} }
 func (m *GetMessagesRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMessagesRequest) ProtoMessage()    {}
 func (*GetMessagesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{13}
+	return fileDescriptor_8c585a45e2093e54, []int{11}
 }
 
 func (m *GetMessagesRequest) XXX_Unmarshal(b []byte) error {
@@ -755,7 +653,7 @@ func (m *GetMessagesMessage) Reset()         { *m = GetMessagesMessage{} }
 func (m *GetMessagesMessage) String() string { return proto.CompactTextString(m) }
 func (*GetMessagesMessage) ProtoMessage()    {}
 func (*GetMessagesMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{14}
+	return fileDescriptor_8c585a45e2093e54, []int{12}
 }
 
 func (m *GetMessagesMessage) XXX_Unmarshal(b []byte) error {
@@ -829,7 +727,7 @@ func (m *GetMessagesResponse) Reset()         { *m = GetMessagesResponse{} }
 func (m *GetMessagesResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMessagesResponse) ProtoMessage()    {}
 func (*GetMessagesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8c585a45e2093e54, []int{15}
+	return fileDescriptor_8c585a45e2093e54, []int{13}
 }
 
 func (m *GetMessagesResponse) XXX_Unmarshal(b []byte) error {
@@ -857,16 +755,116 @@ func (m *GetMessagesResponse) GetMessages() []*GetMessagesMessage {
 	return nil
 }
 
+type BroadcastRequest struct {
+	Username             string   `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *BroadcastRequest) Reset()         { *m = BroadcastRequest{} }
+func (m *BroadcastRequest) String() string { return proto.CompactTextString(m) }
+func (*BroadcastRequest) ProtoMessage()    {}
+func (*BroadcastRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{14}
+}
+
+func (m *BroadcastRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BroadcastRequest.Unmarshal(m, b)
+}
+func (m *BroadcastRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BroadcastRequest.Marshal(b, m, deterministic)
+}
+func (m *BroadcastRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BroadcastRequest.Merge(m, src)
+}
+func (m *BroadcastRequest) XXX_Size() int {
+	return xxx_messageInfo_BroadcastRequest.Size(m)
+}
+func (m *BroadcastRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_BroadcastRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BroadcastRequest proto.InternalMessageInfo
+
+func (m *BroadcastRequest) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+type BroadcastResponse struct {
+	Channel              *GetChannelsMessage `protobuf:"bytes,2,opt,name=channel,proto3" json:"channel,omitempty"`
+	ChatMessage          *GetMessagesMessage `protobuf:"bytes,1,opt,name=chat_message,json=chatMessage,proto3" json:"chat_message,omitempty"`
+	User                 *GetUsersMessage    `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
+	Users                *GetUsersResponse   `protobuf:"bytes,4,opt,name=users,proto3" json:"users,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
+}
+
+func (m *BroadcastResponse) Reset()         { *m = BroadcastResponse{} }
+func (m *BroadcastResponse) String() string { return proto.CompactTextString(m) }
+func (*BroadcastResponse) ProtoMessage()    {}
+func (*BroadcastResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8c585a45e2093e54, []int{15}
+}
+
+func (m *BroadcastResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BroadcastResponse.Unmarshal(m, b)
+}
+func (m *BroadcastResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BroadcastResponse.Marshal(b, m, deterministic)
+}
+func (m *BroadcastResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BroadcastResponse.Merge(m, src)
+}
+func (m *BroadcastResponse) XXX_Size() int {
+	return xxx_messageInfo_BroadcastResponse.Size(m)
+}
+func (m *BroadcastResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_BroadcastResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BroadcastResponse proto.InternalMessageInfo
+
+func (m *BroadcastResponse) GetChannel() *GetChannelsMessage {
+	if m != nil {
+		return m.Channel
+	}
+	return nil
+}
+
+func (m *BroadcastResponse) GetChatMessage() *GetMessagesMessage {
+	if m != nil {
+		return m.ChatMessage
+	}
+	return nil
+}
+
+func (m *BroadcastResponse) GetUser() *GetUsersMessage {
+	if m != nil {
+		return m.User
+	}
+	return nil
+}
+
+func (m *BroadcastResponse) GetUsers() *GetUsersResponse {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*EmptyMessage)(nil), "chat.EmptyMessage")
 	proto.RegisterType((*NewMessageRequest)(nil), "chat.NewMessageRequest")
-	proto.RegisterType((*NewMessageResponse)(nil), "chat.NewMessageResponse")
 	proto.RegisterType((*EditMessageRequest)(nil), "chat.EditMessageRequest")
 	proto.RegisterType((*NewChannelRequest)(nil), "chat.NewChannelRequest")
 	proto.RegisterType((*EditChannelRequest)(nil), "chat.EditChannelRequest")
 	proto.RegisterType((*NewUserRequest)(nil), "chat.NewUserRequest")
 	proto.RegisterType((*EditUserRequest)(nil), "chat.EditUserRequest")
-	proto.RegisterType((*BroadcastMessage)(nil), "chat.BroadcastMessage")
 	proto.RegisterType((*GetChannelsMessage)(nil), "chat.GetChannelsMessage")
 	proto.RegisterType((*GetChannelsResponse)(nil), "chat.GetChannelsResponse")
 	proto.RegisterType((*GetUsersMessage)(nil), "chat.GetUsersMessage")
@@ -874,6 +872,8 @@ func init() {
 	proto.RegisterType((*GetMessagesRequest)(nil), "chat.GetMessagesRequest")
 	proto.RegisterType((*GetMessagesMessage)(nil), "chat.GetMessagesMessage")
 	proto.RegisterType((*GetMessagesResponse)(nil), "chat.GetMessagesResponse")
+	proto.RegisterType((*BroadcastRequest)(nil), "chat.BroadcastRequest")
+	proto.RegisterType((*BroadcastResponse)(nil), "chat.BroadcastResponse")
 }
 
 func init() {
@@ -881,53 +881,53 @@ func init() {
 }
 
 var fileDescriptor_8c585a45e2093e54 = []byte{
-	// 730 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xd1, 0x6e, 0xd3, 0x30,
-	0x14, 0x55, 0x9a, 0x76, 0x6b, 0x6f, 0xa6, 0x6d, 0x98, 0x31, 0xd2, 0x4a, 0x88, 0x91, 0xa7, 0x4a,
-	0x48, 0x1d, 0x14, 0x04, 0x1b, 0x20, 0x4d, 0x6c, 0x4c, 0x7b, 0x40, 0xab, 0xa6, 0xc0, 0x1e, 0x51,
-	0xe5, 0x35, 0xa6, 0x8d, 0x94, 0xc4, 0x21, 0x76, 0x57, 0xf1, 0x21, 0x7c, 0x05, 0x3f, 0xc0, 0xa7,
-	0xf1, 0x88, 0x62, 0xc7, 0xae, 0xdb, 0x64, 0xd1, 0x78, 0x8b, 0xaf, 0xaf, 0xef, 0x39, 0xe7, 0xfa,
-	0x5c, 0x07, 0x60, 0x32, 0xc3, 0x7c, 0x90, 0x66, 0x94, 0x53, 0xd4, 0xcc, 0xbf, 0x7b, 0x4f, 0xa7,
-	0x94, 0x4e, 0x23, 0x72, 0x28, 0x62, 0x37, 0xf3, 0xef, 0x87, 0x3c, 0x8c, 0x09, 0xe3, 0x38, 0x4e,
-	0x65, 0x9a, 0xb7, 0x0d, 0x5b, 0xe7, 0x71, 0xca, 0x7f, 0x5e, 0x12, 0xc6, 0xf0, 0x94, 0x78, 0xd7,
-	0xf0, 0x60, 0x44, 0x16, 0xc5, 0xca, 0x27, 0x3f, 0xe6, 0x84, 0x71, 0x84, 0xa0, 0x39, 0x67, 0x24,
-	0x73, 0xad, 0x03, 0xab, 0xdf, 0xf1, 0xc5, 0x77, 0x1e, 0x8b, 0x49, 0x4c, 0xdd, 0x86, 0x8c, 0xe5,
-	0xdf, 0xc8, 0x85, 0xcd, 0xc9, 0x0c, 0x27, 0x09, 0x89, 0x5c, 0x5b, 0x84, 0xd5, 0xd2, 0xfb, 0x06,
-	0xc8, 0x2c, 0xcb, 0x52, 0x9a, 0x30, 0x82, 0xb6, 0xa1, 0x11, 0x06, 0xa2, 0x6a, 0xcb, 0x6f, 0x84,
-	0x01, 0x7a, 0x0b, 0x9d, 0x94, 0x32, 0x3e, 0x0e, 0x30, 0x27, 0xa2, 0xb0, 0x33, 0xec, 0x0d, 0xa4,
-	0x82, 0x81, 0x52, 0x30, 0xf8, 0xaa, 0x14, 0xf8, 0xed, 0x3c, 0xf9, 0x13, 0xe6, 0xc4, 0x3b, 0x02,
-	0x74, 0x1e, 0x84, 0x7c, 0x8d, 0xf6, 0x7a, 0xf9, 0x0a, 0xca, 0xde, 0x58, 0xe8, 0x3d, 0x93, 0x34,
-	0x0d, 0xbd, 0x09, 0x8e, 0x89, 0xd2, 0x9b, 0x7f, 0xa3, 0x03, 0x70, 0x02, 0xc2, 0x26, 0x59, 0x98,
-	0xf2, 0x90, 0x26, 0x45, 0x0d, 0x33, 0x84, 0xf6, 0xa0, 0x45, 0x17, 0x09, 0xc9, 0x0a, 0xed, 0x72,
-	0xe1, 0x45, 0x92, 0xda, 0x1a, 0x42, 0x17, 0xda, 0x34, 0x0a, 0xc6, 0x06, 0xca, 0x26, 0x8d, 0x82,
-	0x51, 0x0e, 0xd4, 0x85, 0x76, 0x42, 0x16, 0x72, 0x4b, 0xa2, 0x6c, 0x26, 0x64, 0x31, 0xaa, 0xe0,
-	0x60, 0x97, 0x38, 0x78, 0x73, 0xd8, 0x1e, 0x91, 0xc5, 0x35, 0x23, 0x59, 0x9d, 0x96, 0x3d, 0x68,
-	0x91, 0x18, 0x87, 0x51, 0x51, 0x5f, 0x2e, 0x50, 0x0f, 0xda, 0x29, 0x66, 0x6c, 0x41, 0xb3, 0xa0,
-	0x28, 0xad, 0xd7, 0xe8, 0x09, 0x40, 0x18, 0xe3, 0x29, 0x19, 0xa7, 0x98, 0xcf, 0xdc, 0xa6, 0xd8,
-	0xed, 0x88, 0xc8, 0x15, 0xe6, 0x33, 0xef, 0x97, 0x05, 0x3b, 0xb9, 0x4a, 0x13, 0xb8, 0x46, 0x62,
-	0x35, 0xbe, 0x62, 0x6a, 0x1b, 0x4c, 0x9f, 0xc1, 0x56, 0x5e, 0x44, 0xf3, 0x92, 0xc8, 0x0e, 0x8d,
-	0x82, 0x2b, 0x45, 0xcd, 0xa4, 0xdd, 0x5a, 0xa5, 0xed, 0xfd, 0xb6, 0x60, 0xf7, 0x34, 0xa3, 0x38,
-	0x98, 0x60, 0xa6, 0xdc, 0x81, 0xde, 0xc1, 0x56, 0x3e, 0x1b, 0xe3, 0x58, 0xae, 0x05, 0x39, 0x67,
-	0xf8, 0x78, 0x20, 0x86, 0xa7, 0x64, 0x7e, 0xdf, 0xc9, 0xe3, 0xea, 0xec, 0xcb, 0xa5, 0xc3, 0x1b,
-	0x6b, 0xc7, 0x56, 0x6f, 0x58, 0x5b, 0x1f, 0xf5, 0x8b, 0xe1, 0xb1, 0x45, 0xfe, 0x9e, 0xce, 0x37,
-	0x7a, 0x25, 0x47, 0xca, 0x4b, 0x01, 0x5d, 0x10, 0xe5, 0x14, 0xa6, 0x20, 0x2b, 0x5c, 0x6c, 0x78,
-	0xa3, 0xd2, 0x9c, 0x76, 0x8d, 0x39, 0x9b, 0xa6, 0x39, 0x3f, 0xc3, 0x43, 0x03, 0x51, 0xcf, 0xe5,
-	0x6b, 0x68, 0x17, 0xec, 0x99, 0x6b, 0x1d, 0xd8, 0x7d, 0x67, 0xe8, 0x4a, 0xda, 0x65, 0x7a, 0xbe,
-	0xce, 0xf4, 0x2e, 0x61, 0xe7, 0x82, 0x08, 0x0b, 0xfc, 0x17, 0xf7, 0x7d, 0xd8, 0xc0, 0xb7, 0x98,
-	0x63, 0x35, 0x37, 0xc5, 0xca, 0x3b, 0x81, 0x5d, 0x55, 0x4e, 0x13, 0x7b, 0x0e, 0xad, 0xbc, 0x53,
-	0x8a, 0xd5, 0x23, 0xcd, 0xca, 0x44, 0xf5, 0x65, 0x8e, 0x37, 0x10, 0xed, 0x2c, 0x82, 0x4c, 0xd9,
-	0xd2, 0x78, 0xa3, 0xac, 0xd5, 0x37, 0xea, 0x8f, 0xb5, 0x72, 0xa0, 0x46, 0xc3, 0xfd, 0x1f, 0x3e,
-	0x74, 0x04, 0x1d, 0xfd, 0xe4, 0x8a, 0xde, 0xd7, 0x3f, 0x69, 0xcb, 0x64, 0xfd, 0xe8, 0xb6, 0x8c,
-	0x47, 0x77, 0xd9, 0xab, 0x8d, 0x95, 0x5e, 0xc9, 0x7b, 0x5c, 0x4a, 0x5d, 0xde, 0x63, 0x61, 0xf2,
-	0xf2, 0x3d, 0xae, 0xc9, 0xf4, 0x75, 0xe6, 0xf0, 0xaf, 0x0d, 0xce, 0xd9, 0x0c, 0xf3, 0x2f, 0x24,
-	0xbb, 0x0d, 0x27, 0x04, 0x1d, 0x43, 0x47, 0xcf, 0x10, 0x42, 0xb2, 0x80, 0xf9, 0xcf, 0xe8, 0xed,
-	0xcb, 0xd8, 0xfa, 0xa0, 0xbd, 0xb0, 0xd0, 0x09, 0xc0, 0xc7, 0x20, 0x50, 0x9d, 0xbc, 0x6b, 0xc4,
-	0x7a, 0x6e, 0x79, 0xa3, 0x50, 0x70, 0x2c, 0x0a, 0x14, 0x9e, 0x43, 0x77, 0x0d, 0x5b, 0xaf, 0x82,
-	0x15, 0x7a, 0x0f, 0x8e, 0xf1, 0x4f, 0x40, 0x05, 0x46, 0xf9, 0x37, 0x51, 0x77, 0x58, 0x01, 0x1b,
-	0x87, 0xef, 0x81, 0xfc, 0x01, 0x1c, 0x63, 0x50, 0x2a, 0x5b, 0xd6, 0x2d, 0xcd, 0x93, 0x96, 0xfc,
-	0x06, 0xda, 0xca, 0xd0, 0x75, 0xdd, 0x2e, 0xcd, 0xc6, 0xa9, 0x40, 0x55, 0xd7, 0x8a, 0xca, 0x37,
-	0xad, 0x28, 0x77, 0x2b, 0x76, 0x64, 0x8d, 0x9b, 0x0d, 0x61, 0xc9, 0x57, 0xff, 0x02, 0x00, 0x00,
-	0xff, 0xff, 0x93, 0x4d, 0x8e, 0xee, 0x49, 0x08, 0x00, 0x00,
+	// 728 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xdd, 0x6e, 0xd3, 0x30,
+	0x14, 0x56, 0xfa, 0xb3, 0xb5, 0x27, 0x53, 0xb7, 0x99, 0x31, 0xd2, 0x4a, 0x88, 0x91, 0xab, 0x21,
+	0x50, 0x86, 0x0a, 0x42, 0x43, 0x9b, 0x40, 0x6c, 0x9a, 0x76, 0x81, 0x56, 0x4d, 0x81, 0x5d, 0x57,
+	0x5e, 0x63, 0xda, 0x48, 0x49, 0x1c, 0x62, 0x77, 0x15, 0x0f, 0xc2, 0xa3, 0x20, 0xf1, 0x32, 0xbc,
+	0x0b, 0x8a, 0x7f, 0x52, 0xb7, 0xc9, 0xc2, 0xb8, 0xf3, 0x39, 0x3e, 0xe7, 0x7c, 0xdf, 0xf9, 0xb3,
+	0x01, 0x26, 0x33, 0xcc, 0xbd, 0x34, 0xa3, 0x9c, 0xa2, 0x56, 0x7e, 0x1e, 0x3c, 0x9b, 0x52, 0x3a,
+	0x8d, 0xc8, 0x91, 0xd0, 0xdd, 0xce, 0xbf, 0x1d, 0xf1, 0x30, 0x26, 0x8c, 0xe3, 0x38, 0x95, 0x66,
+	0x6e, 0x0f, 0xb6, 0x2e, 0xe2, 0x94, 0xff, 0xb8, 0x22, 0x8c, 0xe1, 0x29, 0x71, 0x6f, 0x60, 0x77,
+	0x44, 0x16, 0x4a, 0xf2, 0xc9, 0xf7, 0x39, 0x61, 0x1c, 0x21, 0x68, 0xcd, 0x19, 0xc9, 0x1c, 0xeb,
+	0xc0, 0x3a, 0xec, 0xfa, 0xe2, 0x9c, 0xeb, 0x62, 0x12, 0x53, 0xa7, 0x21, 0x75, 0xf9, 0x19, 0x39,
+	0xb0, 0x39, 0x99, 0xe1, 0x24, 0x21, 0x91, 0xd3, 0x14, 0x6a, 0x2d, 0xba, 0xc7, 0x80, 0x2e, 0x82,
+	0x90, 0xaf, 0xc5, 0xed, 0x41, 0x23, 0x0c, 0x44, 0xd4, 0xb6, 0xdf, 0x08, 0x83, 0xaa, 0x98, 0xee,
+	0x58, 0x10, 0x3a, 0x97, 0x71, 0x0c, 0x42, 0x09, 0x8e, 0x89, 0x26, 0x94, 0x9f, 0xd1, 0x01, 0xd8,
+	0x01, 0x61, 0x93, 0x2c, 0x4c, 0x79, 0x48, 0x13, 0x15, 0xc3, 0x54, 0xa1, 0x3d, 0x68, 0xd3, 0x45,
+	0x42, 0x32, 0x45, 0x4e, 0x0a, 0x6e, 0x24, 0xa9, 0xad, 0x21, 0xf4, 0xa1, 0x43, 0xa3, 0x60, 0x6c,
+	0xa0, 0x6c, 0xd2, 0x28, 0x18, 0xe5, 0x40, 0x7d, 0xe8, 0x24, 0x64, 0x21, 0xaf, 0x24, 0xca, 0x66,
+	0x42, 0x16, 0xa3, 0x0a, 0x0e, 0xcd, 0x12, 0x07, 0x77, 0x0e, 0xbd, 0x11, 0x59, 0xdc, 0x30, 0x92,
+	0xd5, 0xe5, 0xb2, 0x07, 0x6d, 0x12, 0xe3, 0x30, 0x52, 0xf1, 0xa5, 0x80, 0x06, 0xd0, 0x49, 0x31,
+	0x63, 0x0b, 0x9a, 0x05, 0x2a, 0x74, 0x21, 0xa3, 0xa7, 0x00, 0x61, 0x8c, 0xa7, 0x64, 0x9c, 0x62,
+	0x3e, 0x73, 0x5a, 0xe2, 0xb6, 0x2b, 0x34, 0xd7, 0x98, 0xcf, 0xdc, 0x9f, 0x16, 0x6c, 0xe7, 0x59,
+	0x9a, 0xc0, 0x35, 0x29, 0x56, 0xe3, 0x6b, 0xa6, 0x4d, 0x83, 0xe9, 0x73, 0xd8, 0xca, 0x83, 0x14,
+	0xbc, 0x24, 0xb2, 0x4d, 0xa3, 0xe0, 0x5a, 0x53, 0x33, 0x69, 0xb7, 0x57, 0x69, 0xbb, 0x29, 0xa0,
+	0x4b, 0xa2, 0x6b, 0xcf, 0xd4, 0x78, 0x54, 0xcd, 0x85, 0x51, 0xed, 0xca, 0x76, 0x37, 0x6b, 0xda,
+	0xdd, 0x32, 0xdb, 0xfd, 0x19, 0x1e, 0x19, 0x88, 0x3e, 0x61, 0x29, 0x4d, 0x18, 0x41, 0x6f, 0xa1,
+	0xa3, 0x66, 0x95, 0x39, 0xd6, 0x41, 0xf3, 0xd0, 0x1e, 0x3a, 0x9e, 0xd8, 0xa6, 0x32, 0x3d, 0xbf,
+	0xb0, 0x74, 0xaf, 0x60, 0xfb, 0x92, 0x88, 0xa2, 0xfe, 0x17, 0xf7, 0x7d, 0xd8, 0xc0, 0x77, 0x98,
+	0x63, 0x3d, 0x89, 0x4a, 0x72, 0x3f, 0xc2, 0x8e, 0x0e, 0x57, 0x10, 0x7b, 0x09, 0xed, 0x7c, 0xdf,
+	0x34, 0xab, 0xc7, 0x05, 0x2b, 0x13, 0xd5, 0x97, 0x36, 0xae, 0x27, 0xca, 0xa9, 0x94, 0x4c, 0x37,
+	0xda, 0x58, 0x4b, 0x6b, 0x75, 0x2d, 0x7f, 0x5b, 0x2b, 0x0e, 0x35, 0x39, 0x3c, 0x7c, 0xd7, 0xd1,
+	0x31, 0x74, 0x8b, 0x57, 0x46, 0xd4, 0xde, 0x1e, 0x0e, 0x3c, 0xf9, 0x0e, 0x79, 0xfa, 0x1d, 0xf2,
+	0xbe, 0x6a, 0x0b, 0x7f, 0x69, 0x5c, 0xbc, 0x33, 0x6d, 0xe3, 0x9d, 0x59, 0xd6, 0x6a, 0x63, 0xa5,
+	0x56, 0xb2, 0x8f, 0xcb, 0x54, 0x97, 0x7d, 0x8c, 0x95, 0xae, 0xd4, 0xc7, 0xb5, 0x34, 0xfd, 0xc2,
+	0xd2, 0xf5, 0x60, 0xe7, 0x2c, 0xa3, 0x38, 0x98, 0x60, 0xc6, 0x75, 0xd5, 0x06, 0xd0, 0xc9, 0x09,
+	0x18, 0xeb, 0x51, 0xc8, 0xee, 0x1f, 0x0b, 0x76, 0x0d, 0x07, 0x85, 0x3d, 0x5c, 0x96, 0xa4, 0x21,
+	0xd2, 0xbe, 0x7f, 0x84, 0x8a, 0x62, 0x9d, 0xc0, 0x56, 0x6e, 0x33, 0x56, 0x54, 0x04, 0x52, 0x1d,
+	0x67, 0x3b, 0xbf, 0xd0, 0x7d, 0x7a, 0xa1, 0xea, 0xd5, 0x14, 0x4e, 0xf7, 0x8c, 0x86, 0x2c, 0xe3,
+	0x2b, 0x3d, 0x46, 0xb2, 0x21, 0xfb, 0xab, 0xb6, 0x3a, 0x05, 0x35, 0x47, 0xc3, 0x5f, 0x2d, 0xb0,
+	0xcf, 0x67, 0x98, 0x7f, 0x21, 0xd9, 0x5d, 0x38, 0x21, 0xe8, 0x03, 0x74, 0x8b, 0x74, 0x91, 0xf2,
+	0x5d, 0x2f, 0xd8, 0xe0, 0x49, 0x49, 0x2f, 0x83, 0xbe, 0xb6, 0xd0, 0x29, 0xf4, 0xce, 0x23, 0xca,
+	0xc8, 0xbf, 0x83, 0x20, 0xa9, 0x37, 0xff, 0x24, 0xf4, 0x1e, 0xe0, 0x53, 0x10, 0x68, 0x49, 0xc1,
+	0x94, 0x7e, 0xa9, 0x1a, 0x57, 0x55, 0x7d, 0xc3, 0x75, 0xf5, 0xb5, 0xaf, 0x74, 0x3d, 0x01, 0xdb,
+	0xf8, 0xb2, 0x90, 0x6a, 0x49, 0xf9, 0x17, 0xab, 0x73, 0xd6, 0xc0, 0x86, 0xf3, 0x03, 0x90, 0x4f,
+	0xc1, 0x36, 0x46, 0x06, 0x55, 0x98, 0x0c, 0xfa, 0xa5, 0xc9, 0x2a, 0xa6, 0xf0, 0x1d, 0x74, 0x74,
+	0x5b, 0x2b, 0x5d, 0xef, 0x69, 0x3d, 0x3a, 0x13, 0xa8, 0x7a, 0xde, 0x50, 0x79, 0x04, 0x35, 0xe5,
+	0x7e, 0xc5, 0x8d, 0x8c, 0x71, 0xbb, 0x21, 0xf6, 0xfb, 0xcd, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x8c, 0xb9, 0x50, 0x17, 0x89, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -943,9 +943,10 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ChatServiceClient interface {
 	// broadcast
-	Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error)
+	Broadcast(ctx context.Context, in *BroadcastRequest, opts ...grpc.CallOption) (ChatService_BroadcastClient, error)
+	CloseBroadcast(ctx context.Context, in *BroadcastRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
 	// add new object
-	AddMessage(ctx context.Context, in *NewMessageRequest, opts ...grpc.CallOption) (*NewMessageResponse, error)
+	AddMessage(ctx context.Context, in *NewMessageRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
 	AddChannel(ctx context.Context, in *NewChannelRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
 	// edit object
 	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EmptyMessage, error)
@@ -964,7 +965,7 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
 }
 
-func (c *chatServiceClient) Broadcast(ctx context.Context, in *EmptyMessage, opts ...grpc.CallOption) (ChatService_BroadcastClient, error) {
+func (c *chatServiceClient) Broadcast(ctx context.Context, in *BroadcastRequest, opts ...grpc.CallOption) (ChatService_BroadcastClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_ChatService_serviceDesc.Streams[0], "/chat.ChatService/Broadcast", opts...)
 	if err != nil {
 		return nil, err
@@ -980,7 +981,7 @@ func (c *chatServiceClient) Broadcast(ctx context.Context, in *EmptyMessage, opt
 }
 
 type ChatService_BroadcastClient interface {
-	Recv() (*BroadcastMessage, error)
+	Recv() (*BroadcastResponse, error)
 	grpc.ClientStream
 }
 
@@ -988,16 +989,25 @@ type chatServiceBroadcastClient struct {
 	grpc.ClientStream
 }
 
-func (x *chatServiceBroadcastClient) Recv() (*BroadcastMessage, error) {
-	m := new(BroadcastMessage)
+func (x *chatServiceBroadcastClient) Recv() (*BroadcastResponse, error) {
+	m := new(BroadcastResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *chatServiceClient) AddMessage(ctx context.Context, in *NewMessageRequest, opts ...grpc.CallOption) (*NewMessageResponse, error) {
-	out := new(NewMessageResponse)
+func (c *chatServiceClient) CloseBroadcast(ctx context.Context, in *BroadcastRequest, opts ...grpc.CallOption) (*EmptyMessage, error) {
+	out := new(EmptyMessage)
+	err := c.cc.Invoke(ctx, "/chat.ChatService/CloseBroadcast", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) AddMessage(ctx context.Context, in *NewMessageRequest, opts ...grpc.CallOption) (*EmptyMessage, error) {
+	out := new(EmptyMessage)
 	err := c.cc.Invoke(ctx, "/chat.ChatService/AddMessage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1062,9 +1072,10 @@ func (c *chatServiceClient) GetMessages(ctx context.Context, in *GetMessagesRequ
 // ChatServiceServer is the server API for ChatService service.
 type ChatServiceServer interface {
 	// broadcast
-	Broadcast(*EmptyMessage, ChatService_BroadcastServer) error
+	Broadcast(*BroadcastRequest, ChatService_BroadcastServer) error
+	CloseBroadcast(context.Context, *BroadcastRequest) (*EmptyMessage, error)
 	// add new object
-	AddMessage(context.Context, *NewMessageRequest) (*NewMessageResponse, error)
+	AddMessage(context.Context, *NewMessageRequest) (*EmptyMessage, error)
 	AddChannel(context.Context, *NewChannelRequest) (*EmptyMessage, error)
 	// edit object
 	EditMessage(context.Context, *EditMessageRequest) (*EmptyMessage, error)
@@ -1079,10 +1090,13 @@ type ChatServiceServer interface {
 type UnimplementedChatServiceServer struct {
 }
 
-func (*UnimplementedChatServiceServer) Broadcast(req *EmptyMessage, srv ChatService_BroadcastServer) error {
+func (*UnimplementedChatServiceServer) Broadcast(req *BroadcastRequest, srv ChatService_BroadcastServer) error {
 	return status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
 }
-func (*UnimplementedChatServiceServer) AddMessage(ctx context.Context, req *NewMessageRequest) (*NewMessageResponse, error) {
+func (*UnimplementedChatServiceServer) CloseBroadcast(ctx context.Context, req *BroadcastRequest) (*EmptyMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseBroadcast not implemented")
+}
+func (*UnimplementedChatServiceServer) AddMessage(ctx context.Context, req *NewMessageRequest) (*EmptyMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddMessage not implemented")
 }
 func (*UnimplementedChatServiceServer) AddChannel(ctx context.Context, req *NewChannelRequest) (*EmptyMessage, error) {
@@ -1109,7 +1123,7 @@ func RegisterChatServiceServer(s *grpc.Server, srv ChatServiceServer) {
 }
 
 func _ChatService_Broadcast_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(EmptyMessage)
+	m := new(BroadcastRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -1117,7 +1131,7 @@ func _ChatService_Broadcast_Handler(srv interface{}, stream grpc.ServerStream) e
 }
 
 type ChatService_BroadcastServer interface {
-	Send(*BroadcastMessage) error
+	Send(*BroadcastResponse) error
 	grpc.ServerStream
 }
 
@@ -1125,8 +1139,26 @@ type chatServiceBroadcastServer struct {
 	grpc.ServerStream
 }
 
-func (x *chatServiceBroadcastServer) Send(m *BroadcastMessage) error {
+func (x *chatServiceBroadcastServer) Send(m *BroadcastResponse) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _ChatService_CloseBroadcast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BroadcastRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).CloseBroadcast(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chat.ChatService/CloseBroadcast",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).CloseBroadcast(ctx, req.(*BroadcastRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ChatService_AddMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1259,6 +1291,10 @@ var _ChatService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "chat.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CloseBroadcast",
+			Handler:    _ChatService_CloseBroadcast_Handler,
+		},
 		{
 			MethodName: "AddMessage",
 			Handler:    _ChatService_AddMessage_Handler,

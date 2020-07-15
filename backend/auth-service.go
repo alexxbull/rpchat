@@ -9,6 +9,7 @@ import (
 	"time"
 
 	auth "github.com/alexxbull/rpchat/backend/proto/auth"
+	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -26,7 +27,11 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 	}
 
 	// validate user
-	sqlStmt := `SELECT user_password FROM users WHERE user_name = $1`
+	sqlStmt := `
+		SELECT user_password, id, image_path 
+		FROM users 
+		WHERE user_name = $1
+	`
 
 	stmt, err := as.db.Prepare(sqlStmt)
 	if err != nil {
@@ -34,8 +39,9 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 		return nil, status.Errorf(codes.Internal, "Unable to login. Please check your login information.")
 	}
 
-	var dbPasswordHash string
-	err = stmt.QueryRow(req.Username).Scan(&dbPasswordHash)
+	var avatar, dbPasswordHash string
+	var id int32
+	err = stmt.QueryRow(req.Username).Scan(&dbPasswordHash, &id, &avatar)
 	if err != nil {
 		errMsg := err.Error()
 
@@ -57,7 +63,7 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 
 	accessToken, refreshToken, err := generateTokens(req.Username)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "Unable to make tokens for user %s.", req.Username)
+		return nil, status.Errorf(codes.Internal, "Unable to make authentication tokens for user %s.", req.Username)
 	}
 
 	// store refresh token in db
@@ -68,13 +74,20 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 	stmt, err = as.db.Prepare(sqlStmt)
 	if err != nil {
 		fmt.Println("Error in Prepare sql updating refresh token in Login service:", err)
-		return nil, status.Errorf(codes.Internal, "Unable to store tokens. Please try again later.")
+		return nil, status.Errorf(codes.Internal, "Unable to store authentication tokens. Please try again later.")
 	}
 
 	_, err = stmt.Exec(refreshToken, req.Username)
 	if err != nil {
 		fmt.Println("Error in Execute sql updating refresh token in Login service:", err)
-		return nil, status.Errorf(codes.Internal, "Unable to store tokens. Please try again later.")
+		return nil, status.Errorf(codes.Internal, "Unable to store authentication tokens. Please try again later.")
+	}
+
+	// broadcast user has logged in
+	chatSrvr.newUserMessage <- &chat.GetUsersMessage{
+		Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Id:     id,
+		Name:   req.Username,
 	}
 
 	// store refresh token in a HttpOnly cookie
@@ -108,9 +121,11 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 	}
 
 	// add user to database
-	sqlStmt := `INSERT INTO users(email, user_name, user_password, image_path, refresh_token)
-				VALUES ($1, $2, $3, $4, $5);
-				`
+	sqlStmt := `
+		INSERT INTO users(email, user_name, user_password, image_path, refresh_token)
+		VALUES ($1, $2, $3, $4, $5);
+		RETURNING id
+	`
 
 	stmt, err := as.db.Prepare(sqlStmt)
 	if err != nil {
@@ -125,8 +140,9 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 	}
 
 	// add user to database
-	imagePath := "attachments/default/user-icon.svg" // default avatar for new users
-	_, err = stmt.Exec(req.Email, req.Username, passwordHash, imagePath, refreshToken)
+	var id int32
+	avatar := "attachments/default/user-icon.svg" // default avatar for new users
+	err = stmt.QueryRow(req.Email, req.Username, passwordHash, avatar, refreshToken).Scan(&id)
 	if err != nil {
 		errMsg := err.Error()
 
@@ -141,6 +157,13 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 		}
 
 		return nil, err
+	}
+
+	// broadcast user has logged in
+	chatSrvr.newUserMessage <- &chat.GetUsersMessage{
+		Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Id:     id,
+		Name:   req.Username,
 	}
 
 	// store refresh token in a HttpOnly cookie

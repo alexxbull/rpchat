@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import classes from './Login.module.css'
+
+// grpc
 import { AuthClient } from '../../client/grpc_clients.js'
 import { LoginRequest } from '../../proto/auth/auth_pb.js'
 
+// context
+import { StoreContext } from '../../context/Store'
+
 const Login = props => {
+    const { dispatch } = useContext(StoreContext)
     const [error, setError] = useState('')
     const [username, setUsername] = useState({ value: '', styles: [classes.Username] })
     const [password, setPassword] = useState({ value: '', styles: [classes.Password] })
@@ -37,14 +43,15 @@ const Login = props => {
         if (username.value && password.value) {
             try {
                 const req = new LoginRequest()
-
                 req.setUsername(username.value)
                 req.setPassword(password.value)
-                await AuthClient.login(req, {})
+
+                const authClient = AuthClient(dispatch)
+                await authClient.login(req, {})
                 props.history.push('/chat')
             }
             catch (err) {
-                console.log('login err', err)
+                console.error('login err', err)
                 setError(err.message)
             }
         }

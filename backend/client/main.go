@@ -104,19 +104,17 @@ func login(conn grpc.ClientConnInterface) (string, string, error) {
 	defer cancel()
 
 	req := &auth.LoginRequest{
-		Username: "newUser",
-		Password: "newUser",
+		Username: "another",
+		Password: "another",
 	}
 
 	var header metadata.MD
-	fmt.Println("blank md", header)
 	res, err := client.Login(ctx, req, grpc.Header(&header))
 	if err != nil {
 		return "", "", err
 	}
 
 	// extract refresh token from cookie
-	fmt.Println("header", header)
 	if header == nil {
 		return "", "", status.Errorf(codes.FailedPrecondition, "metadata not provided")
 	}
@@ -195,9 +193,9 @@ func sendMessageShell(conn grpc.ClientConnInterface) {
 		}
 
 		req := &chat.NewMessageRequest{
-			Channel: "TestChannel",
+			Channel: "Test",
 			Memo:    message,
-			User:    "TestUser",
+			User:    "another",
 		}
 
 		res, err := client.AddMessage(ctx, req)
@@ -213,9 +211,9 @@ func sendMessage(conn grpc.ClientConnInterface) {
 	client := chat.NewChatServiceClient(conn)
 	ctx := context.Background()
 	req := &chat.NewMessageRequest{
-		Channel: "TestChannel",
-		Memo:    "Test message from TestUser",
-		User:    "TestUser",
+		Channel: "Test",
+		Memo:    "Test message from another",
+		User:    "another",
 	}
 
 	res, err := client.AddMessage(ctx, req)
@@ -238,23 +236,6 @@ func addChannel(conn grpc.ClientConnInterface) {
 	if err != nil {
 		log.Fatalln("Response error from server:", err)
 	}
-}
-
-func addUser(conn grpc.ClientConnInterface) {
-	client := chat.NewChatServiceClient(conn)
-	ctx := context.Background()
-	req := &chat.NewUserRequest{
-		Name:      "newUser",
-		Email:     "newUser@newUser.com",
-		Password:  "newUser",
-		ImagePath: "newUser image path",
-	}
-
-	_, err := client.AddUser(ctx, req)
-	if err != nil {
-		log.Fatalln("Response error from server:", err)
-	}
-
 }
 
 func editMessage(conn grpc.ClientConnInterface) {
@@ -288,23 +269,4 @@ func editChannel(conn grpc.ClientConnInterface) {
 	}
 
 	fmt.Println("Channel updated")
-}
-
-func editUser(conn grpc.ClientConnInterface) {
-	client := chat.NewChatServiceClient(conn)
-	ctx := context.Background()
-	req := &chat.EditUserRequest{
-		Email:       "updated@email.com",
-		Name:        "UpdatedTester",
-		OldName:     "NewTester",
-		OldPassword: "password",
-		Password:    "newpassword",
-	}
-
-	_, err := client.EditUser(ctx, req)
-	if err != nil {
-		log.Fatalln("Response error from server:", err)
-	}
-
-	fmt.Println("User updated")
 }
