@@ -25,10 +25,15 @@ const reducer = (state, action) => {
             if (state.currentChannel.name === message.channel)
                 return {
                     ...state,
-                    messages: [...state.messages, message]
+                    messages: [...state.messages, message],
                 }
             else
                 return state
+        case 'add-old-messages':
+            return {
+                ...state,
+                messages: [...action.payload, ...state.messages],
+            }
         case 'add-user':
             return {
                 ...state,

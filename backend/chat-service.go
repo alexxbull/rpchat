@@ -333,10 +333,12 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 	}
 
 	sqlStmt := `
-	SELECT m.id, m.channel_name, m.message, m.post_date, m.user_name, u.image_path
-	FROM messages m
-	JOIN users u ON u.user_name = m.user_name
-	WHERE m.channel_name = $1
+	SELECT m.id, m.channel_name, m.message, m.post_date, m.user_name, u.image_path, (SELECT MIN(id) FROM messages WHERE channel_name = $1)
+		FROM messages m
+		JOIN users u ON u.user_name = m.user_name
+		WHERE m.channel_name = $2
+		ORDER BY m.id DESC
+		LIMIT 50;
 	`
 
 	stmt, err := cs.db.Prepare(sqlStmt)
@@ -345,7 +347,7 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
 	}
 
-	rows, err := stmt.Query(req.Channel)
+	rows, err := stmt.Query(req.Channel, req.Channel)
 	if err != nil {
 		fmt.Println("Unable to Query messages", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
@@ -353,11 +355,12 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 	defer rows.Close()
 
 	var messages []*chat.GetMessagesMessage
+	var minID int32
 	for rows.Next() {
 		var avatar, channel, memo, username string
 		var date time.Time
 		var id int32
-		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar)
+		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID)
 		if err != nil {
 			fmt.Println("Unable to read row returned by Query selecting messages:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
@@ -380,7 +383,75 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 		messages = append(messages, message)
 	}
 
-	res := &chat.GetMessagesResponse{Messages: messages}
+	res := &chat.GetMessagesResponse{
+		Messages: messages,
+		MinId:    minID,
+	}
+	return res, nil
+}
+
+func (cs *chatServer) GetFilteredMessages(ctx context.Context, req *chat.GetFilteredMessagesRequest) (*chat.GetMessagesResponse, error) {
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Empty request")
+	}
+
+	sqlStmt := `
+		SELECT m.id, m.channel_name, m.message, m.post_date, m.user_name, u.image_path, (SELECT MIN(id) FROM messages WHERE channel_name = $1)
+		FROM messages m
+		JOIN users u ON u.user_name = m.user_name
+		WHERE 
+			m.channel_name = $2
+			AND m.id < $3
+		ORDER BY m.id DESC
+		LIMIT 30;
+	`
+
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for selecting messages:", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
+	}
+
+	rows, err := stmt.Query(req.Channel, req.Channel, int(req.MinId))
+	if err != nil {
+		fmt.Println("Unable to Query messages", err)
+		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
+	}
+	defer rows.Close()
+
+	var messages []*chat.GetMessagesMessage
+	var minID int32
+	for rows.Next() {
+		var avatar, channel, memo, username string
+		var date time.Time
+		var id int32
+		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID)
+		if err != nil {
+			fmt.Println("Unable to read row returned by Query selecting messages:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
+		}
+
+		ts, err := ptypes.TimestampProto(date)
+		if err != nil {
+			fmt.Println("Unable to convert database time value to proto timestamp:", err)
+			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later")
+		}
+
+		message := &chat.GetMessagesMessage{
+			Id:        id,
+			Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+			Channel:   channel,
+			Timestamp: ts,
+			Memo:      memo,
+			User:      username,
+		}
+		messages = append(messages, message)
+	}
+
+	res := &chat.GetMessagesResponse{
+		Messages: messages,
+		MinId:    minID,
+	}
 	return res, nil
 }
 

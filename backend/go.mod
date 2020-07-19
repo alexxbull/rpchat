@@ -8,7 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/golang/protobuf v1.4.1
-	github.com/imdario/mergo v0.3.9 // indirect
+	github.com/imdario/mergo v0.3.10 // indirect
 	github.com/lib/pq v1.5.2
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect

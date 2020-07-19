@@ -16,16 +16,18 @@ const Message = props => {
             </span>
     }
 
-    return < div className={attachedClasses.join(' ')} >
-        <div className={userIcon}>
-            <img className={classes.User_icon} src={props.avatar} alt={`${props.user} avatar`} />
-        </div>
-        <div className={classes.Message_content}>
-            {metadata}
-            <p className={classes.Message_text}>{props.memo}</p>
-            <div className={classes.Message_time}>{props.timestamp}</div>
-        </div>
-    </div >
+    return (
+        < div className={attachedClasses.join(' ')} ref={props.scrollRef ? props.scrollRef : null}>
+            <div className={userIcon}>
+                <img className={classes.User_icon} src={props.avatar} alt={`${props.user} avatar`} />
+            </div>
+            <div className={classes.Message_content}>
+                {metadata}
+                <p className={classes.Message_text}>{props.memo}</p>
+                <div className={classes.Message_time}>{props.timestamp}</div>
+            </div>
+        </div >
+    )
 }
 
 export default Message;

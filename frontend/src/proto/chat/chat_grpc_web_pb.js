@@ -787,5 +787,85 @@ proto.chat.ChatServicePromiseClient.prototype.getMessages =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.GetFilteredMessagesRequest,
+ *   !proto.chat.GetMessagesResponse>}
+ */
+const methodDescriptor_ChatService_GetFilteredMessages = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/GetFilteredMessages',
+  grpc.web.MethodType.UNARY,
+  proto.chat.GetFilteredMessagesRequest,
+  proto.chat.GetMessagesResponse,
+  /**
+   * @param {!proto.chat.GetFilteredMessagesRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetMessagesResponse.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.chat.GetFilteredMessagesRequest,
+ *   !proto.chat.GetMessagesResponse>}
+ */
+const methodInfo_ChatService_GetFilteredMessages = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.chat.GetMessagesResponse,
+  /**
+   * @param {!proto.chat.GetFilteredMessagesRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.GetMessagesResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.GetFilteredMessagesRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.chat.GetMessagesResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.GetMessagesResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.ChatServiceClient.prototype.getFilteredMessages =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.ChatService/GetFilteredMessages',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetFilteredMessages,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.GetFilteredMessagesRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.GetMessagesResponse>}
+ *     A native promise that resolves to the response
+ */
+proto.chat.ChatServicePromiseClient.prototype.getFilteredMessages =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.ChatService/GetFilteredMessages',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_GetFilteredMessages);
+};
+
+
 module.exports = proto.chat;
 
