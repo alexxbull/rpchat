@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode'
 import { AuthClient } from '../client/grpc_clients.js'
 import { EmptyMessage } from '../proto/auth/auth_pb.js'
 
-const ignoredRoutes = ['/auth.AuthService/Refresh', '/chat.ChatService/Broadcast']
+const ignoredRoutes = ['/auth.AuthService/Refresh']
 const accessTokenRoutes = ['/auth.AuthService/Login', '/auth.AuthService/Register']
 
 class AuthUnaryInterceptor {
