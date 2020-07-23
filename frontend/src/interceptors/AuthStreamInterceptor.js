@@ -13,11 +13,7 @@ class AuthStreamInterceptor {
             // validate user's access token            
             const md = request.getMetadata()
             md['authorization'] = `Bearer ${window.accessToken || ''}`
-            const res = await invoker(request)
-
-            // return new StreamInterceptor(res, this.#dispatch)
-            // return invoker(request)
-            return res
+            return await invoker(request)
         }
         catch (err) {
             console.error('stream int req err', err)
