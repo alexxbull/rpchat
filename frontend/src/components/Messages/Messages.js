@@ -40,7 +40,7 @@ class Messages extends Component {
         // capture the scroll position so we can adjust scroll later if new messages were added.
         if (this.state.messages.length > prevState.messages.length && this.messagesRef) {
             const messagesJSX = this.messagesRef.current;
-            return messagesJSX.scrollHeight
+            return { scrollHeight: messagesJSX.scrollHeight, scrollTop: messagesJSX.scrollTop }
         }
         return null;
     }
@@ -66,7 +66,7 @@ class Messages extends Component {
         // adjust scroll so the new messages don't push the old ones out of view.
         if (snapshot !== null) {
             const messagesJSX = this.messagesRef.current;
-            messagesJSX.scrollTop = messagesJSX.scrollHeight - snapshot + messagesJSX.scrollTop;
+            messagesJSX.scrollTop = messagesJSX.scrollHeight - snapshot.scrollHeight + snapshot.scrollTop
         }
     }
 
@@ -105,6 +105,7 @@ class Messages extends Component {
                 // scroll to bottom of messages
                 this.messagesEndRef.current.scrollIntoView({ alignToTop: false })
             } else {
+                dispatch({ type: 'set-messages', payload: [] })
                 this.setState({ loading: false })
             }
         } catch (err) {

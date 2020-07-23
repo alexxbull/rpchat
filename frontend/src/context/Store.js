@@ -54,6 +54,9 @@ const reducer = (state, action) => {
                 currentChannel: action.payload.currentChannel
             }
         case 'set-current-channel':
+            if (state.currentChannel)
+                state.currentChannel.active = false
+
             return {
                 ...state,
                 currentChannel: action.payload,
