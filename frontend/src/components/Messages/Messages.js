@@ -59,8 +59,14 @@ class Messages extends Component {
 
         // update when global store's messages is updated
         const storeMessages = this.context.state.messages
-        if (this.state.messages !== storeMessages) {
-            this.setState({ messages: storeMessages })
+        const stateMessages = this.state.messages
+        const messagesDiff = () => stateMessages.some((message, index) => message.memo !== storeMessages[index].memo)
+
+        if (stateMessages.length !== storeMessages.length) {
+            this.setState({ messages: [...storeMessages] })
+        }
+        else if (messagesDiff()) {
+            this.setState({ messages: [...storeMessages] })
         }
 
         // adjust scroll so the new messages don't push the old ones out of view.
@@ -86,6 +92,7 @@ class Messages extends Component {
                 return {
                     avatar: message.getAvatar(),
                     channel: message.getChannel(),
+                    edited: message.getEdited(),
                     id: message.getId(),
                     memo: message.getMemo(),
                     timestamp: message.getTimestamp().toDate(),
@@ -102,8 +109,9 @@ class Messages extends Component {
                 })
 
                 dispatch({ type: 'set-messages', payload: messages })
-                // scroll to bottom of messages
-                this.messagesEndRef.current.scrollIntoView({ alignToTop: false })
+                // scroll to bottom of messages after delay to allow each message to format correctly
+                const scrollToBottom = () => this.messagesEndRef.current.scrollIntoView({ alignToTop: false })
+                setTimeout(() => scrollToBottom(), 500)
             } else {
                 dispatch({ type: 'set-messages', payload: [] })
                 this.setState({ loading: false })
@@ -142,6 +150,7 @@ class Messages extends Component {
                         return {
                             avatar: message.getAvatar(),
                             channel: message.getChannel(),
+                            edited: message.getEdited(),
                             id: message.getId(),
                             memo: message.getMemo(),
                             timestamp: message.getTimestamp().toDate(),
@@ -190,6 +199,8 @@ class Messages extends Component {
                         return <Message
                             group={true}
                             key={message.id}
+                            id={message.id}
+                            edited={message.edited}
                             memo={message.memo}
                             timestamp={moment(message.timestamp).format('L').toString()}
                             username={message.username}
@@ -203,6 +214,8 @@ class Messages extends Component {
                 return <Message
                     group={false}
                     key={message.id}
+                    id={message.id}
+                    edited={message.edited}
                     memo={message.memo}
                     timestamp={moment(message.timestamp).format('L').toString()}
                     username={message.username}

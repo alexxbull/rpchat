@@ -15,7 +15,7 @@ body, ul, button, h1, ol, p {
     padding: 0;
 }
 
-body {
+body, textarea {
     font-family: "Open-Sans", sans-serif;
     color: var(--black);
     background: var(--white);

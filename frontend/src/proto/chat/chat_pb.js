@@ -714,7 +714,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.chat.EditMessageRequest.toObject = function (includeInstance, msg) {
     var f, obj = {
       id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      memo: jspb.Message.getFieldWithDefault(msg, 2, "")
+      memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
+      edited: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
     };
 
     if (includeInstance) {
@@ -759,6 +760,10 @@ proto.chat.EditMessageRequest.deserializeBinaryFromReader = function (msg, reade
         var value = /** @type {string} */ (reader.readString());
         msg.setMemo(value);
         break;
+      case 3:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setEdited(value);
+        break;
       default:
         reader.skipField();
         break;
@@ -802,6 +807,13 @@ proto.chat.EditMessageRequest.serializeBinaryToWriter = function (message, write
       f
     );
   }
+  f = message.getEdited();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -838,6 +850,24 @@ proto.chat.EditMessageRequest.prototype.getMemo = function () {
  */
 proto.chat.EditMessageRequest.prototype.setMemo = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional bool edited = 3;
+ * @return {boolean}
+ */
+proto.chat.EditMessageRequest.prototype.getEdited = function () {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.chat.EditMessageRequest} returns this
+ */
+proto.chat.EditMessageRequest.prototype.setEdited = function (value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -2748,7 +2778,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       channel: jspb.Message.getFieldWithDefault(msg, 3, ""),
       timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
       user: jspb.Message.getFieldWithDefault(msg, 5, ""),
-      avatar: jspb.Message.getFieldWithDefault(msg, 6, "")
+      avatar: jspb.Message.getFieldWithDefault(msg, 6, ""),
+      edited: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
     };
 
     if (includeInstance) {
@@ -2809,6 +2840,10 @@ proto.chat.GetMessagesMessage.deserializeBinaryFromReader = function (msg, reade
       case 6:
         var value = /** @type {string} */ (reader.readString());
         msg.setAvatar(value);
+        break;
+      case 7:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setEdited(value);
         break;
       default:
         reader.skipField();
@@ -2879,6 +2914,13 @@ proto.chat.GetMessagesMessage.serializeBinaryToWriter = function (message, write
   if (f.length > 0) {
     writer.writeString(
       6,
+      f
+    );
+  }
+  f = message.getEdited();
+  if (f) {
+    writer.writeBool(
+      7,
       f
     );
   }
@@ -3009,6 +3051,24 @@ proto.chat.GetMessagesMessage.prototype.getAvatar = function () {
  */
 proto.chat.GetMessagesMessage.prototype.setAvatar = function (value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional bool edited = 7;
+ * @return {boolean}
+ */
+proto.chat.GetMessagesMessage.prototype.getEdited = function () {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.chat.GetMessagesMessage} returns this
+ */
+proto.chat.GetMessagesMessage.prototype.setEdited = function (value) {
+  return jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -3364,10 +3424,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
    */
   proto.chat.BroadcastResponse.toObject = function (includeInstance, msg) {
     var f, obj = {
-      channel: (f = msg.getChannel()) && proto.chat.GetChannelsMessage.toObject(includeInstance, f),
       chatMessage: (f = msg.getChatMessage()) && proto.chat.GetMessagesMessage.toObject(includeInstance, f),
+      channel: (f = msg.getChannel()) && proto.chat.GetChannelsMessage.toObject(includeInstance, f),
       user: (f = msg.getUser()) && proto.chat.GetUsersMessage.toObject(includeInstance, f),
-      users: (f = msg.getUsers()) && proto.chat.GetUsersResponse.toObject(includeInstance, f)
+      users: (f = msg.getUsers()) && proto.chat.GetUsersResponse.toObject(includeInstance, f),
+      chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f)
     };
 
     if (includeInstance) {
@@ -3404,15 +3465,15 @@ proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 2:
-        var value = new proto.chat.GetChannelsMessage;
-        reader.readMessage(value, proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
-        msg.setChannel(value);
-        break;
       case 1:
         var value = new proto.chat.GetMessagesMessage;
         reader.readMessage(value, proto.chat.GetMessagesMessage.deserializeBinaryFromReader);
         msg.setChatMessage(value);
+        break;
+      case 2:
+        var value = new proto.chat.GetChannelsMessage;
+        reader.readMessage(value, proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
+        msg.setChannel(value);
         break;
       case 3:
         var value = new proto.chat.GetUsersMessage;
@@ -3423,6 +3484,11 @@ proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader
         var value = new proto.chat.GetUsersResponse;
         reader.readMessage(value, proto.chat.GetUsersResponse.deserializeBinaryFromReader);
         msg.setUsers(value);
+        break;
+      case 5:
+        var value = new proto.chat.EditMessageRequest;
+        reader.readMessage(value, proto.chat.EditMessageRequest.deserializeBinaryFromReader);
+        msg.setChatMessageEdit(value);
         break;
       default:
         reader.skipField();
@@ -3453,20 +3519,20 @@ proto.chat.BroadcastResponse.prototype.serializeBinary = function () {
  */
 proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
-  f = message.getChannel();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.chat.GetChannelsMessage.serializeBinaryToWriter
-    );
-  }
   f = message.getChatMessage();
   if (f != null) {
     writer.writeMessage(
       1,
       f,
       proto.chat.GetMessagesMessage.serializeBinaryToWriter
+    );
+  }
+  f = message.getChannel();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.chat.GetChannelsMessage.serializeBinaryToWriter
     );
   }
   f = message.getUser();
@@ -3485,43 +3551,14 @@ proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer
       proto.chat.GetUsersResponse.serializeBinaryToWriter
     );
   }
-};
-
-
-/**
- * optional GetChannelsMessage channel = 2;
- * @return {?proto.chat.GetChannelsMessage}
- */
-proto.chat.BroadcastResponse.prototype.getChannel = function () {
-  return /** @type{?proto.chat.GetChannelsMessage} */ (
-    jspb.Message.getWrapperField(this, proto.chat.GetChannelsMessage, 2));
-};
-
-
-/**
- * @param {?proto.chat.GetChannelsMessage|undefined} value
- * @return {!proto.chat.BroadcastResponse} returns this
-*/
-proto.chat.BroadcastResponse.prototype.setChannel = function (value) {
-  return jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.chat.BroadcastResponse} returns this
- */
-proto.chat.BroadcastResponse.prototype.clearChannel = function () {
-  return this.setChannel(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.chat.BroadcastResponse.prototype.hasChannel = function () {
-  return jspb.Message.getField(this, 2) != null;
+  f = message.getChatMessageEdit();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.chat.EditMessageRequest.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -3559,6 +3596,43 @@ proto.chat.BroadcastResponse.prototype.clearChatMessage = function () {
  */
 proto.chat.BroadcastResponse.prototype.hasChatMessage = function () {
   return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional GetChannelsMessage channel = 2;
+ * @return {?proto.chat.GetChannelsMessage}
+ */
+proto.chat.BroadcastResponse.prototype.getChannel = function () {
+  return /** @type{?proto.chat.GetChannelsMessage} */ (
+    jspb.Message.getWrapperField(this, proto.chat.GetChannelsMessage, 2));
+};
+
+
+/**
+ * @param {?proto.chat.GetChannelsMessage|undefined} value
+ * @return {!proto.chat.BroadcastResponse} returns this
+*/
+proto.chat.BroadcastResponse.prototype.setChannel = function (value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.chat.BroadcastResponse} returns this
+ */
+proto.chat.BroadcastResponse.prototype.clearChannel = function () {
+  return this.setChannel(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.chat.BroadcastResponse.prototype.hasChannel = function () {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -3633,6 +3707,43 @@ proto.chat.BroadcastResponse.prototype.clearUsers = function () {
  */
 proto.chat.BroadcastResponse.prototype.hasUsers = function () {
   return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional EditMessageRequest chat_message_edit = 5;
+ * @return {?proto.chat.EditMessageRequest}
+ */
+proto.chat.BroadcastResponse.prototype.getChatMessageEdit = function () {
+  return /** @type{?proto.chat.EditMessageRequest} */ (
+    jspb.Message.getWrapperField(this, proto.chat.EditMessageRequest, 5));
+};
+
+
+/**
+ * @param {?proto.chat.EditMessageRequest|undefined} value
+ * @return {!proto.chat.BroadcastResponse} returns this
+*/
+proto.chat.BroadcastResponse.prototype.setChatMessageEdit = function (value) {
+  return jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.chat.BroadcastResponse} returns this
+ */
+proto.chat.BroadcastResponse.prototype.clearChatMessageEdit = function () {
+  return this.setChatMessageEdit(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.chat.BroadcastResponse.prototype.hasChatMessageEdit = function () {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

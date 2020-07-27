@@ -81,6 +81,7 @@ func main() {
 	// chat services server
 	chatSrvr = chatServer{
 		db:                db,
+		editChatMessage:   make(chan *chat.EditMessageRequest),
 		getUsersResponse:  make(chan *chat.GetUsersResponse),
 		newChatMessage:    make(chan *chat.GetMessagesMessage),
 		newChannelMessage: make(chan *chat.GetChannelsMessage),

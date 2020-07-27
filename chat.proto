@@ -15,6 +15,7 @@ message NewMessageRequest {
 message EditMessageRequest {
   int32 id = 1;
   string memo = 2;
+  bool edited = 3;
 }
 
 message NewChannelRequest {
@@ -75,6 +76,7 @@ message GetMessagesMessage {
   google.protobuf.Timestamp timestamp = 4;
   string user = 5;
   string avatar = 6;
+  bool edited = 7;
 }
 
 message GetMessagesResponse {
@@ -85,10 +87,11 @@ message GetMessagesResponse {
 message BroadcastRequest { string username = 1; }
 
 message BroadcastResponse {
-  GetChannelsMessage channel = 2;
   GetMessagesMessage chat_message = 1;
+  GetChannelsMessage channel = 2;
   GetUsersMessage user = 3;
   GetUsersResponse users = 4;
+  EditMessageRequest chat_message_edit = 5;
 }
 
 service ChatService {

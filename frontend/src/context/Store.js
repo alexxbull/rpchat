@@ -39,6 +39,21 @@ const reducer = (state, action) => {
                 ...state,
                 users: [...state.users, action.payload]
             }
+        case 'edit-message':
+            const editedMessage = action.payload
+            const updatedMessages = state.messages.map(message => {
+                const newMessage = { ...message }
+                if (newMessage.id === editedMessage.id) {
+                    newMessage.memo = editedMessage.memo
+                    newMessage.edited = editedMessage.edited
+                }
+                return newMessage
+            })
+
+            return {
+                ...state,
+                messages: updatedMessages,
+            }
         case 'logged-in':
             return {
                 ...state,

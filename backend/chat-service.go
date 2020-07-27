@@ -22,6 +22,7 @@ type user struct {
 
 type chatServer struct {
 	db                *sql.DB
+	editChatMessage   chan *chat.EditMessageRequest
 	getUsersResponse  chan *chat.GetUsersResponse
 	newChatMessage    chan *chat.GetMessagesMessage
 	newChannelMessage chan *chat.GetChannelsMessage
@@ -96,35 +97,48 @@ func (cs *chatServer) broadcast() {
 		select {
 		case msg := <-cs.newChatMessage:
 			res := &chat.BroadcastResponse{
-				Channel:     nil,
-				ChatMessage: msg,
-				User:        nil,
-				Users:       nil,
+				Channel:         nil,
+				ChatMessage:     msg,
+				ChatMessageEdit: nil,
+				User:            nil,
+				Users:           nil,
 			}
 			cs.broadcastObject(res, "add-message")
 
 		case ch := <-cs.newChannelMessage:
 			res := &chat.BroadcastResponse{
-				Channel:     ch,
-				ChatMessage: nil,
-				User:        nil,
-				Users:       nil,
+				Channel:         ch,
+				ChatMessage:     nil,
+				ChatMessageEdit: nil,
+				User:            nil,
+				Users:           nil,
 			}
 			cs.broadcastObject(res, "add-channel")
+		case messageEdit := <-cs.editChatMessage:
+			res := &chat.BroadcastResponse{
+				Channel:         nil,
+				ChatMessage:     nil,
+				ChatMessageEdit: messageEdit,
+				User:            nil,
+				Users:           nil,
+			}
+			cs.broadcastObject(res, "edit-message")
 		case user := <-cs.newUserMessage:
 			res := &chat.BroadcastResponse{
-				Channel:     nil,
-				ChatMessage: nil,
-				User:        user,
-				Users:       nil,
+				Channel:         nil,
+				ChatMessage:     nil,
+				ChatMessageEdit: nil,
+				User:            user,
+				Users:           nil,
 			}
 			cs.broadcastObject(res, "add-user")
 		case usersList := <-cs.getUsersResponse:
 			res := &chat.BroadcastResponse{
-				Channel:     nil,
-				ChatMessage: nil,
-				User:        nil,
-				Users:       usersList,
+				Channel:         nil,
+				ChatMessage:     nil,
+				ChatMessageEdit: nil,
+				User:            nil,
+				Users:           usersList,
 			}
 			cs.broadcastObject(res, "users-list")
 		}
@@ -252,13 +266,27 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequest) (*chat.EmptyMessage, error) {
 	res := &chat.EmptyMessage{}
 	sqlStmt := `UPDATE messages
-			SET message = $1
-			WHERE id = $2;`
+			SET 
+				message = $1,
+				edited = $2
+			WHERE id = $3;`
 
 	stmt, err := cs.db.Prepare(sqlStmt)
-	_, err = stmt.Exec(req.Memo, req.Id)
 	if err != nil {
-		return res, fmt.Errorf("Unable to update message: %v", err)
+		fmt.Println("Unable to Prepare sql for editing message:", err)
+		return res, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
+	}
+
+	_, err = stmt.Exec(req.Memo, true, req.Id)
+	if err != nil {
+		fmt.Println("Unable to Execute message edit:", err)
+		return res, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
+	}
+
+	cs.editChatMessage <- &chat.EditMessageRequest{
+		Edited: true,
+		Id:     req.Id,
+		Memo:   req.Memo,
 	}
 
 	return res, nil
@@ -333,11 +361,23 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 	}
 
 	sqlStmt := `
-	SELECT m.id, m.channel_name, m.message, m.post_date, m.user_name, u.image_path, (SELECT MIN(id) FROM messages WHERE channel_name = $1)
-		FROM messages m
-		JOIN users u ON u.user_name = m.user_name
-		WHERE m.channel_name = $2
-		ORDER BY m.id DESC
+		SELECT 
+			m.id, 
+			m.channel_name, 
+			m.message, 
+			m.post_date, 
+			m.user_name, 
+			u.image_path, 
+			(SELECT MIN(id) FROM messages WHERE channel_name = $1),
+			m.edited
+		FROM 
+			messages m
+		JOIN 
+			users u ON u.user_name = m.user_name
+		WHERE 
+			m.channel_name = $2
+		ORDER BY 
+			m.id DESC
 		LIMIT 50;
 	`
 
@@ -360,7 +400,8 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 		var avatar, channel, memo, username string
 		var date time.Time
 		var id int32
-		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID)
+		var edited bool
+		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID, &edited)
 		if err != nil {
 			fmt.Println("Unable to read row returned by Query selecting messages:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
@@ -379,6 +420,7 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 			Timestamp: ts,
 			Memo:      memo,
 			User:      username,
+			Edited:    edited,
 		}
 		messages = append(messages, message)
 	}
