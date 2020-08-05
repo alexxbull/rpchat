@@ -56,7 +56,6 @@ class Messages extends Component {
         if (this.state.currentChannel.name !== prevState.currentChannel.name)
             this.loadMessages()
 
-
         // update when global store's messages is updated
         const storeMessages = this.context.state.messages
         const stateMessages = this.state.messages
@@ -125,17 +124,16 @@ class Messages extends Component {
     topMessageRef = node => {
         // only run if messages are scrollable
         const { dispatch } = this.context
-        const { currentChannel } = this.state
-        const { clientMin, hasMore, loading } = this.state
         const observer = this.observer
 
-        if (loading)
+        if (this.state.loading)
             return
 
         if (observer.current)
             observer.current.disconnect()
 
         observer.current = new IntersectionObserver(async (entries) => {
+            const { currentChannel, clientMin, hasMore } = this.state
             if (entries[0].isIntersecting && hasMore) {
                 try {
                     this.setState({ loading: true })
