@@ -24,6 +24,15 @@ const broadcastListener = async (username, dispatch) => {
                     }
                     dispatch({ type: 'add-channel', payload: newChannel })
                     break
+                case res.hasChannelEdit():
+                    const channelEdit = res.getChannelEdit()
+                    const editedChannel = {
+                        desc: channelEdit.getDescription(),
+                        id: channelEdit.getId(),
+                        name: channelEdit.getName(),
+                    }
+                    dispatch({ type: 'edit-channel', payload: editedChannel })
+                    break
                 case res.hasChatMessage():
                     const message = res.getChatMessage()
                     const newMessage = {

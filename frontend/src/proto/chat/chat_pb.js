@@ -1093,9 +1093,10 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
    */
   proto.chat.EditChannelRequest.toObject = function (includeInstance, msg) {
     var f, obj = {
-      oldName: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      newName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      description: jspb.Message.getFieldWithDefault(msg, 3, "")
+      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+      name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+      description: jspb.Message.getFieldWithDefault(msg, 3, ""),
+      owner: jspb.Message.getFieldWithDefault(msg, 4, "")
     };
 
     if (includeInstance) {
@@ -1133,16 +1134,20 @@ proto.chat.EditChannelRequest.deserializeBinaryFromReader = function (msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
       case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOldName(value);
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setId(value);
         break;
       case 2:
         var value = /** @type {string} */ (reader.readString());
-        msg.setNewName(value);
+        msg.setName(value);
         break;
       case 3:
         var value = /** @type {string} */ (reader.readString());
         msg.setDescription(value);
+        break;
+      case 4:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setOwner(value);
         break;
       default:
         reader.skipField();
@@ -1173,14 +1178,14 @@ proto.chat.EditChannelRequest.prototype.serializeBinary = function () {
  */
 proto.chat.EditChannelRequest.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
-  f = message.getOldName();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getId();
+  if (f !== 0) {
+    writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getNewName();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -1194,32 +1199,39 @@ proto.chat.EditChannelRequest.serializeBinaryToWriter = function (message, write
       f
     );
   }
+  f = message.getOwner();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
 };
 
 
 /**
- * optional string old_name = 1;
- * @return {string}
+ * optional int32 id = 1;
+ * @return {number}
  */
-proto.chat.EditChannelRequest.prototype.getOldName = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.chat.EditChannelRequest.prototype.getId = function () {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {number} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setOldName = function (value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+proto.chat.EditChannelRequest.prototype.setId = function (value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
- * optional string new_name = 2;
+ * optional string name = 2;
  * @return {string}
  */
-proto.chat.EditChannelRequest.prototype.getNewName = function () {
+proto.chat.EditChannelRequest.prototype.getName = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1228,7 +1240,7 @@ proto.chat.EditChannelRequest.prototype.getNewName = function () {
  * @param {string} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setNewName = function (value) {
+proto.chat.EditChannelRequest.prototype.setName = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1248,6 +1260,24 @@ proto.chat.EditChannelRequest.prototype.getDescription = function () {
  */
 proto.chat.EditChannelRequest.prototype.setDescription = function (value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string owner = 4;
+ * @return {string}
+ */
+proto.chat.EditChannelRequest.prototype.getOwner = function () {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.chat.EditChannelRequest} returns this
+ */
+proto.chat.EditChannelRequest.prototype.setOwner = function (value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -3428,7 +3458,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       channel: (f = msg.getChannel()) && proto.chat.GetChannelsMessage.toObject(includeInstance, f),
       user: (f = msg.getUser()) && proto.chat.GetUsersMessage.toObject(includeInstance, f),
       users: (f = msg.getUsers()) && proto.chat.GetUsersResponse.toObject(includeInstance, f),
-      chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f)
+      chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f),
+      channelEdit: (f = msg.getChannelEdit()) && proto.chat.EditChannelRequest.toObject(includeInstance, f)
     };
 
     if (includeInstance) {
@@ -3489,6 +3520,11 @@ proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader
         var value = new proto.chat.EditMessageRequest;
         reader.readMessage(value, proto.chat.EditMessageRequest.deserializeBinaryFromReader);
         msg.setChatMessageEdit(value);
+        break;
+      case 6:
+        var value = new proto.chat.EditChannelRequest;
+        reader.readMessage(value, proto.chat.EditChannelRequest.deserializeBinaryFromReader);
+        msg.setChannelEdit(value);
         break;
       default:
         reader.skipField();
@@ -3557,6 +3593,14 @@ proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer
       5,
       f,
       proto.chat.EditMessageRequest.serializeBinaryToWriter
+    );
+  }
+  f = message.getChannelEdit();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.chat.EditChannelRequest.serializeBinaryToWriter
     );
   }
 };
@@ -3744,6 +3788,43 @@ proto.chat.BroadcastResponse.prototype.clearChatMessageEdit = function () {
  */
 proto.chat.BroadcastResponse.prototype.hasChatMessageEdit = function () {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional EditChannelRequest channel_edit = 6;
+ * @return {?proto.chat.EditChannelRequest}
+ */
+proto.chat.BroadcastResponse.prototype.getChannelEdit = function () {
+  return /** @type{?proto.chat.EditChannelRequest} */ (
+    jspb.Message.getWrapperField(this, proto.chat.EditChannelRequest, 6));
+};
+
+
+/**
+ * @param {?proto.chat.EditChannelRequest|undefined} value
+ * @return {!proto.chat.BroadcastResponse} returns this
+*/
+proto.chat.BroadcastResponse.prototype.setChannelEdit = function (value) {
+  return jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.chat.BroadcastResponse} returns this
+ */
+proto.chat.BroadcastResponse.prototype.clearChannelEdit = function () {
+  return this.setChannelEdit(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.chat.BroadcastResponse.prototype.hasChannelEdit = function () {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 

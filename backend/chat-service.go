@@ -21,13 +21,14 @@ type user struct {
 }
 
 type chatServer struct {
-	db                *sql.DB
-	editChatMessage   chan *chat.EditMessageRequest
-	getUsersResponse  chan *chat.GetUsersResponse
-	newChatMessage    chan *chat.GetMessagesMessage
-	newChannelMessage chan *chat.GetChannelsMessage
-	newUserMessage    chan *chat.GetUsersMessage
-	users             map[string]user
+	db                 *sql.DB
+	editChatMessage    chan *chat.EditMessageRequest
+	editChannelMessage chan *chat.EditChannelRequest
+	getUsersResponse   chan *chat.GetUsersResponse
+	newChatMessage     chan *chat.GetMessagesMessage
+	newChannelMessage  chan *chat.GetChannelsMessage
+	newUserMessage     chan *chat.GetUsersMessage
+	users              map[string]user
 }
 
 func (cs *chatServer) CloseBroadcast(ctx context.Context, req *chat.BroadcastRequest) (*chat.EmptyMessage, error) {
@@ -98,6 +99,7 @@ func (cs *chatServer) broadcast() {
 		case msg := <-cs.newChatMessage:
 			res := &chat.BroadcastResponse{
 				Channel:         nil,
+				ChannelEdit:     nil,
 				ChatMessage:     msg,
 				ChatMessageEdit: nil,
 				User:            nil,
@@ -108,15 +110,27 @@ func (cs *chatServer) broadcast() {
 		case ch := <-cs.newChannelMessage:
 			res := &chat.BroadcastResponse{
 				Channel:         ch,
+				ChannelEdit:     nil,
 				ChatMessage:     nil,
 				ChatMessageEdit: nil,
 				User:            nil,
 				Users:           nil,
 			}
 			cs.broadcastObject(res, "add-channel")
+		case channelEdit := <-cs.editChannelMessage:
+			res := &chat.BroadcastResponse{
+				Channel:         nil,
+				ChannelEdit:     channelEdit,
+				ChatMessage:     nil,
+				ChatMessageEdit: nil,
+				User:            nil,
+				Users:           nil,
+			}
+			cs.broadcastObject(res, "edit-channel")
 		case messageEdit := <-cs.editChatMessage:
 			res := &chat.BroadcastResponse{
 				Channel:         nil,
+				ChannelEdit:     nil,
 				ChatMessage:     nil,
 				ChatMessageEdit: messageEdit,
 				User:            nil,
@@ -126,6 +140,7 @@ func (cs *chatServer) broadcast() {
 		case user := <-cs.newUserMessage:
 			res := &chat.BroadcastResponse{
 				Channel:         nil,
+				ChannelEdit:     nil,
 				ChatMessage:     nil,
 				ChatMessageEdit: nil,
 				User:            user,
@@ -135,6 +150,7 @@ func (cs *chatServer) broadcast() {
 		case usersList := <-cs.getUsersResponse:
 			res := &chat.BroadcastResponse{
 				Channel:         nil,
+				ChannelEdit:     nil,
 				ChatMessage:     nil,
 				ChatMessageEdit: nil,
 				User:            nil,
@@ -293,18 +309,54 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 }
 
 func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequest) (*chat.EmptyMessage, error) {
-	res := &chat.EmptyMessage{}
-	sqlStmt := `UPDATE channels
-			SET channel_name = $1,
-				description  = $2
-			WHERE channel_name = $3;`
-
+	// validate channel owner
+	sqlStmt := `SELECT channel_name, channel_owner FROM channels WHERE id = $1;`
 	stmt, err := cs.db.Prepare(sqlStmt)
-	_, err = stmt.Exec(req.NewName, req.Description, req.OldName)
 	if err != nil {
-		return res, fmt.Errorf("Unable to update channel: %v", err)
+		fmt.Println("Unable to Prepare sql for querying channel data before channel edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
+	var oldChannelName, channelOwner string
+	err = stmt.QueryRow(req.Id).Scan(&oldChannelName, &channelOwner)
+	if err != nil {
+		fmt.Println("Unable to Query channel data before channel edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
+	}
+
+	if channelOwner != req.Owner {
+		fmt.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Owner, oldChannelName, channelOwner)
+		return nil, status.Errorf(codes.Unauthenticated, "You are not the owner of this channel so you cannot edit it.")
+	}
+
+	// update channel data
+	sqlStmt = `
+		UPDATE channels
+		SET channel_name = $1,
+			description  = $2
+		WHERE id = $3;
+	`
+
+	stmt, err = cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for editing channel:", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
+	}
+
+	_, err = stmt.Exec(req.Name, req.Description, req.Id)
+	if err != nil {
+		fmt.Println("Unable to Execute channel edit:", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
+	}
+
+	cs.editChannelMessage <- &chat.EditChannelRequest{
+		Id:          req.Id,
+		Description: req.Description,
+		Name:        req.Name,
+		Owner:       req.Owner,
+	}
+
+	res := &chat.EmptyMessage{}
 	return res, nil
 }
 

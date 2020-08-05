@@ -80,13 +80,14 @@ func main() {
 
 	// chat services server
 	chatSrvr = chatServer{
-		db:                db,
-		editChatMessage:   make(chan *chat.EditMessageRequest),
-		getUsersResponse:  make(chan *chat.GetUsersResponse),
-		newChatMessage:    make(chan *chat.GetMessagesMessage),
-		newChannelMessage: make(chan *chat.GetChannelsMessage),
-		newUserMessage:    make(chan *chat.GetUsersMessage),
-		users:             make(map[string]user),
+		db:                 db,
+		editChatMessage:    make(chan *chat.EditMessageRequest),
+		editChannelMessage: make(chan *chat.EditChannelRequest),
+		getUsersResponse:   make(chan *chat.GetUsersResponse),
+		newChatMessage:     make(chan *chat.GetMessagesMessage),
+		newChannelMessage:  make(chan *chat.GetChannelsMessage),
+		newUserMessage:     make(chan *chat.GetUsersMessage),
+		users:              make(map[string]user),
 	}
 	go chatSrvr.broadcast()
 

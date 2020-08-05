@@ -15,12 +15,11 @@ import { StoreContext } from '../../context/Store';
 import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
 import SettingsBar from '../SettingsBar/SettingsBar.js';
-import NewChannelModal from './NewChannelModal/NewChannelModal.js';
+import ChannelModal from './ChannelModal/ChannelModal.js';
 import Spinner from '../Spinner/Spinner';
 
 const Channels = props => {
     const { state, dispatch } = useContext(StoreContext)
-    const [showModal, setShowModal] = useState(false)
     const [loading, setLoading] = useState(true)
 
     // load channels after initial render
@@ -66,25 +65,81 @@ const Channels = props => {
     if (loading)
         spinner = <Spinner />
 
+    const [showNewChannelModal, setShowNewChannelModal] = useState(false)
+    const newChannelModal = (
+        <ChannelModal
+            close={setShowNewChannelModal.bind(this, false)}
+            isDesktop={props.isDesktop}
+            modalType={'new'}
+            show={showNewChannelModal}
+            title={'Create Channel'}
+        />
+    )
+
+    const initialChannelOptions = {
+        channel: state.channels[0],
+        classes: classes,
+        optionsClasses: [classes.ChannelOptions],
+        showEdit: false,
+        startLongPress: false,
+        channelOptionClasses: [classes.ChannelOption],
+    }
+    const [channelOptions, setChannelOptions] = useState(initialChannelOptions)
+
+    let editModal = null
+    if (channelOptions.showEdit) {
+        editModal = <ChannelModal
+            channel={channelOptions.channel}
+            close={() => setChannelOptions(initialChannelOptions)}
+            isDesktop={props.isDesktop}
+            modalType={'edit'}
+            show={true}
+            title={'Edit Channel'}
+        />
+    }
+
+    useEffect(() => {
+        if (!props.show || props.isDesktop)
+            setChannelOptions(opts => ({ ...opts, optionsClasses: [classes.ChannelOptions] }))
+    }, [props.show, setChannelOptions, props.isDesktop])
+
+
+    // highlight on touch/longpress
+    const touchHighlight = {
+        onTouchStart: () => setChannelOptions({ ...channelOptions, channelOptionClasses: [classes.ChannelOption, classes.Highlight] }),
+        onTouchEnd: () => setChannelOptions({ ...channelOptions, channelOptionClasses: [classes.ChannelOption] }),
+    }
     return (
         <>
             <div className={channelsClasses.join(' ')}>
-                <ChannelsHeader displayModal={setShowModal.bind(this, true)} />
+                <ChannelsHeader displayModal={setShowNewChannelModal.bind(this, true)} />
                 <ul className={classes.Channels__list}>
                     {spinner}
                     {state.channels.map(channel =>
                         <Channel
+                            id={channel.id}
                             key={channel.id}
                             name={channel.name}
                             desc={channel.desc}
                             owner={channel.owner}
                             active={channel.active}
+                            setChannelOptions={setChannelOptions}
+                            isDesktop={props.isDesktop}
                         />
                     )}
                 </ul>
                 <SettingsBar />
             </div>
-            <NewChannelModal show={showModal} close={setShowModal.bind(this, false)} isDesktop={props.isDesktop} />
+            {newChannelModal}
+            {editModal}
+            <ul className={channelOptions.optionsClasses.join(' ')}>
+                <button
+                    className={channelOptions.channelOptionClasses.join(' ')}
+                    onClick={() => setChannelOptions({ ...channelOptions, optionsClasses: [classes.ChannelOption], showEdit: true })}
+                    {...touchHighlight}
+                >Edit Channel
+                </button>
+            </ul>
         </>
     )
 }

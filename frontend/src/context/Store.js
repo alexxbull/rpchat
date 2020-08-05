@@ -39,6 +39,23 @@ const reducer = (state, action) => {
                 ...state,
                 users: [...state.users, action.payload]
             }
+        case 'edit-channel':
+            let editedChannel = action.payload
+            const updatedChannels = state.channels.map(channel => {
+                const newChannel = { ...channel }
+                if (newChannel.id === editedChannel.id) {
+                    newChannel.name = editedChannel.name
+                    newChannel.desc = editedChannel.desc
+                    editedChannel = newChannel
+                }
+                return newChannel
+            })
+
+            return {
+                ...state,
+                channels: updatedChannels,
+                currentChannel: state.currentChannel.id === editedChannel.id ? { ...editedChannel } : state.currentChannel,
+            }
         case 'edit-message':
             const editedMessage = action.payload
             const updatedMessages = state.messages.map(message => {

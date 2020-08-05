@@ -1,3 +1,11 @@
+.Container {
+    position: relative;
+}
+
+.Container:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 .Channel {    
     cursor: pointer; 
     margin-bottom: 8px;
@@ -10,4 +18,40 @@
 .Channel__icon {    
     color: var(--white);
     margin-right: 4px;
+}
+
+.Channel_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.EditBtn {
+    border: none;
+    display: none;
+    z-index: 1;
+    position: absolute;
+}
+
+.Show {
+    display: block;
+}
+
+.Hide {
+    display: none;
+}
+
+@media(min-width: 40rem) {
+    .EditBtn {
+        background: url(../../../assets/edit-icon.svg) center/1.25rem no-repeat border-box var(--gray);
+        border-radius: 5px;
+        cursor: pointer;
+        height: 1.5rem;
+        overflow: visible;
+        top: 0;
+        right: 0;
+        padding: 8px;
+        width: 1.5rem;
+    }    
 }
