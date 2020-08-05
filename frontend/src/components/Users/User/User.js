@@ -7,7 +7,7 @@ const User = props =>
         <div className={classes.User__icon}>
             <img src={props.avatar} alt={`${props.name} avatar`} width={"32px"} height={"32px"} />
         </div>
-        <span className={classes.User__name}>{props.name}</span>
+        <div className={classes.User__name}>{props.name}</div>
     </li>
 
 export default User;

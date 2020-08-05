@@ -19,8 +19,12 @@
 }
 
 .Channel_name {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin: 0 auto;
+    max-width: 72%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .Users_btn {

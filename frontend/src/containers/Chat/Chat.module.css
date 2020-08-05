@@ -22,6 +22,9 @@
 
 .ChannelName {    
     font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .Divider {
@@ -31,6 +34,9 @@
 
 .ChannelDesc {    
     font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @media (min-width: 40rem) {

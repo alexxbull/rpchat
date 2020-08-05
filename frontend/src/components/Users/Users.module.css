@@ -46,6 +46,9 @@
 
 .User__name {
     margin-left: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @media (min-width: 40rem) {
