@@ -123,8 +123,8 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 	// add user to database
 	sqlStmt := `
 		INSERT INTO users(email, user_name, user_password, image_path, refresh_token)
-		VALUES ($1, $2, $3, $4, $5);
-		RETURNING id
+		VALUES ($1, $2, $3, $4, $5)
+		RETURNING id;
 	`
 
 	stmt, err := as.db.Prepare(sqlStmt)
