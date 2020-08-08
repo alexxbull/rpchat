@@ -715,7 +715,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f, obj = {
       id: jspb.Message.getFieldWithDefault(msg, 1, 0),
       memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      edited: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
+      user: jspb.Message.getFieldWithDefault(msg, 3, ""),
+      edited: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
     };
 
     if (includeInstance) {
@@ -761,6 +762,10 @@ proto.chat.EditMessageRequest.deserializeBinaryFromReader = function (msg, reade
         msg.setMemo(value);
         break;
       case 3:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setUser(value);
+        break;
+      case 4:
         var value = /** @type {boolean} */ (reader.readBool());
         msg.setEdited(value);
         break;
@@ -807,10 +812,17 @@ proto.chat.EditMessageRequest.serializeBinaryToWriter = function (message, write
       f
     );
   }
+  f = message.getUser();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
   f = message.getEdited();
   if (f) {
     writer.writeBool(
-      3,
+      4,
       f
     );
   }
@@ -854,11 +866,29 @@ proto.chat.EditMessageRequest.prototype.setMemo = function (value) {
 
 
 /**
- * optional bool edited = 3;
+ * optional string user = 3;
+ * @return {string}
+ */
+proto.chat.EditMessageRequest.prototype.getUser = function () {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.chat.EditMessageRequest} returns this
+ */
+proto.chat.EditMessageRequest.prototype.setUser = function (value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool edited = 4;
  * @return {boolean}
  */
 proto.chat.EditMessageRequest.prototype.getEdited = function () {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
 
@@ -867,7 +897,7 @@ proto.chat.EditMessageRequest.prototype.getEdited = function () {
  * @return {!proto.chat.EditMessageRequest} returns this
  */
 proto.chat.EditMessageRequest.prototype.setEdited = function (value) {
-  return jspb.Message.setProto3BooleanField(this, 3, value);
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

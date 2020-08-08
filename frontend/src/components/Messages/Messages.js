@@ -14,6 +14,14 @@ import { StoreContext } from '../../context/Store';
 // components
 import Message from './Message/Message';
 import Spinner from '../Spinner/Spinner';
+import Backdrop from '../Backdrop/Backdrop';
+
+
+const initialMessageOptions = {
+    messageEditing: null,
+    messageOptionClasses: [classes.MessageOption],
+    messageOptionsClasses: [classes.MessageOptions],
+}
 
 class Messages extends Component {
     static contextType = StoreContext
@@ -29,6 +37,7 @@ class Messages extends Component {
         loading: false,
         messages: this.context.state.messages,
         serverMin: 0,
+        ...initialMessageOptions,
     }
 
     // load messages after initial render
@@ -73,6 +82,10 @@ class Messages extends Component {
             const messagesJSX = this.messagesRef.current;
             messagesJSX.scrollTop = messagesJSX.scrollHeight - snapshot.scrollHeight + snapshot.scrollTop
         }
+
+        // hide message options menu on desktop
+        if (this.props.isDesktop && !prevProps.isDesktop)
+            this.setState({ ...initialMessageOptions })
     }
 
     loadMessages = async () => {
@@ -177,8 +190,20 @@ class Messages extends Component {
         }
     }
 
+    handleMobileMessageEdit = () => {
+        this.context.dispatch({ type: 'set-mobile-message-edit', payload: this.state.messageEditing })
+        this.setState({ ...initialMessageOptions })
+    }
+
     render() {
-        const { loading, messages } = this.state
+
+        // highlight on touch/longpress
+        const touchHighlight = {
+            onTouchStart: () => this.setState({ messageOptionClasses: [classes.MessageOption, classes.Highlight] }),
+            onTouchEnd: () => this.setState({ messageOptionClasses: [classes.MessageOption] }),
+        }
+
+        const { loading, messages, messageOptionClasses, messageOptionsClasses } = this.state
 
         let spinner = null
         if (loading)
@@ -198,12 +223,15 @@ class Messages extends Component {
                             group={true}
                             key={message.id}
                             id={message.id}
+                            channel={message.channel}
                             edited={message.edited}
                             memo={message.memo}
                             timestamp={moment(message.timestamp).format('L').toString()}
                             username={message.username}
                             avatar={message.avatar}
                             scrollRef={null}
+                            hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
+                            showMessageOptions={() => this.setState({ messageEditing: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
                         />
                     }
                 }
@@ -213,22 +241,41 @@ class Messages extends Component {
                     group={false}
                     key={message.id}
                     id={message.id}
+                    channel={message.channel}
                     edited={message.edited}
                     memo={message.memo}
                     timestamp={moment(message.timestamp).format('L').toString()}
                     username={message.username}
                     avatar={message.avatar}
                     scrollRef={index === 0 ? this.topMessageRef : null}
+                    hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
+                    showMessageOptions={() => this.setState({ messageEditing: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
                 />
             })
         }
 
         return (
-            <div className={classes.Messages} ref={this.messagesRef}>
-                {spinner}
-                {messagesJSX}
-                <div ref={this.messagesEndRef} style={{ marginBottom: '1rem' }}></div>
-            </div>
+            <>
+                <div className={classes.Messages} ref={this.messagesRef}>
+                    {spinner}
+                    {messagesJSX}
+                    <div ref={this.messagesEndRef} style={{ marginBottom: '1rem' }}></div>
+                </div>
+
+                <ul className={messageOptionsClasses.join(' ')}>
+                    <button
+                        className={messageOptionClasses.join(' ')}
+                        onClick={this.handleMobileMessageEdit}
+                        {...touchHighlight}
+                    >Edit Message
+                </button>
+                </ul>
+
+                <Backdrop
+                    show={messageOptionsClasses.includes(classes.ShowOptions)}
+                    click={() => this.setState({ ...initialMessageOptions })}
+                />
+            </>
         )
     }
 }

@@ -69,7 +69,7 @@ const App = props => {
         showUsers={setShowUsers.bind(this, true)}
       />
       <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
-      <Chat />
+      <Chat isDesktop={isDesktop} />
       <Users show={isDesktop || showUsers} />
     </div>
   )

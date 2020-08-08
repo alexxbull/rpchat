@@ -21,6 +21,9 @@ const Message = props => {
         readOnly: true,
         editable: false,
         rows: 1,
+        startLongPress: false,
+        optionsClasses: [classes.MessageOptions],
+        optionClasses: [classes.MessageOption],
     }
     const [messageEdit, setMessageEdit] = useState(initialMessageEdit)
 
@@ -44,18 +47,18 @@ const Message = props => {
 
     // hide edit button and make message editable
     const handleEdit = () => {
+        props.hideMessageOptions()
+
         setMessageEdit(state => {
             return {
                 ...state,
+                editable: true,
                 editBtnClasses: [classes.Hide],
                 editedClasses: [classes.Hide],
                 messageTextClasses: [classes.Message_text, classes.Message_text_editable],
                 readOnly: false,
-                editable: true,
             }
         })
-        if (messageTextRef.current)
-            messageTextRef.current.focus()
     }
 
     // handle user editing message
@@ -69,6 +72,7 @@ const Message = props => {
                     const req = new EditMessageRequest()
                     req.setId(props.id)
                     req.setMemo(newMessageText)
+                    req.setUser(state.username)
 
                     const chatClient = ChatClient(dispatch)
                     await chatClient.editMessage(req, {})
@@ -80,19 +84,16 @@ const Message = props => {
             setMessageEdit(initialMessageEdit)
         }
         // cancel edit changes if the user pressed the Escape key
-        else if (event.key === 'Escape')
+        else if (event.key === 'Escape') {
+            props.hideMessageOptions()
             setMessageEdit(initialMessageEdit)
+        }
     }
 
     // handle text change when user edits message
     const handleEditChange = event => {
         const newMessageText = event.target.value
-        setMessageEdit(state => {
-            return {
-                ...state,
-                messageText: newMessageText,
-            }
-        })
+        setMessageEdit(({ ...messageEdit, messageText: newMessageText }))
     }
 
     // close editable textarea when user clicks outside of textarea
@@ -122,17 +123,20 @@ const Message = props => {
         })
     }, [props.memo, props.edited])
 
-    // reformat message to fit in textarea after edit
+    // reformat message to fit in textarea during edit
     useEffect(() => {
-        let currentRows = null
-        if (messageTextRef.current) {
-            const lineHeight = 14.4;
-            messageTextRef.current.rows = 1 // reset rows
-            currentRows = Math.floor((messageTextRef.current.scrollHeight / lineHeight))
-            messageTextRef.current.rows = currentRows
-            messageTextRef.current.scrollIntoView({ alignToTop: false }) // scroll so the bottom of the message is visible
+        if (messageEdit.editable) {
+            let currentRows = null
+            if (messageTextRef.current) {
+                const lineHeight = 14.4;
+                messageTextRef.current.rows = 1 // reset rows
+                currentRows = Math.floor((messageTextRef.current.scrollHeight / lineHeight))
+                messageTextRef.current.rows = currentRows
+                messageTextRef.current.scrollIntoView({ alignToTop: false }) // scroll so the bottom of the message is visible
+                messageTextRef.current.focus()
+            }
         }
-    }, [messageEdit.messageText])
+    }, [messageEdit.editable, messageEdit.messageText])
 
     // move caret to the end of the message when tries to edit message
     const moveCaretAtEnd = event => {
@@ -162,6 +166,54 @@ const Message = props => {
     if (props.edited)
         edited = <div className={messageEdit.editedClasses.join(' ')}>(edited)</div>
 
+    // handle long press
+    const messageUser = props.username
+    const showMessageOptions = props.showMessageOptions
+    useEffect(() => {
+        let timer
+
+        if (messageEdit.startLongPress) {
+            timer = setTimeout(() => {
+                if (state.username === messageUser) {
+                    showMessageOptions()
+                    setMessageEdit(opts => ({ ...opts, showEdit: false, }))
+                }
+            }, 400)
+        }
+        else
+            clearTimeout(timer)
+
+        return () => clearTimeout(timer)
+    }, [messageEdit.startLongPress, messageUser, showMessageOptions, state.username])
+
+    const longPress = {
+        onTouchStart: () => setMessageEdit({ ...messageEdit, startLongPress: true }),
+        onTouchEnd: () => setMessageEdit({ ...messageEdit, startLongPress: false }),
+    }
+
+    let messageText = (
+        <div
+            className={messageEdit.messageTextClasses.join(' ')}
+            {...longPress}
+        >
+            {props.memo}
+        </div>
+    )
+    if (messageEdit.editable) {
+        messageText =
+            <textarea
+                className={messageEdit.messageTextClasses.join(' ')}
+                value={messageEdit.messageText}
+                onKeyDown={submitEdit}
+                onChange={handleEditChange}
+                readOnly={messageEdit.readOnly}
+                ref={messageTextRef}
+                rows={messageEdit.rows}
+                onFocus={moveCaretAtEnd}
+            >
+            </textarea>
+    }
+
     return (
         < div
             className={messageClasses.join(' ')}
@@ -176,17 +228,7 @@ const Message = props => {
             <div className={classes.Message_content} >
                 {metadata}
                 <div className={classes.Message_text_container}>
-                    <textarea
-                        className={messageEdit.messageTextClasses.join(' ')}
-                        value={messageEdit.messageText}
-                        onKeyDown={submitEdit}
-                        onChange={handleEditChange}
-                        readOnly={messageEdit.readOnly}
-                        ref={messageTextRef}
-                        rows={messageEdit.rows}
-                        onFocus={moveCaretAtEnd}
-                    >
-                    </textarea>
+                    {messageText}
                     {edited}
                 </div>
                 <div className={classes.Message_time}>{props.timestamp}</div>

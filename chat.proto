@@ -15,7 +15,8 @@ message NewMessageRequest {
 message EditMessageRequest {
   int32 id = 1;
   string memo = 2;
-  bool edited = 3;
+  string user = 3;
+  bool edited = 4;
 }
 
 message NewChannelRequest {

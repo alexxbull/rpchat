@@ -8,6 +8,8 @@ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDk
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/cosmtrek/air v1.12.1 h1:5YnQHF0a09Yt8vNWYtK3CtlR8aodV4w23Iz+fLSDLE4=
 github.com/cosmtrek/air v1.12.1/go.mod h1:5EsgUqrBIHlW2ghNoevwPBEG1FQvF5XNulikjPte538=
+github.com/cosmtrek/air v1.21.2 h1:PwChdKs3qlSkKucKwwC04daw5eoy4SVgiEBQiHX5L9A=
+github.com/cosmtrek/air v1.21.2/go.mod h1:5EsgUqrBIHlW2ghNoevwPBEG1FQvF5XNulikjPte538=
 github.com/creack/pty v1.1.9 h1:uDmaGzcdjhF4i/plgjmEsriH11Y0o7RKapEf/LDaM3w=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/creack/pty v1.1.11 h1:07n33Z8lZxZ2qwegKbObQohDhXDQxiMMz1NOUGYlesw=
@@ -126,6 +128,12 @@ golang.org/x/sys v0.0.0-20200802091954-4b90ce9b60b3 h1:qDJKu1y/1SjhWac4BQZjLljqv
 golang.org/x/sys v0.0.0-20200802091954-4b90ce9b60b3/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200803210538-64077c9b5642 h1:B6caxRw+hozq68X2MY7jEpZh/cr4/aHLv9xU8Kkadrw=
 golang.org/x/sys v0.0.0-20200803210538-64077c9b5642/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200805065543-0cf7623e9dbd h1:wefLe/3g5tC0FcXw3NneLA5tHgbyouyZlfcSjNfOdgk=
+golang.org/x/sys v0.0.0-20200805065543-0cf7623e9dbd/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200806125547-5acd03effb82 h1:6cBnXxYO+CiRVrChvCosSv7magqTPbyAgz1M8iOv5wM=
+golang.org/x/sys v0.0.0-20200806125547-5acd03effb82/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200808120158-1030fc2bf1d9 h1:yi1hN8dcqI9l8klZfy4B8mJvFmmAxJEePIQQFNSd7Cs=
+golang.org/x/sys v0.0.0-20200808120158-1030fc2bf1d9/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/tools v0.0.0-20190114222345-bf090417da8b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=

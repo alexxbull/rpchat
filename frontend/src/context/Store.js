@@ -7,6 +7,7 @@ const initialState = {
     currentChannel: {},
     listening: false,
     messages: [],
+    mobileMessageEdit: {},
     username: '',
     users: [],
 }
@@ -102,6 +103,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 messages: action.payload,
+            }
+        case 'set-mobile-message-edit':
+            return {
+                ...state,
+                mobileMessageEdit: { ...action.payload }
             }
         case 'set-users':
             return {

@@ -280,14 +280,34 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 }
 
 func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequest) (*chat.EmptyMessage, error) {
+	// validate message creator
+	sqlStmt := `SELECT user_name FROM messages WHERE id = $1;`
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for querying message data before message edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
+	}
+
+	var messageCreator string
+	err = stmt.QueryRow(req.Id).Scan(&messageCreator)
+	if err != nil {
+		fmt.Println("Unable to Query message data before message edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
+	}
+
+	if messageCreator != req.User {
+		fmt.Printf("User %s is not the creator of this message. User %s is the creator.", req.User, messageCreator)
+		return nil, status.Errorf(codes.Unauthenticated, "You are not the creator of this message so you cannot edit it.")
+	}
+
 	res := &chat.EmptyMessage{}
-	sqlStmt := `UPDATE messages
+	sqlStmt = `UPDATE messages
 			SET 
 				message = $1,
 				edited = $2
 			WHERE id = $3;`
 
-	stmt, err := cs.db.Prepare(sqlStmt)
+	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
 		fmt.Println("Unable to Prepare sql for editing message:", err)
 		return res, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")

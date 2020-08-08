@@ -22,7 +22,7 @@ const Chat = props => {
                 <p className={classes.ChannelDesc}>{currentChannel.desc}</p>
             </div>
             <Messages />
-            <ReplyBox />
+            <ReplyBox isDesktop={props.isDesktop} />
         </div>
     )
 }
