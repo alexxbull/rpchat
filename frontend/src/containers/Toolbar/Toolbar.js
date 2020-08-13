@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 
+// css
 import classes from './Toolbar.module.css'
 
 // context
@@ -9,27 +10,31 @@ const Toolbar = props => {
     const { state } = useContext(StoreContext)
     const currentChannel = state.currentChannel
 
-    let toolbar = null
-
-    if (props.show) {
-        const channelsButton =
+    const mobileToolbar = (
+        <div className={classes.Toolbar}>
             <button
-                className={classes.Channels_btn}
+                className={classes.ChannelsBtn}
                 onClick={props.showChannels}
             >
-                <span className={classes.Channels_btn_bar}></span>
-                <span className={classes.Channels_btn_bar}></span>
-                <span className={classes.Channels_btn_bar}></span>
+                <span className={classes.ChannelsBtn_bar}></span>
+                <span className={classes.ChannelsBtn_bar}></span>
+                <span className={classes.ChannelsBtn_bar}></span>
             </button>
-
-        toolbar = <div className={classes.Toolbar}>
-            {channelsButton}
-            <h1 className={classes.Channel_name}>{currentChannel.name}</h1>
-            <button className={classes.Users_btn} onClick={props.showUsers}></button>
+            <h1 className={classes.ChannelName}>{currentChannel.name}</h1>
+            <button className={classes.UsersBtn} onClick={props.showUsers}></button>
         </div>
-    }
+    )
 
-    return toolbar
+    const desktopToolbar = (
+        <div className={classes.Toolbar}>
+            <div className={classes.Hashtag}>#</div>
+            <h1 className={classes.ChannelName}>{currentChannel.name}</h1>
+            <div className={classes.Divider}>|</div>
+            <p className={classes.ChannelDesc}>{currentChannel.desc}</p>
+        </div>
+    )
+
+    return props.isDesktop ? desktopToolbar : mobileToolbar
 
 }
 

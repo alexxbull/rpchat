@@ -4,21 +4,21 @@
     background-color: var(--lightBlue);
 }
 
-.Channels_btn {
+.ChannelsBtn {
     width: 2.5rem;
     background: none;
     cursor: pointer;
     border: none;
 }
 
-.Channels_btn_bar {
+.ChannelsBtn_bar {
     height: 0.2rem;
     background: var(--black);
     display: block;
     margin: 0.5rem 0;
 }
 
-.Channel_name {
+.ChannelName {
     font-size: 1rem;
     margin: 0 auto;
     max-width: 72%;
@@ -27,11 +27,51 @@
     white-space: nowrap;
 }
 
-.Users_btn {
+.UsersBtn {
     background: url('../../assets//users-icon.svg') center/2rem no-repeat;
     height: 2rem;
     width: 2rem;
     border: none;
     cursor: pointer;
     outline: none;
+}
+
+.Hashtag {
+    margin: 0 8px;
+    color: var(--white);
+}
+
+.Divider {
+    margin: 0 8px;
+    color: var(--white);
+}
+
+.ChannelDesc {    
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media(min-width: 40rem) {
+    .ChannelsBtn {
+        display: none;
+    }
+
+    .Toolbar {
+        background-color: var(--gray);
+        color: var(--black);
+        height: 2rem;
+        overflow: hidden;
+        width: 100%;
+    }    
+    
+    .ChannelName {    
+        margin: 0;
+        max-width: none;
+    }
+
+    .UsersBtn {
+        display: none;
+    }
 }

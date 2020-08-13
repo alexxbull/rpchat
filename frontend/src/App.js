@@ -8,7 +8,6 @@ import { EmptyMessage } from './proto/auth/auth_pb.js'
 import { StoreContext } from './context/Store.js';
 
 // components
-import Toolbar from './containers/Toolbar/Toolbar.js'
 import Chat from './containers/Chat/Chat.js';
 import Channels from './components/Channels/Channels.js';
 import Users from './components/Users/Users.js';
@@ -62,14 +61,12 @@ const App = props => {
     <div className="App">
       <RefreshHandlder />
       <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
-      <Toolbar
-        show={!isDesktop}
+      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
+      <Chat
         isDesktop={isDesktop}
         showChannels={setShowChannels.bind(this, true)}
         showUsers={setShowUsers.bind(this, true)}
       />
-      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
-      <Chat isDesktop={isDesktop} />
       <Users show={isDesktop || showUsers} />
     </div>
   )
