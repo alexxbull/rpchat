@@ -19,6 +19,11 @@ message EditMessageRequest {
   bool edited = 4;
 }
 
+message DeleteMessageRequest {
+  int32 id = 1;
+  string username = 2;
+}
+
 message NewChannelRequest {
   string name = 1;
   string description = 2;
@@ -95,6 +100,7 @@ message BroadcastResponse {
   GetUsersResponse users = 4;
   EditMessageRequest chat_message_edit = 5;
   EditChannelRequest channel_edit = 6;
+  DeleteMessageRequest chat_message_deleted = 7;
 }
 
 service ChatService {
@@ -105,6 +111,9 @@ service ChatService {
   // add new object
   rpc AddMessage(NewMessageRequest) returns (EmptyMessage);
   rpc AddChannel(NewChannelRequest) returns (EmptyMessage);
+
+  // delete object
+  rpc DeleteMessage(DeleteMessageRequest) returns (EmptyMessage);
 
   // edit object
   rpc EditMessage(EditMessageRequest) returns (EmptyMessage);

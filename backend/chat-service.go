@@ -22,6 +22,7 @@ type user struct {
 
 type chatServer struct {
 	db                 *sql.DB
+	deletedChatMessage chan *chat.DeleteMessageRequest
 	editChatMessage    chan *chat.EditMessageRequest
 	editChannelMessage chan *chat.EditChannelRequest
 	getUsersResponse   chan *chat.GetUsersResponse
@@ -98,63 +99,80 @@ func (cs *chatServer) broadcast() {
 		select {
 		case msg := <-cs.newChatMessage:
 			res := &chat.BroadcastResponse{
-				Channel:         nil,
-				ChannelEdit:     nil,
-				ChatMessage:     msg,
-				ChatMessageEdit: nil,
-				User:            nil,
-				Users:           nil,
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChatMessage:        msg,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              nil,
 			}
 			cs.broadcastObject(res, "add-message")
 
 		case ch := <-cs.newChannelMessage:
 			res := &chat.BroadcastResponse{
-				Channel:         ch,
-				ChannelEdit:     nil,
-				ChatMessage:     nil,
-				ChatMessageEdit: nil,
-				User:            nil,
-				Users:           nil,
+				Channel:            ch,
+				ChannelEdit:        nil,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              nil,
 			}
 			cs.broadcastObject(res, "add-channel")
+		case deletedMessage := <-cs.deletedChatMessage:
+			res := &chat.BroadcastResponse{
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: deletedMessage,
+				User:               nil,
+				Users:              nil,
+			}
+			cs.broadcastObject(res, "deleted-message")
 		case channelEdit := <-cs.editChannelMessage:
 			res := &chat.BroadcastResponse{
-				Channel:         nil,
-				ChannelEdit:     channelEdit,
-				ChatMessage:     nil,
-				ChatMessageEdit: nil,
-				User:            nil,
-				Users:           nil,
+				Channel:            nil,
+				ChannelEdit:        channelEdit,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              nil,
 			}
 			cs.broadcastObject(res, "edit-channel")
 		case messageEdit := <-cs.editChatMessage:
 			res := &chat.BroadcastResponse{
-				Channel:         nil,
-				ChannelEdit:     nil,
-				ChatMessage:     nil,
-				ChatMessageEdit: messageEdit,
-				User:            nil,
-				Users:           nil,
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChatMessage:        nil,
+				ChatMessageEdit:    messageEdit,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              nil,
 			}
 			cs.broadcastObject(res, "edit-message")
 		case user := <-cs.newUserMessage:
 			res := &chat.BroadcastResponse{
-				Channel:         nil,
-				ChannelEdit:     nil,
-				ChatMessage:     nil,
-				ChatMessageEdit: nil,
-				User:            user,
-				Users:           nil,
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               user,
+				Users:              nil,
 			}
 			cs.broadcastObject(res, "add-user")
 		case usersList := <-cs.getUsersResponse:
 			res := &chat.BroadcastResponse{
-				Channel:         nil,
-				ChannelEdit:     nil,
-				ChatMessage:     nil,
-				ChatMessageEdit: nil,
-				User:            nil,
-				Users:           usersList,
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              usersList,
 			}
 			cs.broadcastObject(res, "users-list")
 		}
@@ -276,6 +294,50 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 	}
 
 	res := &chat.EmptyMessage{}
+	return res, nil
+}
+
+func (cs *chatServer) DeleteMessage(ctx context.Context, req *chat.DeleteMessageRequest) (*chat.EmptyMessage, error) {
+	// validate message creator
+	sqlStmt := `SELECT user_name FROM messages WHERE id = $1;`
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for querying message data before message delete", err)
+		return nil, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
+	}
+
+	var messageCreator string
+	err = stmt.QueryRow(req.Id).Scan(&messageCreator)
+	if err != nil {
+		fmt.Println("Unable to Query message data before message delete", err)
+		return nil, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
+	}
+
+	if messageCreator != req.Username {
+		fmt.Printf("User %s is not the creator of this message. User %s is the creator.", req.Username, messageCreator)
+		return nil, status.Errorf(codes.Unauthenticated, "You are not the creator of this message so you cannot delete it.")
+	}
+
+	res := &chat.EmptyMessage{}
+	sqlStmt = `DELETE FROM messages WHERE id = $1;`
+
+	stmt, err = cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for deleting message:", err)
+		return res, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
+	}
+
+	_, err = stmt.Exec(req.Id)
+	if err != nil {
+		fmt.Println("Unable to Execute message delete:", err)
+		return res, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
+	}
+
+	cs.deletedChatMessage <- &chat.DeleteMessageRequest{
+		Id:       req.Id,
+		Username: req.Username,
+	}
+
 	return res, nil
 }
 

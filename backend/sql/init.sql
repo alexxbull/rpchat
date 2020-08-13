@@ -25,7 +25,8 @@ CREATE TABLE messages (
 	channel_name TEXT REFERENCES channels(channel_name) ON UPDATE CASCADE ON DELETE CASCADE,
 	message TEXT NOT NULL CHECK (message !~ '^(|\s.*)$'), --do not allow empty or messages with only spaces
 	post_date TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-	edited BOOLEAN DEFAULT FALSE NOT NULL
+	edited BOOLEAN DEFAULT FALSE NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 CREATE TABLE images (

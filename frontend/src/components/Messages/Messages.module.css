@@ -15,10 +15,39 @@
     background: rgba(0,0,0, 0.05);
 }
 
-.EditBtn {
-    border: none;
+
+.MessageBtns {        
     display: none;
-    z-index: 1;
+}
+
+.MessageOptions {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    width: 100vw;
+    z-index: 10;
+}
+
+.MessageOption {
+    background: var(--gray);
+    border: none;
+    list-style: none;
+    height: 3.5rem;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: bold;
+    padding: 16px;
+    width: 100%;
+}
+
+.ShowOptions {
+    transform: translateY(0%);
 }
 
 .Message_content {
@@ -80,36 +109,6 @@
     margin-left: auto;
 }
 
-.MessageOptions {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-    transform: translateY(100%);
-    transition: transform 0.3s;
-    width: 100vw;
-    z-index: 10;
-}
-
-.MessageOption {
-    background: var(--gray);
-    border: none;
-    height: 2.5rem;
-    text-align: center;
-    font-size: 1.05rem;
-    font-weight: bold;
-    padding: 8px;
-    width: 100%;
-}
-
-.ShowOptions {
-    transform: translateY(0%);
-}
-
-
 .TopMargin {
     margin-top: 8px;
 }
@@ -136,16 +135,33 @@
 }
 
 @media(min-width: 40rem) {
-    .EditBtn {
-        background: url(../../assets/edit-icon.svg) center/1.5rem no-repeat border-box var(--gray);
-        border-radius: 5px;
-        cursor: pointer;
-        height: 1.75rem;
+    .MessageBtns {        
         position: absolute;
         top: 0;
         right: 0;
-        padding: 8px;
-        margin: 0 8px;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .MessageBtn {
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        height: 1.75rem;
+        margin: 0 2px;
         width: 1.75rem;
+        z-index: 1;
+    }
+
+    .EditBtn {
+        background: url(../../assets/edit-icon.svg) center/1.5rem no-repeat border-box var(--gray);
+    }
+
+    .DeleteBtn {
+        background: url(../../assets/close-icon.svg) center/1.5rem no-repeat border-box var(--gray);
+    }
+
+    .ShowBtns {
+        display: flex;
     }
 }

@@ -40,6 +40,13 @@ const reducer = (state, action) => {
                 ...state,
                 users: [...state.users, action.payload]
             }
+        case 'deleted-message':
+            const deletedMessage = action.payload
+            const remainingMessages = state.messages.filter(message => message.id !== deletedMessage.id)
+            return {
+                ...state,
+                messages: remainingMessages,
+            }
         case 'edit-channel':
             let editedChannel = action.payload
             const updatedChannels = state.channels.map(channel => {

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
-import classes from './Messages.module.css';
-
 import moment from 'moment'
+
+// css
+import classes from './Messages.module.css';
 
 // grpc
 import { ChatClient } from '../../client/grpc_clients.js'
-import { GetFilteredMessagesRequest, GetMessagesRequest } from '../../proto/chat/chat_pb.js'
+import { DeleteMessageRequest, GetFilteredMessagesRequest, GetMessagesRequest } from '../../proto/chat/chat_pb.js'
 
 // context
 import { StoreContext } from '../../context/Store';
@@ -15,10 +15,13 @@ import { StoreContext } from '../../context/Store';
 import Message from './Message/Message';
 import Spinner from '../Spinner/Spinner';
 import Backdrop from '../Backdrop/Backdrop';
+import DeleteModal from '../DeleteModal/DeleteModal';
 
 
 const initialMessageOptions = {
-    messageEditing: null,
+    deleteMessage: false,
+    deleteMessageError: '',
+    targetMessage: null,
     messageOptionClasses: [classes.MessageOption],
     messageOptionsClasses: [classes.MessageOptions],
 }
@@ -83,8 +86,8 @@ class Messages extends Component {
             messagesJSX.scrollTop = messagesJSX.scrollHeight - snapshot.scrollHeight + snapshot.scrollTop
         }
 
-        // hide message options menu on desktop
-        if (this.props.isDesktop && !prevProps.isDesktop)
+        // hide message options menu whening changing between mobile and desktop
+        if ((this.props.isDesktop && !prevProps.isDesktop) || (!this.props.isDesktop && prevProps.isDesktop))
             this.setState({ ...initialMessageOptions })
     }
 
@@ -191,19 +194,39 @@ class Messages extends Component {
     }
 
     handleMobileMessageEdit = () => {
-        this.context.dispatch({ type: 'set-mobile-message-edit', payload: this.state.messageEditing })
+        this.context.dispatch({ type: 'set-mobile-message-edit', payload: this.state.targetMessage })
         this.setState({ ...initialMessageOptions })
+    }
+
+    handleDeleteMessage = async () => {
+        console.log('delete msg', this.state.targetMessage.id);
+
+        const { dispatch, state } = this.context
+
+        try {
+            const req = new DeleteMessageRequest()
+            req.setId(this.state.targetMessage.id)
+            req.setUsername(state.username)
+
+            const chatClient = ChatClient(dispatch)
+            await chatClient.deleteMessage(req, {})
+            this.setState({ ...initialMessageOptions })
+        }
+        catch (err) {
+            console.error('Edit message erorr:', err)
+            this.setState({ deleteMessageError: err.message })
+        }
     }
 
     render() {
 
         // highlight on touch/longpress
         const touchHighlight = {
-            onTouchStart: () => this.setState({ messageOptionClasses: [classes.MessageOption, classes.Highlight] }),
-            onTouchEnd: () => this.setState({ messageOptionClasses: [classes.MessageOption] }),
+            onTouchStart: event => event.target.classList.add(classes.Highlight),
+            onTouchEnd: event => event.target.classList.remove(classes.Highlight),
         }
 
-        const { loading, messages, messageOptionClasses, messageOptionsClasses } = this.state
+        const { deleteMessage, deleteMessageError, loading, messages, messageOptionClasses, messageOptionsClasses, targetMessage } = this.state
 
         let spinner = null
         if (loading)
@@ -220,7 +243,7 @@ class Messages extends Component {
                     // group consecutive messages from the same user on the same day
                     if (message.username === prevMessage.username && messageDate === prevMessageDate) {
                         return <Message
-                            group={true}
+                            grouped={true}
                             key={message.id}
                             id={message.id}
                             channel={message.channel}
@@ -231,14 +254,16 @@ class Messages extends Component {
                             avatar={message.avatar}
                             scrollRef={null}
                             hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
-                            showMessageOptions={() => this.setState({ messageEditing: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
+                            showMessageOptions={() => this.setState({ targetMessage: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
+                            isDesktop={this.props.isDesktop}
+                            showDeleteModal={() => this.setState({ deleteMessage: true, targetMessage: message })}
                         />
                     }
                 }
 
                 // do not group this message
                 return <Message
-                    group={false}
+                    grouped={false}
                     key={message.id}
                     id={message.id}
                     channel={message.channel}
@@ -249,10 +274,27 @@ class Messages extends Component {
                     avatar={message.avatar}
                     scrollRef={index === 0 ? this.topMessageRef : null}
                     hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
-                    showMessageOptions={() => this.setState({ messageEditing: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
+                    showMessageOptions={() => this.setState({ targetMessage: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
+                    isDesktop={this.props.isDesktop}
+                    showDeleteModal={() => this.setState({ deleteMessage: true, targetMessage: message })}
                 />
             })
         }
+
+        let deleteMessageModal = null
+        if (deleteMessage)
+            deleteMessageModal = (
+                <DeleteModal
+                    autoHeight={this.props.isDesktop ? true : false}
+                    error={deleteMessageError}
+                    show={true}
+                    close={() => this.setState({ ...initialMessageOptions })}
+                    content={targetMessage.memo}
+                    isDesktop={this.props.isDesktop}
+                    submit={this.handleDeleteMessage}
+                    title={'Delete Message'}
+                />
+            )
 
         return (
             <>
@@ -263,13 +305,20 @@ class Messages extends Component {
                 </div>
 
                 <ul className={messageOptionsClasses.join(' ')}>
-                    <button
+                    <li
                         className={messageOptionClasses.join(' ')}
                         onClick={this.handleMobileMessageEdit}
                         {...touchHighlight}
                     >Edit Message
-                </button>
+                </li>
+                    <li
+                        className={messageOptionClasses.join(' ')}
+                        onClick={() => this.setState({ deleteMessage: true })}
+                        {...touchHighlight}
+                    >Delete Message
+                </li>
                 </ul>
+                {deleteMessageModal}
 
                 <Backdrop
                     show={messageOptionsClasses.includes(classes.ShowOptions)}

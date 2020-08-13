@@ -45,6 +45,13 @@ const broadcastListener = async (username, dispatch) => {
                     }
                     dispatch({ type: 'add-message', payload: newMessage })
                     break
+                case res.hasChatMessageDeleted():
+                    const messageDeleted = res.getChatMessageDeleted()
+                    const deletedMessage = {
+                        id: messageDeleted.getId(),
+                    }
+                    dispatch({ type: 'deleted-message', payload: deletedMessage })
+                    break
                 case res.hasChatMessageEdit():
                     const messageEdit = res.getChatMessageEdit()
                     const editedMessage = {

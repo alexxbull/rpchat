@@ -11,6 +11,8 @@ const Modal = props => {
 
     if (props.show) {
         modalClasses.push(classes.Open)
+        if (props.autoHeight)
+            modalClasses.push(classes.AutoHeight)
         backdrop = <Backdrop click={props.close} show={props.show && props.isDesktop} />
     }
 

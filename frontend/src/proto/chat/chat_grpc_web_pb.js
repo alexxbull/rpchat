@@ -390,6 +390,86 @@ proto.chat.ChatServicePromiseClient.prototype.addChannel =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chat.DeleteMessageRequest,
+ *   !proto.chat.EmptyMessage>}
+ */
+const methodDescriptor_ChatService_DeleteMessage = new grpc.web.MethodDescriptor(
+  '/chat.ChatService/DeleteMessage',
+  grpc.web.MethodType.UNARY,
+  proto.chat.DeleteMessageRequest,
+  proto.chat.EmptyMessage,
+  /**
+   * @param {!proto.chat.DeleteMessageRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.EmptyMessage.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.chat.DeleteMessageRequest,
+ *   !proto.chat.EmptyMessage>}
+ */
+const methodInfo_ChatService_DeleteMessage = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.chat.EmptyMessage,
+  /**
+   * @param {!proto.chat.DeleteMessageRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chat.EmptyMessage.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chat.DeleteMessageRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chat.ChatServiceClient.prototype.deleteMessage =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chat.ChatService/DeleteMessage',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_DeleteMessage,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chat.DeleteMessageRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chat.EmptyMessage>}
+ *     A native promise that resolves to the response
+ */
+proto.chat.ChatServicePromiseClient.prototype.deleteMessage =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chat.ChatService/DeleteMessage',
+      request,
+      metadata || {},
+      methodDescriptor_ChatService_DeleteMessage);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.chat.EditMessageRequest,
  *   !proto.chat.EmptyMessage>}
  */
