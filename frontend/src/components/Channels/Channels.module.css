@@ -32,13 +32,13 @@
 }
 
 .ChannelOption {
-    background: var(--gray);
-    border: none;
-    height: 2.5rem;
+    background: var(--gray);    
+    height: 3.5rem;
+    list-style: none;
     text-align: center;
     font-size: 1.05rem;
     font-weight: bold;
-    padding: 8px;
+    padding: 16px;
     width: 100%;
 }
 

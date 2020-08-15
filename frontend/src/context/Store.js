@@ -40,6 +40,14 @@ const reducer = (state, action) => {
                 ...state,
                 users: [...state.users, action.payload]
             }
+        case 'deleted-channel':
+            const deletedChannel = action.payload
+            const remainingChannels = state.channels.filter(channel => channel.id !== deletedChannel.id)
+            return {
+                ...state,
+                channels: remainingChannels,
+                currentChannel: deletedChannel.name === state.currentChannel.name ? remainingChannels[0] : state.currentChannel
+            }
         case 'deleted-message':
             const deletedMessage = action.payload
             const remainingMessages = state.messages.filter(message => message.id !== deletedMessage.id)

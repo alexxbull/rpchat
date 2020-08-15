@@ -22,6 +22,7 @@ type user struct {
 
 type chatServer struct {
 	db                 *sql.DB
+	deletedChannel     chan *chat.DeleteChannelRequest
 	deletedChatMessage chan *chat.DeleteMessageRequest
 	editChatMessage    chan *chat.EditMessageRequest
 	editChannelMessage chan *chat.EditChannelRequest
@@ -101,6 +102,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        msg,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: nil,
@@ -113,6 +115,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            ch,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: nil,
@@ -120,10 +123,23 @@ func (cs *chatServer) broadcast() {
 				Users:              nil,
 			}
 			cs.broadcastObject(res, "add-channel")
+		case deletedChannel := <-cs.deletedChannel:
+			res := &chat.BroadcastResponse{
+				Channel:            nil,
+				ChannelEdit:        nil,
+				ChannelDeleted:     deletedChannel,
+				ChatMessage:        nil,
+				ChatMessageEdit:    nil,
+				ChatMessageDeleted: nil,
+				User:               nil,
+				Users:              nil,
+			}
+			cs.broadcastObject(res, "deleted-message")
 		case deletedMessage := <-cs.deletedChatMessage:
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: deletedMessage,
@@ -135,6 +151,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        channelEdit,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: nil,
@@ -146,6 +163,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    messageEdit,
 				ChatMessageDeleted: nil,
@@ -157,6 +175,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: nil,
@@ -168,6 +187,7 @@ func (cs *chatServer) broadcast() {
 			res := &chat.BroadcastResponse{
 				Channel:            nil,
 				ChannelEdit:        nil,
+				ChannelDeleted:     nil,
 				ChatMessage:        nil,
 				ChatMessageEdit:    nil,
 				ChatMessageDeleted: nil,
@@ -385,6 +405,51 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 		Edited: true,
 		Id:     req.Id,
 		Memo:   req.Memo,
+	}
+
+	return res, nil
+}
+
+func (cs *chatServer) DeleteChannel(ctx context.Context, req *chat.DeleteChannelRequest) (*chat.EmptyMessage, error) {
+	// validate channel owner
+	sqlStmt := `SELECT channel_name, channel_owner FROM channels WHERE id = $1;`
+	stmt, err := cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for querying channel data before channel edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
+	}
+
+	var channelName, channelOwner string
+	err = stmt.QueryRow(req.Id).Scan(&channelName, &channelOwner)
+	if err != nil {
+		fmt.Println("Unable to Query channel data before channel edit", err)
+		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
+	}
+
+	if channelOwner != req.Username {
+		fmt.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Username, channelName, channelOwner)
+		return nil, status.Errorf(codes.Unauthenticated, "You are not the owner of this channel so you cannot edit it.")
+	}
+
+	res := &chat.EmptyMessage{}
+	sqlStmt = `DELETE FROM channels WHERE id = $1;`
+
+	stmt, err = cs.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for deleting channel:", err)
+		return res, status.Errorf(codes.Internal, "Unable to delete channel. Please try again later.")
+	}
+
+	_, err = stmt.Exec(req.Id)
+	if err != nil {
+		fmt.Println("Unable to Execute channel delete:", err)
+		return res, status.Errorf(codes.Internal, "Unable to delete channel. Please try again later.")
+	}
+
+	cs.deletedChannel <- &chat.DeleteChannelRequest{
+		Id:       req.Id,
+		Name:     channelName,
+		Username: req.Username,
 	}
 
 	return res, nil

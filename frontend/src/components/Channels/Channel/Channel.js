@@ -6,7 +6,7 @@ import { StoreContext } from '../../../context/Store.js';
 import { useEffect } from 'react';
 
 const Channel = props => {
-    const { dispatch } = useContext(StoreContext)
+    const { dispatch, state } = useContext(StoreContext)
     const ch = {
         id: props.id,
         key: props.id,
@@ -17,50 +17,20 @@ const Channel = props => {
     }
 
     const initialChannelOptions = {
-        editBtnClasses: [classes.EditBtn],
+        channelBtnClasses: [classes.ChannelBtns],
+        deleteBtnClasses: [classes.DeleteBtn, classes.ChannelBtn],
+        editBtnClasses: [classes.EditBtn, classes.ChannelBtn],
         startLongPress: false,
     }
 
     const [channelOptions, setChannelOptions] = useState(initialChannelOptions)
-
-    const handleClick = () => dispatch({ type: 'set-current-channel', payload: ch })
-
-    const handleEdit = () => {
-        if (props.isDesktop)
-            props.setChannelOptions(opts => {
-                return {
-                    ...opts,
-                    channel: ch,
-                    show: false,
-                    showEdit: true,
-                    optionsClasses: [opts.classes.ChannelOptions],
-                }
-            })
-        else
-            props.setChannelOptions(opts => {
-                return {
-                    ...opts,
-                    channel: ch,
-                    showEdit: false,
-                    optionsClasses: [opts.classes.ChannelOptions, opts.classes.ShowOptions],
-                }
-            })
-    }
 
     useEffect(() => {
         let timer
 
         if (channelOptions.startLongPress) {
             timer = setTimeout(() => {
-                props.setChannelOptions(opts => {
-                    return {
-                        ...opts,
-                        channel: ch,
-                        showEdit: false,
-                        optionsClasses: [opts.classes.ChannelOptions, opts.classes.ShowOptions],
-                    }
-                })
-
+                props.showChannelOptions()
             }, 400)
         } else {
             clearTimeout(timer)
@@ -70,15 +40,17 @@ const Channel = props => {
     }, [ch, channelOptions.startLongPress, props])
 
 
-    // show edit button when user hovers over channel
+    const handleClick = () => dispatch({ type: 'set-current-channel', payload: ch })
+
+    // show channel options when user hovers over channel
     const mouseHover = {
         onMouseEnter: () => {
-            if (channelOptions.editBtnClasses[0] !== classes.Hide)
-                setChannelOptions({ ...channelOptions, editBtnClasses: [classes.EditBtn, classes.Show] })
+            if (channelOptions.channelBtnClasses[0] !== classes.Hide && ch.owner === state.username)
+                setChannelOptions({ ...channelOptions, channelBtnClasses: [classes.ChannelBtns, classes.ShowBtns] })
         },
         onMouseLeave: () => {
-            if (channelOptions.editBtnClasses[0] !== classes.Hide)
-                setChannelOptions({ ...channelOptions, editBtnClasses: [classes.EditBtn] })
+            if (channelOptions.channelBtnClasses[0] !== classes.Hide)
+                setChannelOptions({ ...channelOptions, channelBtnClasses: [classes.ChannelBtns] })
         },
     }
 
@@ -93,11 +65,14 @@ const Channel = props => {
             {...mouseHover}
             {...longPress}
         >
-            <button className={channelOptions.editBtnClasses.join(' ')} onClick={handleEdit}></button>
+            <div className={channelOptions.channelBtnClasses.join(' ')}>
+                <button className={[classes.EditBtn, classes.ChannelBtn].join(' ')} onClick={props.editChannel}></button>
+                <button className={[classes.DeleteBtn, classes.ChannelBtn].join(' ')} onClick={props.deleteChannel}></button>
+            </div>
             <li className={classes.Channel} onClick={handleClick}>
                 <div className={classes.Channel_name}>
                     <span className={classes.Channel__icon}></span>
-                    {props.name}
+                    {ch.name}
                 </div>
             </li>
         </div>

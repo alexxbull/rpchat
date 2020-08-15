@@ -16,11 +16,20 @@ import Channel from './Channel/Channel.js'
 import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
 import SettingsBar from '../SettingsBar/SettingsBar.js';
 import ChannelModal from './ChannelModal/ChannelModal.js';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner/Spinner.js';
 
 const Channels = props => {
     const { state, dispatch } = useContext(StoreContext)
     const [loading, setLoading] = useState(true)
+    const { isDesktop, show } = props
+    const initialChannelOptions = {
+        classes: [classes.ChannelOptions],
+        editChannel: false,
+        deleteChannel: false,
+        deleteChannelError: '',
+        targetChannel: null,
+    }
+    const [channelOptions, setChannelOptions] = useState(initialChannelOptions)
 
     // load channels after initial render
     useEffect(() => {
@@ -50,15 +59,21 @@ const Channels = props => {
                     setLoading(false)
                 }
                 catch (err) {
-                    console.log('error loading channels:', err)
+                    console.error('error loading channels:', err)
                     // send to 404 page
                 }
             }
         )()
     }, [dispatch, state.accessToken])
 
+    // hide channel options when on desktop
+    useEffect(() => {
+        if (!show || isDesktop)
+            setChannelOptions(opts => ({ ...opts, classes: [classes.ChannelOptions] }))
+    }, [show, setChannelOptions, isDesktop])
+
     const channelsClasses = [classes.Channels]
-    if (props.show)
+    if (show)
         channelsClasses.push(classes.Open)
 
     let spinner = null
@@ -69,46 +84,47 @@ const Channels = props => {
     const newChannelModal = (
         <ChannelModal
             close={setShowNewChannelModal.bind(this, false)}
-            isDesktop={props.isDesktop}
+            isDesktop={isDesktop}
             modalType={'new'}
             show={showNewChannelModal}
             title={'Create Channel'}
         />
     )
 
-    const initialChannelOptions = {
-        channel: state.channels[0],
-        classes: classes,
-        optionsClasses: [classes.ChannelOptions],
-        showEdit: false,
-        startLongPress: false,
-        channelOptionClasses: [classes.ChannelOption],
-    }
-    const [channelOptions, setChannelOptions] = useState(initialChannelOptions)
-
     let editModal = null
-    if (channelOptions.showEdit) {
-        editModal = <ChannelModal
-            channel={channelOptions.channel}
-            close={() => setChannelOptions(initialChannelOptions)}
-            isDesktop={props.isDesktop}
-            modalType={'edit'}
-            show={true}
-            title={'Edit Channel'}
-        />
+    if (channelOptions.editChannel) {
+        editModal = (
+            <ChannelModal
+                channel={channelOptions.targetChannel}
+                close={() => setChannelOptions(initialChannelOptions)}
+                isDesktop={isDesktop}
+                modalType={'edit'}
+                show={true}
+                title={'Edit Channel'}
+            />
+        )
     }
 
-    useEffect(() => {
-        if (!props.show || props.isDesktop)
-            setChannelOptions(opts => ({ ...opts, optionsClasses: [classes.ChannelOptions] }))
-    }, [props.show, setChannelOptions, props.isDesktop])
-
+    let deleteModal = null
+    if (channelOptions.deleteChannel) {
+        deleteModal = (
+            <ChannelModal
+                channel={channelOptions.targetChannel}
+                close={() => setChannelOptions({ ...initialChannelOptions })}
+                isDesktop={isDesktop}
+                modalType={'delete'}
+                show={true}
+                title={'Delete Channel'}
+            />
+        )
+    }
 
     // highlight on touch/longpress
     const touchHighlight = {
-        onTouchStart: () => setChannelOptions({ ...channelOptions, channelOptionClasses: [classes.ChannelOption, classes.Highlight] }),
-        onTouchEnd: () => setChannelOptions({ ...channelOptions, channelOptionClasses: [classes.ChannelOption] }),
+        onTouchStart: event => event.target.classList.add(classes.Highlight),
+        onTouchEnd: event => event.target.classList.remove(classes.Highlight),
     }
+
     return (
         <>
             <div className={channelsClasses.join(' ')}>
@@ -123,8 +139,10 @@ const Channels = props => {
                             desc={channel.desc}
                             owner={channel.owner}
                             active={channel.active}
-                            setChannelOptions={setChannelOptions}
-                            isDesktop={props.isDesktop}
+                            deleteChannel={() => setChannelOptions(opts => ({ ...opts, deleteChannel: true, targetChannel: channel }))}
+                            editChannel={() => setChannelOptions(opts => ({ ...opts, targetChannel: channel, editChannel: true }))}
+                            isDesktop={isDesktop}
+                            showChannelOptions={() => setChannelOptions(opts => ({ ...opts, targetChannel: channel, classes: [classes.ChannelOptions, classes.ShowOptions] }))}
                         />
                     )}
                 </ul>
@@ -132,13 +150,20 @@ const Channels = props => {
             </div>
             {newChannelModal}
             {editModal}
-            <ul className={channelOptions.optionsClasses.join(' ')}>
-                <button
-                    className={channelOptions.channelOptionClasses.join(' ')}
-                    onClick={() => setChannelOptions({ ...channelOptions, optionsClasses: [classes.ChannelOption], showEdit: true })}
+            {deleteModal}
+            <ul className={channelOptions.classes.join(' ')}>
+                <li
+                    className={[classes.ChannelOption]}
+                    onClick={() => setChannelOptions({ ...channelOptions, classes: [classes.ChannelOption], editChannel: true })}
                     {...touchHighlight}
                 >Edit Channel
-                </button>
+                </li>
+                <li
+                    className={[classes.ChannelOption]}
+                    onClick={() => setChannelOptions({ ...channelOptions, classes: [classes.ChannelOption], deleteChannel: true })}
+                    {...touchHighlight}
+                >Delete Channel
+                </li>
             </ul>
         </>
     )

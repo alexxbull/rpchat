@@ -81,7 +81,8 @@ func main() {
 	// chat services server
 	chatSrvr = chatServer{
 		db:                 db,
-		deletedChatMessage:  make(chan *chat.DeleteMessageRequest),
+		deletedChannel:     make(chan *chat.DeleteChannelRequest),
+		deletedChatMessage: make(chan *chat.DeleteMessageRequest),
 		editChatMessage:    make(chan *chat.EditMessageRequest),
 		editChannelMessage: make(chan *chat.EditChannelRequest),
 		getUsersResponse:   make(chan *chat.GetUsersResponse),

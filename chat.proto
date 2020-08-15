@@ -37,6 +37,12 @@ message EditChannelRequest {
   string owner = 4;
 }
 
+message DeleteChannelRequest {
+  int32 id = 1;
+  string name = 2;
+  string username = 3;
+}
+
 message NewUserRequest {
   string name = 1;
   string email = 2;
@@ -101,6 +107,7 @@ message BroadcastResponse {
   EditMessageRequest chat_message_edit = 5;
   EditChannelRequest channel_edit = 6;
   DeleteMessageRequest chat_message_deleted = 7;
+  DeleteChannelRequest channel_deleted = 8;
 }
 
 service ChatService {
@@ -114,6 +121,7 @@ service ChatService {
 
   // delete object
   rpc DeleteMessage(DeleteMessageRequest) returns (EmptyMessage);
+  rpc DeleteChannel(DeleteChannelRequest) returns (EmptyMessage);
 
   // edit object
   rpc EditMessage(EditMessageRequest) returns (EmptyMessage);

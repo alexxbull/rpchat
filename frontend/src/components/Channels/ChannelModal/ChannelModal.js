@@ -7,7 +7,7 @@ import { StoreContext } from '../../../context/Store'
 
 // grpc
 import { ChatClient } from '../../../client/grpc_clients.js'
-import { NewChannelRequest, EditChannelRequest } from '../../../proto/chat/chat_pb.js'
+import { DeleteChannelRequest, EditChannelRequest, NewChannelRequest } from '../../../proto/chat/chat_pb.js'
 
 // copmponents
 import Modal from '../../Modal/Modal.js'
@@ -15,15 +15,14 @@ import Modal from '../../Modal/Modal.js'
 const ChannelModal = props => {
     const { dispatch, state } = useContext(StoreContext)
 
-    const editChannel = { ...props.channel }
+    const existingChannel = { ...props.channel }
     const newChannel = {
         desc: '',
         error: '',
         id: null,
         name: '',
     }
-
-    const [channel, setChannel] = useState(props.modalType === 'edit' ? editChannel : newChannel)
+    const [channel, setChannel] = useState(props.modalType === 'new' ? newChannel : existingChannel)
 
     const inputChangeHandler = event => {
         const eventName = event.target.name
@@ -69,8 +68,24 @@ const ChannelModal = props => {
                     setChannel(channelState => ({ ...channelState, error: err.message }))
                 }
                 break
+            case 'delete':
+                try {
+                    const req = new DeleteChannelRequest()
+                    req.setId(channel.id)
+                    req.setName(channel.name)
+                    req.setUsername(state.username)
+
+                    const chatClient = ChatClient(dispatch)
+                    await chatClient.deleteChannel(req, {})
+                    handleModalClose()
+                }
+                catch (err) {
+                    setChannel(channelState => ({ ...channelState, error: err.message }))
+                }
+                break
             default:
-                console.error('Unknown channel modalType:', props.modalType)
+                const err = `Unknown channel modalType: ${props.modalType}`
+                setChannel(channelState => ({ ...channelState, error: err }))
                 break
         }
     }
@@ -88,10 +103,27 @@ const ChannelModal = props => {
             <form id={`${props.modalType}_${classes.ChannelModal}`} className={classes.ChannelModal} onSubmit={handleSubmit}>
                 <label htmlFor="Channel Name">Name:</label>
                 {/* FIXME  fix required highlight showing on input box after modal closes*/}
-                <input required type="text" placeholder={"Channel name"} name={"name"} value={channel.name} onChange={inputChangeHandler} pattern={"^(?!\\s*$).+"} title={"Channel name cannot only be whitespace"} />
+                <input
+                    required
+                    type="text"
+                    placeholder={"Channel name"}
+                    name={"name"}
+                    value={channel.name}
+                    onChange={inputChangeHandler}
+                    pattern={"^(?!\\s*$).+"}
+                    title={"Channel name cannot only be whitespace"}
+                    readOnly={props.modalType === 'delete' ? true : false}
+                />
 
                 <label htmlFor="Channel Description">Description:</label>
-                <input type="text" placeholder={"Describe the topics of this channel"} name={"desc"} value={channel.desc} onChange={inputChangeHandler} />
+                <input
+                    type="text"
+                    placeholder={"Describe the topics of this channel"}
+                    name={"desc"}
+                    value={channel.desc}
+                    onChange={inputChangeHandler}
+                    readOnly={props.modalType === 'delete' ? true : false}
+                />
             </form>
         </Modal>
     )
