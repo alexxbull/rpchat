@@ -37,7 +37,7 @@ const App = props => {
       await authClient.refresh(req, {})
     }
     catch (err) {
-      props.history.push('/')
+      props.history.push('/error')
     }
   }
 

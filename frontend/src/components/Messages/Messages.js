@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment'
 
 // css
@@ -133,7 +134,7 @@ class Messages extends Component {
             }
         } catch (err) {
             console.error('error loading messages:', err.message)
-            // send to 404 page
+            this.props.history.push('/error')
         }
     }
 
@@ -183,7 +184,7 @@ class Messages extends Component {
                     }
                 } catch (err) {
                     console.error('error loading messages:', err.message)
-                    // send to 404 page
+                    this.props.history.push('/error')
                 }
             }
         }, { threshold: 1 })
@@ -329,4 +330,4 @@ class Messages extends Component {
     }
 }
 
-export default Messages;
+export default withRouter(Messages)

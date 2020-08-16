@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+// css
+import './index.css';
+
 // context
-import { StoreProvider } from './context/Store';
+import { StoreProvider } from './context/Store.js';
 
 // components
 import App from './App.js';
 import Login from './containers/Login/Login.js'
-import Register from './containers/Register/Register';
+import Register from './containers/Register/Register.js';
+import ErrorPage from './components/ErrorPage/ErrorPage.js'
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -18,6 +22,7 @@ ReactDOM.render(
         <Route path="/" exact component={Login} />
         <Route path="/register" exact component={Register} />
         <Route path="/chat" exact component={App} />
+        <Route path="/error" exact component={ErrorPage} />
       </StoreProvider>
     </BrowserRouter>
   </React.StrictMode>,

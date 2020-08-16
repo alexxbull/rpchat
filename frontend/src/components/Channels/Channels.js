@@ -17,9 +17,11 @@ import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
 import SettingsBar from '../SettingsBar/SettingsBar.js';
 import ChannelModal from './ChannelModal/ChannelModal.js';
 import Spinner from '../Spinner/Spinner.js';
+import { useHistory } from 'react-router-dom';
 
 const Channels = props => {
     const { state, dispatch } = useContext(StoreContext)
+    const history = useHistory()
     const [loading, setLoading] = useState(true)
     const { isDesktop, show } = props
     const initialChannelOptions = {
@@ -60,11 +62,11 @@ const Channels = props => {
                 }
                 catch (err) {
                     console.error('error loading channels:', err)
-                    // send to 404 page
+                    history.push('/error')
                 }
             }
         )()
-    }, [dispatch, state.accessToken])
+    }, [dispatch, history, state.accessToken])
 
     // hide channel options when on desktop
     useEffect(() => {

@@ -1,0 +1,70 @@
+.Container {
+    background: var(--lightBlue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.ErrorPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 8px; */
+    height: 100%;
+    width: 100%;
+    overflow: hidden;    
+}
+
+.ErrorPage header {
+    background: var(--red);
+    color: var(--white);
+    font-size: 1.25rem;
+    padding: 4px;
+    width: 100%;
+}
+
+.ErrorPage h1 {
+    color: var(--white);
+    font-size: 3rem;
+    font-family: 'Lobster', cursive;
+    margin: 1rem auto;
+}
+
+.ErrorIcon {
+    fill:  var(--red);
+    height: 7rem;
+    width: 7rem;
+    margin-bottom: 2rem;
+}
+
+.Message {
+    font-size: 1.15rem;
+    color: var(--white);
+}
+
+
+@media(min-width: 40rem) {
+    .ErrorPage {
+        background: var(--white);
+        border: 1px solid var(--black);
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);
+        height: 80%;
+        max-height: 45rem;
+        max-width: 30rem;
+    }
+
+    .ErrorPage header {
+        font-size: 1.35rem;
+    }
+
+    .ErrorPage h1 {
+        color: var(--black);
+    }
+
+    .Message {
+        color: var(--black);
+    }
+}

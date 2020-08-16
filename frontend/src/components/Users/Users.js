@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import classes from './Users.module.css';
 
@@ -16,6 +17,7 @@ import Spinner from '../Spinner/Spinner';
 
 const Users = props => {
     const { state, dispatch } = useContext(StoreContext)
+    const history = useHistory()
     const [loading, setLoading] = useState(true)
 
     // load user after initial render only
@@ -39,11 +41,11 @@ const Users = props => {
                 }
                 catch (err) {
                     console.log('error loading users:', err)
-                    // send to 404 page
+                    history.push('/error')
                 }
             }
         )()
-    }, [dispatch, state.accessToken, state.listening])
+    }, [dispatch, history, state.accessToken, state.listening])
 
     const usersClasses = [classes.Users]
     if (props.show)
