@@ -33,11 +33,12 @@ const Settings = props => {
 
     let settingsMenu = null
     if (showSettingsMenu) {
-        settingsMenu =
+        settingsMenu = (
             <div className={classes.Settings_menu}>
-                <button className={classes.Settings_menu_item}>About</button>
+                <button className={classes.Settings_menu_item} onClick={() => history.push('/About')}>About</button>
                 <button className={classes.Settings_menu_item} onClick={handleLogout}>Log Out</button>
             </div>
+        )
     }
 
     return (

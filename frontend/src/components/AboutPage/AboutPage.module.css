@@ -1,0 +1,146 @@
+
+.Container {
+    background: var(--lightBlue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.AboutPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.AboutPage nav  {
+    display: none;
+}
+
+.AboutPage h1 {
+    color: var(--white);
+    font-size: 3rem;
+    font-family: 'Lobster', cursive;
+    margin: 1rem auto;
+}
+
+.Source, .Credits {
+    padding: 8px;
+}
+
+.Source a, .Credits a {
+    color: var(--white);
+}
+
+.Source a:visited, .Credits a:visited {
+    color: var(--white);
+}
+
+.Source header, .Credits header {
+    display: flex;
+    align-items: center;
+}
+.Source p {
+    margin-bottom: 3rem;
+}
+
+.SourceIcon, .ReceiptIcon {
+    height: 3rem;
+    margin-right: 4px;
+    width: 3rem;
+}
+
+.Credits ul {
+    list-style-position:inside;
+    margin: 0 16px;
+}
+
+.Credits li {
+    margin: 8px 0;
+}
+
+.Buttons {
+    display: flex;
+    margin-top: auto;
+}
+
+.Button {
+    background: var(--gray);
+    border: none;
+    border-right: 1px solid var(--black);
+    cursor: pointer;
+    flex: 1;
+    height: 3rem;
+}
+
+.Button:last-child {
+    border-right: none;
+}
+
+.Highlight {
+    background-color: #52585f;
+}
+
+@media(min-width: 40rem) {
+    .AboutPage {
+        background: var(--white);
+        border: 1px solid var(--black);
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);
+        height: 100%;
+        width: 75%;
+    }
+
+    .AboutPage nav  {
+        background: var(--gray);
+        display: block;
+        width: 100%;      
+    }
+
+    .Links {
+        display: flex;
+        list-style: none;
+        padding: 8px;
+    }
+
+    .Link {
+        margin-left: 8px;
+    }
+
+    .Link a, .Link a:visited {
+        color: var(--white);
+    }
+
+    .Link a:hover, .Link a:visited:hover  {
+        color: var(--black);
+    }
+
+    .AboutPage h1 {
+        color: var(--black);
+    }
+
+    .Source, .Credits {
+        margin: 0 auto;
+        width: 85%;
+    }
+
+    .Source a, .Credits a {
+        color: var(--lightBlue);
+    }
+    
+    .Source a:visited, .Credits a:visited {
+        color: var(--lightBlue);
+    }
+
+    .Buttons {
+        display: none;
+    }
+}
+
+@media(min-width: 100rem) {
+    .AboutPage {
+        width: 50%;
+    }
+}

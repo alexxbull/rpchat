@@ -14,6 +14,7 @@ import App from './App.js';
 import Login from './containers/Login/Login.js'
 import Register from './containers/Register/Register.js';
 import ErrorPage from './components/ErrorPage/ErrorPage.js'
+import AboutPage from './components/AboutPage/AboutPage.js'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Route path="/register" exact component={Register} />
         <Route path="/chat" exact component={App} />
         <Route path="/error" exact component={ErrorPage} />
+        <Route path="/about" exact component={AboutPage} />
       </StoreProvider>
     </BrowserRouter>
   </React.StrictMode>,
