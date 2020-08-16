@@ -34,7 +34,7 @@ class Messages extends Component {
     messagesRef = React.createRef()
     observer = React.createRef()
 
-    state = {
+    initialState = {
         clientMin: 0,
         currentChannel: this.context.state.currentChannel,
         hasMore: false,
@@ -43,6 +43,8 @@ class Messages extends Component {
         serverMin: 0,
         ...initialMessageOptions,
     }
+
+    state = { ...this.initialState }
 
     // load messages after initial render
     componentDidMount() {
@@ -59,10 +61,10 @@ class Messages extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // update when global store's currentChannel is updated
+        // reset to initial state and update currentChannel when global store's currentChannel is updated
         const storeCurrentChannel = this.context.state.currentChannel
         if (this.state.currentChannel.name !== storeCurrentChannel.name) {
-            this.setState({ currentChannel: storeCurrentChannel })
+            this.setState({ ...this.initialState, currentChannel: storeCurrentChannel })
         }
 
         // update when currentChannel is updated
@@ -220,7 +222,6 @@ class Messages extends Component {
     }
 
     render() {
-
         // highlight on touch/longpress
         const touchHighlight = {
             onTouchStart: event => event.target.classList.add(classes.Highlight),
