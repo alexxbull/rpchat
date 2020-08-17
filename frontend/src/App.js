@@ -57,11 +57,19 @@ const App = props => {
     return () => window.removeEventListener('resize', updateView)
   })
 
+  // reset channels/users sidebar when layout switches to desktop
+  useEffect(() => {
+    if (isDesktop) {
+      setShowChannels(false)
+      setShowUsers(false)
+    }
+  }, [isDesktop])
+
   return (
     <div className="App">
       <RefreshHandlder />
       <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
-      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} />
+      <Channels show={isDesktop || showChannels} isDesktop={isDesktop} hideChannels={setShowChannels.bind(this, false)} />
       <Chat
         isDesktop={isDesktop}
         showChannels={setShowChannels.bind(this, true)}

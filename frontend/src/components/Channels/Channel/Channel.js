@@ -40,7 +40,11 @@ const Channel = props => {
     }, [ch, channelOptions.startLongPress, props])
 
 
-    const handleClick = () => dispatch({ type: 'set-current-channel', payload: ch })
+    const handleClick = () => {
+        dispatch({ type: 'set-current-channel', payload: ch })
+        if (!props.isDesktop)
+            props.hideChannels()
+    }
 
     // show channel options when user hovers over channel
     const mouseHover = {

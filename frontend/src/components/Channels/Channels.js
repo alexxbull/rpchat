@@ -143,6 +143,7 @@ const Channels = props => {
                             active={channel.active}
                             deleteChannel={() => setChannelOptions(opts => ({ ...opts, deleteChannel: true, targetChannel: channel }))}
                             editChannel={() => setChannelOptions(opts => ({ ...opts, targetChannel: channel, editChannel: true }))}
+                            hideChannels={props.hideChannels}
                             isDesktop={isDesktop}
                             showChannelOptions={() => setChannelOptions(opts => ({ ...opts, targetChannel: channel, classes: [classes.ChannelOptions, classes.ShowOptions] }))}
                         />
