@@ -5,6 +5,26 @@
     height: 100%;
 }
 
+.NewDateSeperator {
+    display: flex;
+    color: #27272785;
+    color: #272727a1;
+    color: #272727c2;
+}
+
+.NewDateSeperator:before,
+.NewDateSeperator:after {
+    border-bottom: 2px solid #27272721;
+    content: "";
+    flex: 1 1;
+    margin: auto;
+}
+
+.NewDateSeperator div {
+    font-size: 0.8rem;
+    margin: 0 8px;
+}
+
 .Message {
     padding: 2px;
     display: flex;
@@ -71,13 +91,20 @@
 }
 
 .Message_timestamp {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: normal;
     margin-left: 8px;
 }
 
 .Message_time {
     display: none;
+}
+
+.ShowTime {
+    display: block;
+    font-size: 0.6rem;
+    position: absolute;
+    left: 0;
 }
 
 .Message_text_container {

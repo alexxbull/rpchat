@@ -11,7 +11,7 @@ import { EditMessageRequest } from '../../../proto/chat/chat_pb.js'
 import { StoreContext } from '../../../context/Store.js';
 
 const Message = props => {
-    const { avatar, edited, grouped, id, isDesktop, memo, scrollRef, timestamp, user, username } = props
+    const { avatar, edited, grouped, id, isDesktop, memo, scrollRef, time, timestamp, user, username } = props
     const { state, dispatch } = useContext(StoreContext)
 
     const initialMessageOptions = {
@@ -26,6 +26,7 @@ const Message = props => {
         editable: false,
         rows: 1,
         startLongPress: false,
+        timeClasses: [classes.Message_time],
     }
     const [messageOptions, setMessageOptions] = useState(initialMessageOptions)
 
@@ -85,6 +86,7 @@ const Message = props => {
                 return {
                     ...state,
                     messageBtnClasses: [classes.MessageBtns, classes.ShowBtns],
+                    timeClasses: [classes.Message_time, classes.ShowTime],
                 }
             return state
         })
@@ -95,6 +97,7 @@ const Message = props => {
                 return {
                     ...state,
                     messageBtnClasses: [classes.MessageBtns],
+                    timeClasses: [classes.Message_time],
                 }
             return state
         })
@@ -165,10 +168,11 @@ const Message = props => {
     if (!grouped) {
         messageClasses.push(classes.TopMargin)
         userIcon = classes.Visible
-        metadata =
+        metadata = (
             <span className={classes.User_name}>{username}
                 <span className={classes.Message_timestamp}>{timestamp}</span>
             </span>
+        )
     }
 
     let editBtn = null
@@ -212,6 +216,7 @@ const Message = props => {
             {memo}
         </div>
     )
+
     if (messageOptions.editable) {
         messageText =
             <textarea
@@ -252,7 +257,7 @@ const Message = props => {
                         {messageText}
                         {editedIndicator}
                     </div>
-                    <div className={classes.Message_time}>{timestamp}</div>
+                    <div className={messageOptions.timeClasses.join(' ')}>{time}</div>
                 </div>
             </div >
         </>

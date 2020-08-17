@@ -237,49 +237,63 @@ class Messages extends Component {
         let messagesJSX = null
         if (messages.length > 0) {
             messagesJSX = messages.map((message, index) => {
+                let newDateSeperator = null
+
                 if (index > 0) {
                     const prevMessage = messages[index - 1]
-                    const messageDate = moment(message.timestamp).format('L').toString
-                    const prevMessageDate = moment(prevMessage.timestamp).format('L').toString
+                    const messageDate = moment(message.timestamp).format('ll').toString()
+                    const prevMessageDate = moment(prevMessage.timestamp).format('ll').toString()
+
+                    if (prevMessageDate !== messageDate) {
+                        // Date format: Month name Day, YYYY
+                        newDateSeperator = <div className={classes.NewDateSeperator}><div>{messageDate}</div></div>
+                    }
 
                     // group consecutive messages from the same user on the same day
                     if (message.username === prevMessage.username && messageDate === prevMessageDate) {
-                        return <Message
-                            grouped={true}
-                            key={message.id}
+                        return (
+                            <Message
+                                grouped={true}
+                                key={message.id}
+                                id={message.id}
+                                channel={message.channel}
+                                edited={message.edited}
+                                memo={message.memo}
+                                timestamp={moment(message.timestamp).format('L').toString()}
+                                time={moment(message.timestamp).format('LT').toString()}
+                                username={message.username}
+                                avatar={message.avatar}
+                                scrollRef={null}
+                                hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
+                                showMessageOptions={() => this.setState({ targetMessage: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
+                                isDesktop={this.props.isDesktop}
+                                showDeleteModal={() => this.setState({ deleteMessage: true, targetMessage: message })}
+                            />
+                        )
+                    }
+                }
+
+                // do not group this message
+                return (
+                    <div key={message.id}>
+                        {newDateSeperator}
+                        <Message
+                            grouped={false}
                             id={message.id}
                             channel={message.channel}
                             edited={message.edited}
                             memo={message.memo}
-                            timestamp={moment(message.timestamp).format('L').toString()}
+                            timestamp={moment(message.timestamp).format('lll').toString()}
                             username={message.username}
                             avatar={message.avatar}
-                            scrollRef={null}
+                            scrollRef={index === 0 ? this.topMessageRef : null}
                             hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
                             showMessageOptions={() => this.setState({ targetMessage: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
                             isDesktop={this.props.isDesktop}
                             showDeleteModal={() => this.setState({ deleteMessage: true, targetMessage: message })}
                         />
-                    }
-                }
-
-                // do not group this message
-                return <Message
-                    grouped={false}
-                    key={message.id}
-                    id={message.id}
-                    channel={message.channel}
-                    edited={message.edited}
-                    memo={message.memo}
-                    timestamp={moment(message.timestamp).format('L').toString()}
-                    username={message.username}
-                    avatar={message.avatar}
-                    scrollRef={index === 0 ? this.topMessageRef : null}
-                    hideMessageOptions={() => this.setState({ ...initialMessageOptions })}
-                    showMessageOptions={() => this.setState({ targetMessage: message, messageOptionsClasses: [classes.MessageOptions, classes.ShowOptions] })}
-                    isDesktop={this.props.isDesktop}
-                    showDeleteModal={() => this.setState({ deleteMessage: true, targetMessage: message })}
-                />
+                    </div>
+                )
             })
         }
 
