@@ -16,6 +16,7 @@ const ReplyBox = props => {
     const { dispatch, state } = useContext(StoreContext)
     const [memo, setMemo] = useState('')
     const [error, setError] = useState('')
+    // const [textRows, setTextRows] = useState(1)
 
     // if mobile user is editing message, set memo to the edited message's memo
     const messageRef = useRef()
@@ -39,6 +40,17 @@ const ReplyBox = props => {
         }
     }, [dispatch, endMobileMessageEdit, isDesktop, mobileMessageEdit.channel, mobileMessageEdit.memo, state.currentChannel.name,])
 
+    // resize message to fit in textarea during edit
+    useEffect(() => {
+        if (messageRef.current) {
+            const lineHeight = isDesktop ? 19.4 : 22.4;
+            messageRef.current.rows = 1 // reset rows
+            const currentRows = Math.floor(messageRef.current.scrollHeight / lineHeight)
+            messageRef.current.rows = currentRows
+            messageRef.current.scrollIntoView({ alignToTop: false }) // scroll so the bottom of the message is visible
+        }
+    }, [isDesktop, memo, messageRef])
+
     const inputChangeHandler = event => {
         setMemo(event.target.value)
         if (error)
@@ -48,36 +60,38 @@ const ReplyBox = props => {
     const handleReply = async (event) => {
         event.preventDefault()
 
-        if (mobileMessageEdit.memo) {
-            if (mobileMessageEdit.memo !== memo) {
-                try {
-                    const req = new EditMessageRequest()
-                    req.setId(mobileMessageEdit.id)
-                    req.setMemo(memo)
-                    req.setUser(state.username)
+        if (memo) {
+            if (mobileMessageEdit.memo) {
+                if (mobileMessageEdit.memo !== memo) {
+                    try {
+                        const req = new EditMessageRequest()
+                        req.setId(mobileMessageEdit.id)
+                        req.setMemo(memo)
+                        req.setUser(state.username)
 
+                        const chatClient = ChatClient(dispatch)
+                        await chatClient.editMessage(req, {})
+                    }
+                    catch (err) {
+                        console.error('Edit message erorr:', err);
+                    }
+                }
+                endMobileMessageEdit()
+            }
+            else {
+                const req = new NewMessageRequest()
+                req.setMemo(memo)
+                req.setUser(state.username)
+                req.setChannel(state.currentChannel.name)
+
+                try {
                     const chatClient = ChatClient(dispatch)
-                    await chatClient.editMessage(req, {})
+                    await chatClient.addMessage(req, {})
+                    setMemo('')
                 }
                 catch (err) {
-                    console.error('Edit message erorr:', err);
+                    setError(err.message)
                 }
-            }
-            endMobileMessageEdit()
-        }
-        else {
-            const req = new NewMessageRequest()
-            req.setMemo(memo)
-            req.setUser(state.username)
-            req.setChannel(state.currentChannel.name)
-
-            try {
-                const chatClient = ChatClient(dispatch)
-                await chatClient.addMessage(req, {})
-                setMemo('')
-            }
-            catch (err) {
-                setError(err.message)
             }
         }
     }
@@ -113,6 +127,14 @@ const ReplyBox = props => {
             </div>
     }
 
+    // handle user submitting message
+    const handleKeyDown = event => {
+        // submit message if the user pressed only the Enter key
+        if (event.key === 'Enter' && !event.shiftKey) {
+            handleReply(event)
+        }
+    }
+
     // highlight on touch/longpress
     const [replyBtnClasses, setReplyBtnClasses] = useState([classes.ReplyBtn])
     const touchReplyBtnHighlight = {
@@ -125,14 +147,16 @@ const ReplyBox = props => {
             {errorJSX}
             {editingMobileMessage}
             <form className={classes.ReplyContainer} onSubmit={handleReply} >
-                <input
-                    type="text"
+                <textarea
                     className={classes.Reply}
                     onChange={inputChangeHandler}
                     name={"memo"}
                     ref={messageRef}
+                    rows={1}
                     value={memo}
-                />
+                    onKeyDown={handleKeyDown}
+                >
+                </textarea>
                 <input
                     type="submit"
                     className={replyBtnClasses.join(' ')}

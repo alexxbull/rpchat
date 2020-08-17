@@ -57,7 +57,7 @@ const Message = props => {
         })
     }, [memo, edited])
 
-    // reformat message to fit in textarea during edit
+    // resize message to fit in textarea during edit
     useEffect(() => {
         if (messageOptions.editable) {
             let currentRows = null

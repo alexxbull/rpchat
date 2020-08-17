@@ -18,10 +18,12 @@
     flex: 1;
     border: none;
     border-radius: 25px;    
-    padding: 0.4rem;
+    padding: 8px;
     font-size: 0.9rem;
     border: 2px solid var(--gray);
     background: var(--white);
+    max-height: 25vh;
+    resize: none;
 }
 
 .EditingMobileMessage {
@@ -81,7 +83,7 @@
 
 @media (min-width: 40rem) {
     .Reply {
-        padding: 0.6rem;
+        padding: 4px 10px;
     }
 
     .ReplyBtn {
