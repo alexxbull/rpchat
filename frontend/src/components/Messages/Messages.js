@@ -202,8 +202,6 @@ class Messages extends Component {
     }
 
     handleDeleteMessage = async () => {
-        console.log('delete msg', this.state.targetMessage.id);
-
         const { dispatch, state } = this.context
 
         try {

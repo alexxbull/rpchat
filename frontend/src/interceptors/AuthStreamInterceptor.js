@@ -5,10 +5,6 @@ class AuthStreamInterceptor {
     }
 
     intercept = async (request, invoker) => {
-        const route = request['b']['name']
-        if (route === '/chat.ChatService/Broadcast')
-            console.log('route', route)
-
         try {
             // validate user's access token            
             const md = request.getMetadata()
