@@ -8,8 +8,14 @@ COPY package.json .
 
 RUN npm install
 
-CMD [ "npm", "start" ]
+CMD if [ ${APP_ENV} = prod ]; \
+    then \
+    npm run build && \
+    serve -s build; \
+    else \
+    npm start; \
+    fi
 
-EXPOSE 3000
+EXPOSE 3000 5000
 
 COPY . .
