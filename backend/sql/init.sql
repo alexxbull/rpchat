@@ -59,3 +59,9 @@ CREATE TRIGGER image_deleted
 AFTER DELETE ON images
 FOR EACH ROW
 EXECUTE PROCEDURE delete_server_image();
+
+INSERT INTO users(email, image_path, user_name, user_password)
+VALUES ('admin@alexxbull.com', 'attachments/default/user-icon.svg', 'admin', current_setting('custom.admin_password'));
+
+INSERT INTO channels(channel_name, description, channel_owner)
+VALUES ('general', 'A channel for dicussing a range of topics', 'admin');

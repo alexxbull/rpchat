@@ -7,6 +7,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - RPCHAT_ADMIN_PASSWORD=${RPCHAT_ADMIN_PASSWORD}
+      - PGOPTIONS=${PGOPTIONS}
     image: postgres:alpine
     ports: 
         - "5430:5432"
@@ -34,6 +36,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      
+      - APP_ENV=${APP_ENV}
     depends_on:
       - db
     ports:
