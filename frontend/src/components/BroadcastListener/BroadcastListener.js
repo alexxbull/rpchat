@@ -105,7 +105,7 @@ const broadcastListener = async (username, dispatch) => {
 
     }
     catch (err) {
-        console.error('broadcast error:', err)
+        console.error('broadcast error:', err.message)
     }
 }
 

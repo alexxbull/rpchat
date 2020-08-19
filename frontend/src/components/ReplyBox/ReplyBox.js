@@ -73,7 +73,7 @@ const ReplyBox = props => {
                         await chatClient.editMessage(req, {})
                     }
                     catch (err) {
-                        console.error('Edit message erorr:', err);
+                        console.error('Edit message erorr:', err.message);
                     }
                 }
                 endMobileMessageEdit()

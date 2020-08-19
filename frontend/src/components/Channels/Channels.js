@@ -61,7 +61,7 @@ const Channels = props => {
                     setLoading(false)
                 }
                 catch (err) {
-                    console.error('error loading channels:', err)
+                    console.error('error loading channels:', err.message)
                     history.push('/error')
                 }
             }

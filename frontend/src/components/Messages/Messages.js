@@ -214,7 +214,7 @@ class Messages extends Component {
             this.setState({ ...initialMessageOptions })
         }
         catch (err) {
-            console.error('Edit message erorr:', err)
+            console.error('Edit message erorr:', err.message)
             this.setState({ deleteMessageError: err.message })
         }
     }

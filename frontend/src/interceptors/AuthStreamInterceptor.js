@@ -12,7 +12,7 @@ class AuthStreamInterceptor {
             return await invoker(request)
         }
         catch (err) {
-            console.error('stream int req err', err)
+            console.error('stream int req err', err.message)
         }
     }
 }

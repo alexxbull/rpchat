@@ -51,7 +51,7 @@ const Login = props => {
                 props.history.push('/chat')
             }
             catch (err) {
-                console.error('login err', err)
+                console.error('login err', err.message)
                 setError(err.message)
             }
         }

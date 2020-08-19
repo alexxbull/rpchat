@@ -59,7 +59,7 @@ const Register = props => {
                 props.history.push('/chat')
             }
             catch (err) {
-                console.error('reg err', err)
+                console.error('reg err', err.message)
                 setError(err.message)
             }
         }

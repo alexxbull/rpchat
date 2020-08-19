@@ -40,7 +40,7 @@ const Users = props => {
                     setLoading(false)
                 }
                 catch (err) {
-                    console.error('error loading users:', err)
+                    console.error('error loading users:', err.message)
                     history.push('/error')
                 }
             }
