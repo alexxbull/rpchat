@@ -14,7 +14,7 @@ class AuthUnaryInterceptor {
     }
 
     intercept = async (request, invoker) => {
-        const route = request['b']['name']
+        const route = request.getMethodDescriptor().name
         if (ignoredRoutes.includes(route)) {
             return invoker(request)
         }
@@ -24,7 +24,8 @@ class AuthUnaryInterceptor {
             if (accessTokenRoutes.includes(route)) {
                 // intercept Login and Register requests and store the access token returned
                 response = await invoker(request)
-                window.accessToken = response['P'].getToken().getAccessToken()
+                const responseMessage = response.getResponseMessage()
+                window.accessToken = responseMessage.getToken().getAccessToken()
 
                 const decodedToken = jwtDecode(window.accessToken)
                 const username = decodedToken.username
@@ -50,16 +51,14 @@ class AuthUnaryInterceptor {
                     this.#dispatch({ type: 'logged-in', payload: username })
 
                     // send initial request with updated access token
-                    request['c'] = {
-                        ...request['c'],
-                        'authorization': 'Bearer ' + window.accessToken
-                    }
+                    const md = request.getMetadata()
+                    md['authorization'] = `Bearer ${window.accessToken || ''}`
 
                     return invoker(request)
                 }
                 catch (err) {
                     // return error from validating refresh token
-                    console.error('token refresh err', err)
+                    console.error('token refresh err', err.message)
                     return Promise.reject(err)
                 }
             } else {
