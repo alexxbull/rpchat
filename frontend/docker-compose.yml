@@ -4,6 +4,8 @@ services:
 
     grpchat:
         container_name: grpchat-frontend
+        environment: 
+            - APP_ENV=${APP_ENV}
         build: 
             context: ./
             dockerfile: ./docker/Dockerfile

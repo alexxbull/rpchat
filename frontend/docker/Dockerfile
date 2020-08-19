@@ -8,7 +8,7 @@ COPY package.json .
 
 RUN npm install
 
-CMD if [ '${APP_ENV} = prod' ]; \
+CMD if [ ${APP_ENV} = prod ]; \
     then \
     npm run build && \
     npm install -g serve && \
