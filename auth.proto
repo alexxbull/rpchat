@@ -9,9 +9,10 @@ message LoginRequest {
   string password = 2;
 }
 
-message LoginResponse { NewTokenResponse token = 1; }
-
-message NewTokenResponse { string access_token = 1; }
+message LoginResponse {
+  string access_token = 1;
+  string avatar = 2;
+}
 
 message RegisterRequest {
   string email = 1;
@@ -21,6 +22,6 @@ message RegisterRequest {
 
 service AuthService {
   rpc Login(LoginRequest) returns (LoginResponse);
-  rpc Refresh(EmptyMessage) returns (NewTokenResponse);
+  rpc Refresh(EmptyMessage) returns (LoginResponse);
   rpc Register(RegisterRequest) returns (LoginResponse);
 }

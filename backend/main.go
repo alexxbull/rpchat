@@ -29,10 +29,15 @@ const (
 var (
 	authSrvr authServer
 	chatSrvr chatServer
+	hostname = os.Getenv("GRPC_SERVER_HOST")
 )
 
 func main() {
-	fmt.Println("connect to db")
+	if hostname == "" {
+		hostname = "https://localhost"
+		fmt.Println("running server locally")
+	}
+
 	// connect to database
 	dbConnInfo := fmt.Sprintf("host=db dbname=%s user=%s password=%s sslmode=disable", os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
 	db, err := connectDatabase(dbConnInfo)

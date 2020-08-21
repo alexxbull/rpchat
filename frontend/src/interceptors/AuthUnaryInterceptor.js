@@ -25,11 +25,12 @@ class AuthUnaryInterceptor {
                 // intercept Login and Register requests and store the access token returned
                 response = await invoker(request)
                 const responseMessage = response.getResponseMessage()
-                window.accessToken = responseMessage.getToken().getAccessToken()
+                const avatar = responseMessage.getAvatar()
+                window.accessToken = responseMessage.getAccessToken()
 
                 const decodedToken = jwtDecode(window.accessToken)
                 const username = decodedToken.username
-                this.#dispatch({ type: 'logged-in', payload: username })
+                this.#dispatch({ type: 'logged-in', payload: { avatar: avatar, username: username } })
             } else {
                 // validate user's access token            
                 const md = request.getMetadata()
@@ -44,11 +45,12 @@ class AuthUnaryInterceptor {
                     const tokenRequest = new EmptyMessage()
                     const authClient = AuthClient(null)
                     const refreshResponse = await authClient.refresh(tokenRequest, {})
+                    const avatar = refreshResponse.getAvatar()
                     window.accessToken = refreshResponse.getAccessToken()
 
                     const decodedToken = jwtDecode(window.accessToken)
                     const username = decodedToken.username
-                    this.#dispatch({ type: 'logged-in', payload: username })
+                    this.#dispatch({ type: 'logged-in', payload: { avatar: avatar, username: username } })
 
                     // send initial request with updated access token
                     const md = request.getMetadata()

@@ -8,6 +8,7 @@ const initialState = {
     listening: false,
     messages: [],
     mobileMessageEdit: {},
+    userAvatar: '',
     username: '',
     users: [],
 }
@@ -88,9 +89,11 @@ const reducer = (state, action) => {
                 messages: updatedMessages,
             }
         case 'logged-in':
+            const user = action.payload
             return {
                 ...state,
-                username: action.payload,
+                userAvatar: user.avatar,
+                username: user.username,
             }
         case 'logout':
             window.accessToken = null
@@ -123,6 +126,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 mobileMessageEdit: { ...action.payload }
+            }
+        case 'set-user-avatar':
+            return {
+                ...state,
+                userAvatar: action.payload,
             }
         case 'set-users':
             return {

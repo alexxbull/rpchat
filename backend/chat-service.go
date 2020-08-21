@@ -305,7 +305,7 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 	}
 
 	cs.newChatMessage <- &chat.GetMessagesMessage{
-		Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Avatar:    fmt.Sprintf("%s:4430/%s", hostname, avatar),
 		Channel:   req.Channel,
 		Id:        id,
 		Memo:      req.Memo,
@@ -614,7 +614,7 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 
 		message := &chat.GetMessagesMessage{
 			Id:        id,
-			Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+			Avatar:    fmt.Sprintf("%s:4430/%s", hostname, avatar),
 			Channel:   channel,
 			Timestamp: ts,
 			Memo:      memo,
@@ -680,7 +680,7 @@ func (cs *chatServer) GetFilteredMessages(ctx context.Context, req *chat.GetFilt
 
 		message := &chat.GetMessagesMessage{
 			Id:        id,
-			Avatar:    fmt.Sprintf("https://localhost:4430/%s", avatar),
+			Avatar:    fmt.Sprintf("%s:4430/%s", hostname, avatar),
 			Channel:   channel,
 			Timestamp: ts,
 			Memo:      memo,
@@ -741,7 +741,7 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		user := &chat.GetUsersMessage{
 			Id:     id,
 			Name:   username,
-			Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+			Avatar: fmt.Sprintf("%s:4430/%s", hostname, avatar),
 		}
 		users = append(users, user)
 	}

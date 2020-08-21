@@ -84,8 +84,9 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 	}
 
 	// broadcast user has logged in
+	avatarPath := fmt.Sprintf("%s:4430/%s", hostname, avatar)
 	chatSrvr.newUserMessage <- &chat.GetUsersMessage{
-		Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Avatar: avatarPath,
 		Id:     id,
 		Name:   req.Username,
 	}
@@ -97,14 +98,17 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 		HttpOnly: true,
 		Expires:  time.Now().Add(refreshTokenDuration),
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
 	}
 
 	// attach cookie to response header
 	header := metadata.Pairs("set-cookie", cookie.String())
 	grpc.SendHeader(ctx, header)
 
-	res := &auth.LoginResponse{Token: &auth.NewTokenResponse{AccessToken: accessToken}}
+	res := &auth.LoginResponse{
+		AccessToken: accessToken,
+		Avatar:      avatarPath,
+	}
+
 	return res, nil
 }
 
@@ -160,8 +164,9 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 	}
 
 	// broadcast user has logged in
+	avatarPath := fmt.Sprintf("%s:4430/%s", hostname, avatar)
 	chatSrvr.newUserMessage <- &chat.GetUsersMessage{
-		Avatar: fmt.Sprintf("https://localhost:4430/%s", avatar),
+		Avatar: avatarPath,
 		Id:     id,
 		Name:   req.Username,
 	}
@@ -173,18 +178,21 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 		HttpOnly: true,
 		Expires:  time.Now().Add(refreshTokenDuration),
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
 	}
 
 	// attach cookie to response header
 	header := metadata.Pairs("set-cookie", cookie.String())
 	grpc.SendHeader(ctx, header)
 
-	res := &auth.LoginResponse{Token: &auth.NewTokenResponse{AccessToken: accessToken}}
+	res := &auth.LoginResponse{
+		AccessToken: accessToken,
+		Avatar:      avatarPath,
+	}
+
 	return res, nil
 }
 
-func (as *authServer) Refresh(ctx context.Context, req *auth.EmptyMessage) (*auth.NewTokenResponse, error) {
+func (as *authServer) Refresh(ctx context.Context, req *auth.EmptyMessage) (*auth.LoginResponse, error) {
 	if req == nil {
 		return nil, status.Errorf(codes.InvalidArgument, "Empty request.")
 	}
@@ -236,6 +244,26 @@ func (as *authServer) Refresh(ctx context.Context, req *auth.EmptyMessage) (*aut
 		return nil, status.Errorf(codes.Internal, "Unable to make tokens for user %s. Please try again later.", userClaim.Username)
 	}
 
-	res := &auth.NewTokenResponse{AccessToken: accessToken}
+	// get user's avatar owner
+	sqlStmt := `SELECT image_path FROM users WHERE user_name = $1;`
+	stmt, err := as.db.Prepare(sqlStmt)
+	if err != nil {
+		fmt.Println("Unable to Prepare sql for querying user's avatar before sending access token", err)
+		return nil, status.Errorf(codes.Internal, "Unable to generate access token. Please try again later.")
+	}
+
+	var avatar string
+	err = stmt.QueryRow(userClaim.Username).Scan(&avatar)
+	if err != nil {
+		fmt.Println("Unable to Query user's avatar before sending access token", err)
+		return nil, status.Errorf(codes.Internal, "Unable to generate access token. Please try again later.")
+	}
+
+	avatarPath := fmt.Sprintf("%s:4430/%s", hostname, avatar)
+	res := &auth.LoginResponse{
+		AccessToken: accessToken,
+		Avatar:      avatarPath,
+	}
+
 	return res, nil
 }
