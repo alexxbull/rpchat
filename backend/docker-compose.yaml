@@ -37,6 +37,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      
       - APP_ENV=${APP_ENV}
+      - GRPC_SERVER_HOST=${GRPC_SERVER_HOST}
     depends_on:
       - db
     ports:
