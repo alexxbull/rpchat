@@ -10,12 +10,12 @@ import Settings from '../../containers/Settings/Settings.js'
 
 const SettingsBar = props => {
     const { state } = useContext(StoreContext)
-    const { avatar, username } = state
+    const { userAvatar, username } = state
 
     return (
         <div className={classes.SettingsBar}>
             <div className={classes.User}>
-                <img className={classes.User_icon} src={avatar} alt={`${username} avatar`} />
+                <img className={classes.User_icon} src={userAvatar} alt={`${username} avatar`} />
                 <div className={classes.User_name}>{username}</div>
             </div>
             <Settings />
