@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -14,6 +13,7 @@ import (
 	auth "github.com/alexxbull/rpchat/backend/proto/auth"
 	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/keepalive"
@@ -30,12 +30,25 @@ var (
 	authSrvr authServer
 	chatSrvr chatServer
 	hostname = os.Getenv("GRPC_SERVER_HOST")
+	appEnv   = os.Getenv("APP_ENV")
 )
 
 func main() {
+	fmt.Printf("Starting server in %s environment\n", appEnv)
+	// log to file if in prod environment, otherwise log to terminal
+	if appEnv == "prod" {
+		// create or append to log file
+		logFile, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			log.Fatalf("Error creating log file: %v\n", err)
+		}
+
+		log.SetOutput(logFile)
+	}
+
 	if hostname == "" {
 		hostname = "https://localhost"
-		fmt.Println("running server locally")
+		log.Println("running server locally")
 	}
 
 	// connect to database
@@ -105,17 +118,17 @@ func main() {
 	// start file server
 	go func() {
 		http.Handle("/", http.FileServer(http.Dir("./static")))
-		fmt.Println("Starting file server")
+		log.Println("Starting file server")
 		err := http.ListenAndServeTLS(":4430", certFile, keyFile, nil)
 		// err := http.ListenAndServe(":4430", nil)
 		if err != nil {
-			fmt.Println("File server error", err)
+			log.Println("File server error", err)
 			log.Fatal(err)
 		}
 	}()
 
 	// start grpc server
-	fmt.Println("Starting grpc server...")
+	log.Println("Starting grpc server...")
 	server.Serve(lis)
 }
 
@@ -130,7 +143,7 @@ func connectDatabase(dbConnInfo string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	fmt.Println("Connected to database")
+	log.Println("Connected to database")
 
 	return db, nil
 }
@@ -138,7 +151,7 @@ func connectDatabase(dbConnInfo string) (*sql.DB, error) {
 func dbListener(dbConnInfo string) {
 	reportConnError := func(event pq.ListenerEventType, err error) {
 		if err != nil {
-			fmt.Println("Connection error while listening to database:", err)
+			log.Println("Connection error while listening to database:", err)
 		}
 	}
 
@@ -149,7 +162,7 @@ func dbListener(dbConnInfo string) {
 	}
 
 	// listen for image deletions
-	fmt.Println("Listening to database...")
+	log.Println("Listening to database...")
 	for {
 		notice := <-listener.Notify
 		payload := notice.Extra
@@ -168,16 +181,16 @@ func dbListener(dbConnInfo string) {
 		// delete file
 		err = os.Remove(imgDelete.Path)
 		if err != nil {
-			fmt.Println("Unable to delete file:", err)
+			log.Println("Unable to delete file:", err)
 			continue
 		}
 
-		fmt.Println("File deleted:", imgDelete.Path)
+		log.Println("File deleted:", imgDelete.Path)
 	}
 }
 
 func unaryIntercepter(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-	fmt.Println("Unary intercepter:", info.FullMethod)
+	log.Println("Unary intercepter:", info.FullMethod)
 
 	// authenticate user
 	if err := authenticate(ctx, info.FullMethod); err != nil {
@@ -188,7 +201,7 @@ func unaryIntercepter(ctx context.Context, req interface{}, info *grpc.UnaryServ
 }
 
 func streamIntercpeter(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
-	fmt.Println("Stream intercepter:", info.FullMethod)
+	log.Println("Stream intercepter:", info.FullMethod)
 
 	// authenticate user
 	if err := authenticate(stream.Context(), info.FullMethod); err != nil {

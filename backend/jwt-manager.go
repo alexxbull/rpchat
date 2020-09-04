@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
@@ -41,7 +41,7 @@ func generateTokens(username string) (string, string, error) {
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
 	accessTokenString, err := accessToken.SignedString([]byte(accessSecretKey))
 	if err != nil {
-		fmt.Println("Unable to sign token:", err)
+		log.Println("Unable to sign token:", err)
 		return "", "", status.Errorf(codes.Internal, "unable to sign token: %v", err)
 	}
 
@@ -77,7 +77,7 @@ func verifyToken(tokenString string) (*jwt.Token, error) {
 
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
-			fmt.Println("ve", ve.Errors)
+			log.Println("ve", ve.Errors)
 			switch {
 			// malformed token provided
 			case ve.Errors&(jwt.ValidationErrorMalformed|jwt.ValidationErrorNotValidYet) != 0:
@@ -116,7 +116,7 @@ func authenticate(ctx context.Context, method string) error {
 	tokenString = accessToken[0]
 	if strings.HasPrefix(tokenString, "Bearer ") {
 		tokenString = strings.Split(tokenString, "Bearer ")[1]
-		fmt.Println("at", tokenString)
+		log.Println("at", tokenString)
 	} else if tokenString == "Bearer" {
 		return status.Errorf(codes.FailedPrecondition, "missing access token")
 	} else {

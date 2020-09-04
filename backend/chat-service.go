@@ -12,6 +12,7 @@ import (
 	chat "github.com/alexxbull/rpchat/backend/proto/chat"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 )
 
 type user struct {
@@ -40,10 +41,10 @@ func (cs *chatServer) CloseBroadcast(ctx context.Context, req *chat.BroadcastReq
 
 	// close stream for disconnected user
 	if user, ok := cs.users[req.Username]; ok {
-		fmt.Println("Closing broadcast for user", req.Username)
+		log.Println("Closing broadcast for user", req.Username)
 		user.broadcastErr <- nil
 	} else {
-		fmt.Println("no stream for user:", req.Username)
+		log.Println("no stream for user:", req.Username)
 		return nil, status.Errorf(codes.InvalidArgument, "User: '%s' does not have an active stream", req.Username)
 	}
 
@@ -52,25 +53,24 @@ func (cs *chatServer) CloseBroadcast(ctx context.Context, req *chat.BroadcastReq
 }
 
 func (cs *chatServer) Broadcast(req *chat.BroadcastRequest, stream chat.ChatService_BroadcastServer) error {
-	err := stream.Send(&chat.BroadcastResponse{})
+	err := stream.Send(&chat.BroadcastResponse{Connected: true})
 	if err != nil {
 		return fmt.Errorf("unable to broadcast to user: %v", err)
 	}
 
-	// create a hash representation of the user's name
-	fmt.Println("user:", req.Username)
-
+	// store the new user's information needed for broadcasting
 	newUser := user{
 		broadcastErr: make(chan error),
 		name:         req.Username,
 		stream:       stream,
 	}
 
-	fmt.Printf("stream for user %s: %v\n", req.Username, stream)
+	log.Printf("stream for user %s: %v\n", req.Username, stream)
 
 	// add user's stream for broadcasting updates if they don't have an open stream
 	if _, hasUser := cs.users[req.Username]; !hasUser {
 		cs.users[req.Username] = newUser
+		log.Printf("Broadcast stream opened for user: %s", req.Username)
 	}
 
 	// block until user disconnects
@@ -78,17 +78,17 @@ func (cs *chatServer) Broadcast(req *chat.BroadcastRequest, stream chat.ChatServ
 
 	// remove disconnected user
 	delete(cs.users, req.Username)
-	fmt.Printf("Removed user %s\n", req.Username)
+	log.Printf("Removed user %s\n", req.Username)
 
 	getUsersResponse, getUsersErr := cs.GetUsers(context.Background(), &chat.EmptyMessage{})
 	if getUsersErr != nil {
-		fmt.Printf("User %s disconnected but unable to reload user's list", req.Username)
+		log.Printf("User %s disconnected but unable to reload user's list", req.Username)
 	}
-	fmt.Println("getUsersResponse received", getUsersResponse)
+	log.Println("getUsersResponse received", getUsersResponse)
 	cs.getUsersResponse <- getUsersResponse
 
 	if err != nil {
-		fmt.Printf("Broadcast err with user %s: %v\n", req.Username, err)
+		log.Printf("Broadcast err with user %s: %v\n", req.Username, err)
 		return status.Errorf(codes.DataLoss, "Lost connection with server")
 	}
 
@@ -99,101 +99,35 @@ func (cs *chatServer) broadcast() {
 	for {
 		select {
 		case msg := <-cs.newChatMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        msg,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{ChatMessage: msg}
 			cs.broadcastObject(res, "add-message")
 
 		case ch := <-cs.newChannelMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            ch,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{Channel: ch}
 			cs.broadcastObject(res, "add-channel")
+
 		case deletedChannel := <-cs.deletedChannel:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     deletedChannel,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{ChannelDeleted: deletedChannel}
 			cs.broadcastObject(res, "deleted-message")
+
 		case deletedMessage := <-cs.deletedChatMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: deletedMessage,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{ChatMessageDeleted: deletedMessage}
 			cs.broadcastObject(res, "deleted-message")
+
 		case channelEdit := <-cs.editChannelMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        channelEdit,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{ChannelEdit: channelEdit}
 			cs.broadcastObject(res, "edit-channel")
+
 		case messageEdit := <-cs.editChatMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    messageEdit,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{ChatMessageEdit: messageEdit}
 			cs.broadcastObject(res, "edit-message")
+
 		case user := <-cs.newUserMessage:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               user,
-				Users:              nil,
-			}
+			res := &chat.BroadcastResponse{User: user}
 			cs.broadcastObject(res, "add-user")
+
 		case usersList := <-cs.getUsersResponse:
-			res := &chat.BroadcastResponse{
-				Channel:            nil,
-				ChannelEdit:        nil,
-				ChannelDeleted:     nil,
-				ChatMessage:        nil,
-				ChatMessageEdit:    nil,
-				ChatMessageDeleted: nil,
-				User:               nil,
-				Users:              usersList,
-			}
+			res := &chat.BroadcastResponse{Users: usersList}
 			cs.broadcastObject(res, "users-list")
 		}
 	}
@@ -201,12 +135,12 @@ func (cs *chatServer) broadcast() {
 
 // Broadcast object to all clients
 func (cs *chatServer) broadcastObject(res *chat.BroadcastResponse, origin string) {
-	fmt.Println("total users", len(cs.users), cs.users)
+	log.Println("total users", len(cs.users), cs.users)
 	for _, user := range cs.users {
 		err := user.stream.Send(res)
-		fmt.Println("broadcast object to", user.name)
+		log.Println("broadcast object to", user.name)
 		if err != nil {
-			fmt.Println("err broadcasting", err)
+			log.Println("err broadcasting", err)
 			user.broadcastErr <- fmt.Errorf("Unable to Broadcast %v: %v", origin, err)
 		}
 	}
@@ -222,14 +156,14 @@ func (cs *chatServer) AddChannel(ctx context.Context, req *chat.NewChannelReques
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Printf("Unable to Prepare new channel insertion: %v", err)
+		log.Printf("Unable to Prepare new channel insertion: %v", err)
 		return nil, status.Errorf(codes.Internal, "Unable to add channel. Please try agaain later.")
 	}
 
 	var id int32
 	err = stmt.QueryRow(req.Name, req.Description, req.Owner).Scan(&id)
 	if err != nil {
-		fmt.Printf("Unable to Execute new channel insertion: %v", err)
+		log.Printf("Unable to Execute new channel insertion: %v", err)
 		return nil, status.Errorf(codes.Internal, "Unable to add channel. Please try agaain later.")
 	}
 
@@ -253,7 +187,7 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 
 	stmt, err := db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Printf("Unable to Prepare new message insertion: %v", err)
+		log.Printf("Unable to Prepare new message insertion: %v", err)
 		return nil, status.Errorf(codes.Internal, "Unable to send message. Please try agaain later.")
 	}
 
@@ -269,14 +203,14 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 		case `pq: insert or update on table "messages" violates foreign key constraint "messages_user_name_fkey"`:
 			err = status.Errorf(codes.InvalidArgument, "user '%s' does not exist", req.User)
 		default:
-			fmt.Println("Error in Execute sql for inserting new user in Register service:", err)
+			log.Println("Error in Execute sql for inserting new user in Register service:", err)
 			err = status.Errorf(codes.Internal, "Unable to send message. Please try again later.")
 		}
 
 		return nil, err
 	}
 
-	fmt.Println("Message added to db")
+	log.Println("Message added to db")
 
 	// query sender's avatar
 	sqlStmt = `
@@ -287,20 +221,20 @@ func (cs *chatServer) AddMessage(ctx context.Context, req *chat.NewMessageReques
 
 	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for selecting sender's avatar:", err)
+		log.Println("Unable to Prepare sql for selecting sender's avatar:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to broadcast message. Please try again later.")
 	}
 
 	var avatar string
 	err = stmt.QueryRow(req.User).Scan(&avatar)
 	if err != nil {
-		fmt.Println("Unable to Query sender's avatar:", err)
+		log.Println("Unable to Query sender's avatar:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to broadcast message. Please try again later.")
 	}
 
 	ts, err := ptypes.TimestampProto(date)
 	if err != nil {
-		fmt.Println("Unable to convert database time value to proto timestamp:", err)
+		log.Println("Unable to convert database time value to proto timestamp:", err)
 		return nil, status.Errorf(codes.Internal, "Unable to add messages. Please try again later")
 	}
 
@@ -322,19 +256,19 @@ func (cs *chatServer) DeleteMessage(ctx context.Context, req *chat.DeleteMessage
 	sqlStmt := `SELECT user_name FROM messages WHERE id = $1;`
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for querying message data before message delete", err)
+		log.Println("Unable to Prepare sql for querying message data before message delete", err)
 		return nil, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
 	}
 
 	var messageCreator string
 	err = stmt.QueryRow(req.Id).Scan(&messageCreator)
 	if err != nil {
-		fmt.Println("Unable to Query message data before message delete", err)
+		log.Println("Unable to Query message data before message delete", err)
 		return nil, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
 	}
 
 	if messageCreator != req.Username {
-		fmt.Printf("User %s is not the creator of this message. User %s is the creator.", req.Username, messageCreator)
+		log.Printf("User %s is not the creator of this message. User %s is the creator.", req.Username, messageCreator)
 		return nil, status.Errorf(codes.Unauthenticated, "You are not the creator of this message so you cannot delete it.")
 	}
 
@@ -343,13 +277,13 @@ func (cs *chatServer) DeleteMessage(ctx context.Context, req *chat.DeleteMessage
 
 	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for deleting message:", err)
+		log.Println("Unable to Prepare sql for deleting message:", err)
 		return res, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
 	}
 
 	_, err = stmt.Exec(req.Id)
 	if err != nil {
-		fmt.Println("Unable to Execute message delete:", err)
+		log.Println("Unable to Execute message delete:", err)
 		return res, status.Errorf(codes.Internal, "Unable to delete message. Please try again later.")
 	}
 
@@ -366,19 +300,19 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 	sqlStmt := `SELECT user_name FROM messages WHERE id = $1;`
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for querying message data before message edit", err)
+		log.Println("Unable to Prepare sql for querying message data before message edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
 	}
 
 	var messageCreator string
 	err = stmt.QueryRow(req.Id).Scan(&messageCreator)
 	if err != nil {
-		fmt.Println("Unable to Query message data before message edit", err)
+		log.Println("Unable to Query message data before message edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
 	}
 
 	if messageCreator != req.User {
-		fmt.Printf("User %s is not the creator of this message. User %s is the creator.", req.User, messageCreator)
+		log.Printf("User %s is not the creator of this message. User %s is the creator.", req.User, messageCreator)
 		return nil, status.Errorf(codes.Unauthenticated, "You are not the creator of this message so you cannot edit it.")
 	}
 
@@ -391,13 +325,13 @@ func (cs *chatServer) EditMessage(ctx context.Context, req *chat.EditMessageRequ
 
 	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for editing message:", err)
+		log.Println("Unable to Prepare sql for editing message:", err)
 		return res, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
 	}
 
 	_, err = stmt.Exec(req.Memo, true, req.Id)
 	if err != nil {
-		fmt.Println("Unable to Execute message edit:", err)
+		log.Println("Unable to Execute message edit:", err)
 		return res, status.Errorf(codes.Internal, "Unable to edit message. Please try again later.")
 	}
 
@@ -415,19 +349,19 @@ func (cs *chatServer) DeleteChannel(ctx context.Context, req *chat.DeleteChannel
 	sqlStmt := `SELECT channel_name, channel_owner FROM channels WHERE id = $1;`
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for querying channel data before channel edit", err)
+		log.Println("Unable to Prepare sql for querying channel data before channel edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
 	var channelName, channelOwner string
 	err = stmt.QueryRow(req.Id).Scan(&channelName, &channelOwner)
 	if err != nil {
-		fmt.Println("Unable to Query channel data before channel edit", err)
+		log.Println("Unable to Query channel data before channel edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
 	if channelOwner != req.Username {
-		fmt.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Username, channelName, channelOwner)
+		log.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Username, channelName, channelOwner)
 		return nil, status.Errorf(codes.Unauthenticated, "You are not the owner of this channel so you cannot edit it.")
 	}
 
@@ -436,13 +370,13 @@ func (cs *chatServer) DeleteChannel(ctx context.Context, req *chat.DeleteChannel
 
 	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for deleting channel:", err)
+		log.Println("Unable to Prepare sql for deleting channel:", err)
 		return res, status.Errorf(codes.Internal, "Unable to delete channel. Please try again later.")
 	}
 
 	_, err = stmt.Exec(req.Id)
 	if err != nil {
-		fmt.Println("Unable to Execute channel delete:", err)
+		log.Println("Unable to Execute channel delete:", err)
 		return res, status.Errorf(codes.Internal, "Unable to delete channel. Please try again later.")
 	}
 
@@ -460,19 +394,19 @@ func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequ
 	sqlStmt := `SELECT channel_name, channel_owner FROM channels WHERE id = $1;`
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for querying channel data before channel edit", err)
+		log.Println("Unable to Prepare sql for querying channel data before channel edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
 	var oldChannelName, channelOwner string
 	err = stmt.QueryRow(req.Id).Scan(&oldChannelName, &channelOwner)
 	if err != nil {
-		fmt.Println("Unable to Query channel data before channel edit", err)
+		log.Println("Unable to Query channel data before channel edit", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
 	if channelOwner != req.Owner {
-		fmt.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Owner, oldChannelName, channelOwner)
+		log.Printf("User %s is not the owner of channel %s. User %s is the owner.", req.Owner, oldChannelName, channelOwner)
 		return nil, status.Errorf(codes.Unauthenticated, "You are not the owner of this channel so you cannot edit it.")
 	}
 
@@ -486,13 +420,13 @@ func (cs *chatServer) EditChannel(ctx context.Context, req *chat.EditChannelRequ
 
 	stmt, err = cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for editing channel:", err)
+		log.Println("Unable to Prepare sql for editing channel:", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
 	_, err = stmt.Exec(req.Name, req.Description, req.Id)
 	if err != nil {
-		fmt.Println("Unable to Execute channel edit:", err)
+		log.Println("Unable to Execute channel edit:", err)
 		return nil, status.Errorf(codes.Internal, "Unable to edit channel. Please try again later.")
 	}
 
@@ -520,13 +454,13 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for selecting channels:", err)
+		log.Println("Unable to Prepare sql for selecting channels:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load channels. Please try again later.")
 	}
 
 	rows, err := stmt.Query()
 	if err != nil {
-		fmt.Println("Unable to Query channels", err)
+		log.Println("Unable to Query channels", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load channels. Please try again later.")
 	}
 	defer rows.Close()
@@ -537,7 +471,7 @@ func (cs *chatServer) GetChannels(ctx context.Context, req *chat.EmptyMessage) (
 		var id int32
 		err = rows.Scan(&id, &channelName, &channelDesc, &channelOwner)
 		if err != nil {
-			fmt.Println("Unable to read row returned by Query selecting channels:", err)
+			log.Println("Unable to read row returned by Query selecting channels:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load channels. Please try again later.")
 		}
 
@@ -582,13 +516,13 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for selecting messages:", err)
+		log.Println("Unable to Prepare sql for selecting messages:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
 	}
 
 	rows, err := stmt.Query(req.Channel, req.Channel)
 	if err != nil {
-		fmt.Println("Unable to Query messages", err)
+		log.Println("Unable to Query messages", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
 	}
 	defer rows.Close()
@@ -602,13 +536,13 @@ func (cs *chatServer) GetMessages(ctx context.Context, req *chat.GetMessagesRequ
 		var edited bool
 		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID, &edited)
 		if err != nil {
-			fmt.Println("Unable to read row returned by Query selecting messages:", err)
+			log.Println("Unable to read row returned by Query selecting messages:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
 		}
 
 		ts, err := ptypes.TimestampProto(date)
 		if err != nil {
-			fmt.Println("Unable to convert database time value to proto timestamp:", err)
+			log.Println("Unable to convert database time value to proto timestamp:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later")
 		}
 
@@ -649,13 +583,13 @@ func (cs *chatServer) GetFilteredMessages(ctx context.Context, req *chat.GetFilt
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for selecting messages:", err)
+		log.Println("Unable to Prepare sql for selecting messages:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
 	}
 
 	rows, err := stmt.Query(req.Channel, req.Channel, int(req.MinId))
 	if err != nil {
-		fmt.Println("Unable to Query messages", err)
+		log.Println("Unable to Query messages", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load messages. Please try again later.")
 	}
 	defer rows.Close()
@@ -668,13 +602,13 @@ func (cs *chatServer) GetFilteredMessages(ctx context.Context, req *chat.GetFilt
 		var id int32
 		err = rows.Scan(&id, &channel, &memo, &date, &username, &avatar, &minID)
 		if err != nil {
-			fmt.Println("Unable to read row returned by Query selecting messages:", err)
+			log.Println("Unable to read row returned by Query selecting messages:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later.")
 		}
 
 		ts, err := ptypes.TimestampProto(date)
 		if err != nil {
-			fmt.Println("Unable to convert database time value to proto timestamp:", err)
+			log.Println("Unable to convert database time value to proto timestamp:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load messages. Please try again later")
 		}
 
@@ -715,13 +649,13 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 
 	stmt, err := cs.db.Prepare(sqlStmt)
 	if err != nil {
-		fmt.Println("Unable to Prepare sql for selecting users:", err)
+		log.Println("Unable to Prepare sql for selecting users:", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
 	}
 
 	rows, err := stmt.Query(pq.Array(usersNameList))
 	if err != nil {
-		fmt.Println("Unable to Query users", err)
+		log.Println("Unable to Query users", err)
 		return nil, status.Errorf(codes.Unavailable, "Unable to load users. Please try again later.")
 	}
 	defer rows.Close()
@@ -734,7 +668,7 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		var id int32
 		err = rows.Scan(&id, &username, &avatar)
 		if err != nil {
-			fmt.Println("Unable to read row returned by Query selecting users:", err)
+			log.Println("Unable to read row returned by Query selecting users:", err)
 			return nil, status.Errorf(codes.Internal, "Unable to load users. Please try again later.")
 		}
 
@@ -745,7 +679,7 @@ func (cs *chatServer) GetUsers(ctx context.Context, req *chat.EmptyMessage) (*ch
 		}
 		users = append(users, user)
 	}
-	fmt.Println("returning users list of size", count)
+	log.Println("returning users list of size", count)
 
 	res := &chat.GetUsersResponse{Users: users}
 	return res, nil

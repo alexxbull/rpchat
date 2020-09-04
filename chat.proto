@@ -108,6 +108,7 @@ message BroadcastResponse {
   EditChannelRequest channel_edit = 6;
   DeleteMessageRequest chat_message_deleted = 7;
   DeleteChannelRequest channel_deleted = 8;
+  bool connected = 9;
 }
 
 service ChatService {
