@@ -4,8 +4,7 @@ import jwtDecode from 'jwt-decode'
 import { AuthClient } from '../client/grpc_clients.js'
 import { EmptyMessage } from '../proto/auth/auth_pb.js'
 
-const ignoredRoutes = ['/auth.AuthService/Refresh']
-const accessTokenRoutes = ['/auth.AuthService/Login', '/auth.AuthService/Register']
+const authRoutes = ['/auth.AuthService/Login', '/auth.AuthService/Refresh', '/auth.AuthService/Register']
 
 class AuthUnaryInterceptor {
     #dispatch
@@ -15,14 +14,11 @@ class AuthUnaryInterceptor {
 
     intercept = async (request, invoker) => {
         const route = request.getMethodDescriptor().name
-        if (ignoredRoutes.includes(route)) {
-            return invoker(request)
-        }
 
         try {
             let response = null
-            if (accessTokenRoutes.includes(route)) {
-                // intercept Login and Register requests and store the access token returned
+            if (authRoutes.includes(route)) {
+                // intercept auth service routes and store the access token returned from these requests
                 response = await invoker(request)
                 const responseMessage = response.getResponseMessage()
                 const avatar = responseMessage.getAvatar()

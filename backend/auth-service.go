@@ -98,6 +98,7 @@ func (as *authServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.
 		Value:    refreshToken,
 		HttpOnly: true,
 		Expires:  time.Now().Add(refreshTokenDuration),
+		SameSite: http.SameSiteNoneMode,
 		Secure:   true,
 	}
 
@@ -178,6 +179,7 @@ func (as *authServer) Register(ctx context.Context, req *auth.RegisterRequest) (
 		Value:    refreshToken,
 		HttpOnly: true,
 		Expires:  time.Now().Add(refreshTokenDuration),
+		SameSite: http.SameSiteNoneMode,
 		Secure:   true,
 	}
 

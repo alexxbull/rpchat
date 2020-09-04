@@ -7,7 +7,7 @@ import { BroadcastRequest } from '../../proto/chat/chat_pb.js'
 // context
 import { StoreContext } from '../../context/Store'
 
-const RefreshHandlder = props => {
+const RefreshHandler = props => {
     const { dispatch, state } = useContext(StoreContext)
 
     // handle page refresh
@@ -38,4 +38,4 @@ const RefreshHandlder = props => {
     return null
 }
 
-export default RefreshHandlder
+export default RefreshHandler

@@ -13,7 +13,7 @@ import Channels from './components/Channels/Channels.js';
 import Users from './components/Users/Users.js';
 import Backdrop from './components/Backdrop/Backdrop.js';
 import { broadcastListener } from './components/BroadcastListener/BroadcastListener.js';
-import RefreshHandlder from './components/RefreshHandler/RefreshHandler.js';
+import RefreshHandler from './components/RefreshHandler/RefreshHandler.js';
 
 const rem = 16
 
@@ -68,7 +68,7 @@ const App = props => {
 
   return (
     <div className="App">
-      <RefreshHandlder />
+      <RefreshHandler />
       <Backdrop show={!isDesktop && (showChannels || showUsers)} click={toggleBackdrop} isDesktop={isDesktop} />
       <Channels show={isDesktop || showChannels} isDesktop={isDesktop} hideChannels={setShowChannels.bind(this, false)} />
       <Chat
