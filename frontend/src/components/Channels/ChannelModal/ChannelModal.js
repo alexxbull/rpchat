@@ -23,6 +23,7 @@ const ChannelModal = props => {
         name: '',
     }
     const [channel, setChannel] = useState(props.modalType === 'new' ? newChannel : existingChannel)
+    const submitButtonClasses = props.modalType === 'delete' ? [classes.SubmitBtn, classes.BackgroundRed] : [classes.SubmitBtn]
 
     const inputChangeHandler = event => {
         const eventName = event.target.name
@@ -98,7 +99,14 @@ const ChannelModal = props => {
             close={handleModalClose}
             isDesktop={props.isDesktop}
             formID={`${props.modalType}_${classes.ChannelModal}`}
-            okayBtn={<input className={classes.SubmitBtn} type="submit" onSubmit={props.click} value={"Submit"} form={`${props.modalType}_${classes.ChannelModal}`} />}
+            okayBtn={
+                <input className={submitButtonClasses.join(' ')}
+                    type={"submit"}
+                    onSubmit={props.click}
+                    value={"Submit"}
+                    form={`${props.modalType}_${classes.ChannelModal}`}
+                />
+            }
         >
             <form id={`${props.modalType}_${classes.ChannelModal}`} className={classes.ChannelModal} onSubmit={handleSubmit}>
                 <label htmlFor="Channel Name">Name:</label>

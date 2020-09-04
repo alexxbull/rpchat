@@ -3885,7 +3885,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f),
       channelEdit: (f = msg.getChannelEdit()) && proto.chat.EditChannelRequest.toObject(includeInstance, f),
       chatMessageDeleted: (f = msg.getChatMessageDeleted()) && proto.chat.DeleteMessageRequest.toObject(includeInstance, f),
-      channelDeleted: (f = msg.getChannelDeleted()) && proto.chat.DeleteChannelRequest.toObject(includeInstance, f)
+      channelDeleted: (f = msg.getChannelDeleted()) && proto.chat.DeleteChannelRequest.toObject(includeInstance, f),
+      connected: jspb.Message.getBooleanFieldWithDefault(msg, 9, false)
     };
 
     if (includeInstance) {
@@ -3961,6 +3962,10 @@ proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader
         var value = new proto.chat.DeleteChannelRequest;
         reader.readMessage(value, proto.chat.DeleteChannelRequest.deserializeBinaryFromReader);
         msg.setChannelDeleted(value);
+        break;
+      case 9:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setConnected(value);
         break;
       default:
         reader.skipField();
@@ -4053,6 +4058,13 @@ proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer
       8,
       f,
       proto.chat.DeleteChannelRequest.serializeBinaryToWriter
+    );
+  }
+  f = message.getConnected();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
     );
   }
 };
@@ -4351,6 +4363,24 @@ proto.chat.BroadcastResponse.prototype.clearChannelDeleted = function () {
  */
 proto.chat.BroadcastResponse.prototype.hasChannelDeleted = function () {
   return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional bool connected = 9;
+ * @return {boolean}
+ */
+proto.chat.BroadcastResponse.prototype.getConnected = function () {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.chat.BroadcastResponse} returns this
+ */
+proto.chat.BroadcastResponse.prototype.setConnected = function (value) {
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 

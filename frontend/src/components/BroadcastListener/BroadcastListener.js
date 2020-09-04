@@ -9,7 +9,6 @@ const broadcastListener = async (username, dispatch) => {
 
         const chatClient = ChatClient(dispatch)
         const stream = await chatClient.broadcast(req, {})
-        dispatch({ type: 'set-listening', payload: true })
 
         stream.on('data', (res) => {
             switch (true) {
@@ -89,6 +88,9 @@ const broadcastListener = async (username, dispatch) => {
                     dispatch({ type: 'set-users', payload: usersList })
                     break
                 default:
+                    // set listening to to true if successfully connected to broadcast stream
+                    if (res.getConnected())
+                        dispatch({ type: 'set-listening', payload: true })
                     break
             }
         })

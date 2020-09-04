@@ -215,7 +215,7 @@ proto.chat.ChatServiceClient.prototype.closeBroadcast =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.closeBroadcast =
     function(request, metadata) {
@@ -295,7 +295,7 @@ proto.chat.ChatServiceClient.prototype.addMessage =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addMessage =
     function(request, metadata) {
@@ -375,7 +375,7 @@ proto.chat.ChatServiceClient.prototype.addChannel =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.addChannel =
     function(request, metadata) {
@@ -455,7 +455,7 @@ proto.chat.ChatServiceClient.prototype.deleteMessage =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.deleteMessage =
     function(request, metadata) {
@@ -535,7 +535,7 @@ proto.chat.ChatServiceClient.prototype.deleteChannel =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.deleteChannel =
     function(request, metadata) {
@@ -615,7 +615,7 @@ proto.chat.ChatServiceClient.prototype.editMessage =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.editMessage =
     function(request, metadata) {
@@ -695,7 +695,7 @@ proto.chat.ChatServiceClient.prototype.editChannel =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.editChannel =
     function(request, metadata) {
@@ -775,7 +775,7 @@ proto.chat.ChatServiceClient.prototype.getChannels =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetChannelsResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.getChannels =
     function(request, metadata) {
@@ -855,7 +855,7 @@ proto.chat.ChatServiceClient.prototype.getUsers =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetUsersResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.getUsers =
     function(request, metadata) {
@@ -935,7 +935,7 @@ proto.chat.ChatServiceClient.prototype.getMessages =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetMessagesResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.getMessages =
     function(request, metadata) {
@@ -1015,7 +1015,7 @@ proto.chat.ChatServiceClient.prototype.getFilteredMessages =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetMessagesResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.chat.ChatServicePromiseClient.prototype.getFilteredMessages =
     function(request, metadata) {

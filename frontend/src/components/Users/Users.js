@@ -24,24 +24,27 @@ const Users = props => {
     useEffect(() => {
         (
             async () => {
-                // load users
-                try {
-                    const req = new EmptyMessage()
-                    const chatClient = ChatClient(dispatch)
-                    const res = await chatClient.getUsers(req, {})
-                    const newUsers = res.getUsersList().map(user => {
-                        return {
-                            id: user.getId(),
-                            name: user.getName(),
-                            avatar: user.getAvatar()
-                        }
-                    })
-                    dispatch({ type: 'set-users', payload: newUsers })
-                    setLoading(false)
-                }
-                catch (err) {
-                    console.error('error loading users:', err.message)
-                    history.push('/error')
+                // only load users if user is connected to broadcast stream
+                if (state.listening) {
+                    // load users
+                    try {
+                        const req = new EmptyMessage()
+                        const chatClient = ChatClient(dispatch)
+                        const res = await chatClient.getUsers(req, {})
+                        const newUsers = res.getUsersList().map(user => {
+                            return {
+                                id: user.getId(),
+                                name: user.getName(),
+                                avatar: user.getAvatar()
+                            }
+                        })
+                        dispatch({ type: 'set-users', payload: newUsers })
+                        setLoading(false)
+                    }
+                    catch (err) {
+                        console.error('error loading users:', err.message)
+                        history.push('/error')
+                    }
                 }
             }
         )()

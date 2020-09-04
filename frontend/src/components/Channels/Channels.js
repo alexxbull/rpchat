@@ -37,36 +37,38 @@ const Channels = props => {
     useEffect(() => {
         (
             async () => {
-                // load channels
-                try {
-                    const req = new EmptyMessage()
-                    const chatClient = ChatClient(dispatch)
-                    const res = await chatClient.getChannels(req, {})
-                    let currentChannel = null
-                    const newChannels = res.getChannelsList().map((channel, index) => {
-                        const ch = {
-                            id: channel.getId(),
-                            name: channel.getName(),
-                            desc: channel.getDescription(),
-                            owner: channel.getOwner(),
-                            active: index === 0 ? true : false // set the first channel as the current channel
-                        }
-                        if (ch.active)
-                            currentChannel = ch
+                // only load channels if user is connected to broadcast stream
+                if (state.listening) {
+                    try {
+                        const req = new EmptyMessage()
+                        const chatClient = ChatClient(dispatch)
+                        const res = await chatClient.getChannels(req, {})
+                        let currentChannel = null
+                        const newChannels = res.getChannelsList().map((channel, index) => {
+                            const ch = {
+                                id: channel.getId(),
+                                name: channel.getName(),
+                                desc: channel.getDescription(),
+                                owner: channel.getOwner(),
+                                active: index === 0 ? true : false // set the first channel as the current channel
+                            }
+                            if (ch.active)
+                                currentChannel = ch
 
-                        return ch
-                    })
+                            return ch
+                        })
 
-                    dispatch({ type: 'set-channels', payload: { channels: newChannels, currentChannel: currentChannel } })
-                    setLoading(false)
-                }
-                catch (err) {
-                    console.error('error loading channels:', err.message)
-                    history.push('/error')
+                        dispatch({ type: 'set-channels', payload: { channels: newChannels, currentChannel: currentChannel } })
+                        setLoading(false)
+                    }
+                    catch (err) {
+                        console.error('error loading channels:', err.message)
+                        history.push('/error')
+                    }
                 }
             }
         )()
-    }, [dispatch, history, state.accessToken])
+    }, [dispatch, history, state.accessToken, state.listening])
 
     // hide channel options when on desktop
     useEffect(() => {

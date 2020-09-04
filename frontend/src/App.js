@@ -37,7 +37,7 @@ const App = props => {
       await authClient.refresh(req, {})
     }
     catch (err) {
-      console.log('unable to get access token', err.message)
+      console.error('unable to get access token', err.message)
       props.history.push('/error')
     }
   }

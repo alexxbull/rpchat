@@ -35,6 +35,7 @@ class Messages extends Component {
     observer = React.createRef()
 
     initialState = {
+        broadcastListening: this.context.state.listening,
         clientMin: 0,
         currentChannel: this.context.state.currentChannel,
         hasMore: false,
@@ -61,15 +62,26 @@ class Messages extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        // update when global store's listening is updated
+        const listening = this.context.state.listening
+        const { broadcastListening } = this.state
+        if (listening !== broadcastListening)
+            this.setState({ broadcastListening: listening })
+
         // reset to initial state and update currentChannel when global store's currentChannel is updated
         const storeCurrentChannel = this.context.state.currentChannel
         if (this.state.currentChannel.name !== storeCurrentChannel.name) {
             this.setState({ ...this.initialState, currentChannel: storeCurrentChannel })
         }
 
-        // update when currentChannel is updated
-        if (this.state.currentChannel.name !== prevState.currentChannel.name)
+        // load messages when any are true: 
+        // - currentChannel is updated
+        // - if user is connected to broadcast stream
+        if (this.state.currentChannel.name !== prevState.currentChannel.name
+            || (broadcastListening && !prevState.broadcastListening)
+        ) {
             this.loadMessages()
+        }
 
         // update when global store's messages is updated
         const storeMessages = this.context.state.messages
@@ -96,47 +108,50 @@ class Messages extends Component {
 
     loadMessages = async () => {
         const { dispatch } = this.context
-        const { currentChannel } = this.state
+        const { broadcastListening, currentChannel } = this.state
 
-        try {
-            this.setState({ loading: true })
+        // only load messages if user is connected to broadcast stream
+        if (broadcastListening) {
+            try {
+                this.setState({ loading: true })
 
-            const req = new GetMessagesRequest()
-            req.setChannel(currentChannel.name)
+                const req = new GetMessagesRequest()
+                req.setChannel(currentChannel.name)
 
-            const chatClient = ChatClient(dispatch)
-            const res = await chatClient.getMessages(req, {})
-            const messages = res.getMessagesList().map(message => {
-                return {
-                    avatar: message.getAvatar(),
-                    channel: message.getChannel(),
-                    edited: message.getEdited(),
-                    id: message.getId(),
-                    memo: message.getMemo(),
-                    timestamp: message.getTimestamp().toDate(),
-                    username: message.getUser(),
+                const chatClient = ChatClient(dispatch)
+                const res = await chatClient.getMessages(req, {})
+                const messages = res.getMessagesList().map(message => {
+                    return {
+                        avatar: message.getAvatar(),
+                        channel: message.getChannel(),
+                        edited: message.getEdited(),
+                        id: message.getId(),
+                        memo: message.getMemo(),
+                        timestamp: message.getTimestamp().toDate(),
+                        username: message.getUser(),
+                    }
+                }).reverse()
+
+                if (messages.length > 0) {
+                    this.setState({
+                        clientMin: messages[0].id,
+                        hasMore: messages[0].id > res.getMinId(),
+                        loading: false,
+                        serverMin: res.getMinId(),
+                    })
+
+                    dispatch({ type: 'set-messages', payload: messages })
+                    // scroll to bottom of messages after delay to allow each message to format correctly
+                    const scrollToBottom = () => this.messagesEndRef.current.scrollIntoView({ alignToTop: false })
+                    setTimeout(() => scrollToBottom(), 500)
+                } else {
+                    dispatch({ type: 'set-messages', payload: [] })
+                    this.setState({ loading: false })
                 }
-            }).reverse()
-
-            if (messages.length > 0) {
-                this.setState({
-                    clientMin: messages[0].id,
-                    hasMore: messages[0].id > res.getMinId(),
-                    loading: false,
-                    serverMin: res.getMinId(),
-                })
-
-                dispatch({ type: 'set-messages', payload: messages })
-                // scroll to bottom of messages after delay to allow each message to format correctly
-                const scrollToBottom = () => this.messagesEndRef.current.scrollIntoView({ alignToTop: false })
-                setTimeout(() => scrollToBottom(), 500)
-            } else {
-                dispatch({ type: 'set-messages', payload: [] })
-                this.setState({ loading: false })
+            } catch (err) {
+                console.error('error loading messages:', err.message)
+                this.props.history.push('/error')
             }
-        } catch (err) {
-            console.error('error loading messages:', err.message)
-            this.props.history.push('/error')
         }
     }
 
@@ -226,10 +241,10 @@ class Messages extends Component {
             onTouchEnd: event => event.target.classList.remove(classes.Highlight),
         }
 
-        const { deleteMessage, deleteMessageError, loading, messages, messageOptionClasses, messageOptionsClasses, targetMessage } = this.state
+        const { broadcastListening, deleteMessage, deleteMessageError, loading, messages, messageOptionClasses, messageOptionsClasses, targetMessage } = this.state
 
         let spinner = null
-        if (loading)
+        if (loading || !broadcastListening)
             spinner = <Spinner />
 
         let messagesJSX = null
