@@ -25,19 +25,23 @@ const Channel = props => {
 
     const [channelOptions, setChannelOptions] = useState(initialChannelOptions)
 
+    const showChannelOptions = props.showChannelOptions
     useEffect(() => {
         let timer
 
         if (channelOptions.startLongPress) {
-            timer = setTimeout(() => {
-                props.showChannelOptions()
-            }, 400)
+            if (state.username === ch.owner) {
+                timer = setTimeout(() => {
+                    showChannelOptions()
+                    setChannelOptions(opts => ({ ...opts, startLongPress: false }))
+                }, 400)
+            }
         } else {
             clearTimeout(timer)
         }
 
         return () => clearTimeout(timer)
-    }, [ch, channelOptions.startLongPress, props])
+    }, [ch.owner, channelOptions.startLongPress, setChannelOptions, showChannelOptions, state.username])
 
 
     const handleClick = () => {

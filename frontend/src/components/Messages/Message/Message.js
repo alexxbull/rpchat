@@ -193,7 +193,7 @@ const Message = props => {
             timer = setTimeout(() => {
                 if (state.username === messageUser) {
                     showMessageOptions()
-                    setMessageOptions(opts => ({ ...opts, showEdit: false, }))
+                    setMessageOptions(opts => ({ ...opts, showEdit: false, startLongPress: false }))
                 }
             }, 400)
         }

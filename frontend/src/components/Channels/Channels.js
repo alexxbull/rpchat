@@ -158,13 +158,13 @@ const Channels = props => {
             {deleteModal}
             <ul className={channelOptions.classes.join(' ')}>
                 <li
-                    className={[classes.ChannelOption]}
+                    className={classes.ChannelOption}
                     onClick={() => setChannelOptions({ ...channelOptions, classes: [classes.ChannelOption], editChannel: true })}
                     {...touchHighlight}
                 >Edit Channel
                 </li>
                 <li
-                    className={[classes.ChannelOption]}
+                    className={classes.ChannelOption}
                     onClick={() => setChannelOptions({ ...channelOptions, classes: [classes.ChannelOption], deleteChannel: true })}
                     {...touchHighlight}
                 >Delete Channel
