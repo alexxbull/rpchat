@@ -41,6 +41,7 @@ func main() {
 		hostname = "https://localhost"
 		log.Info("Running server locally")
 	}
+	log.Info("Starting server in ", appEnv, " environment")
 
 	// connect to database
 	dbConnInfo := fmt.Sprintf("host=db dbname=%s user=%s password=%s sslmode=disable", os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
@@ -207,8 +208,6 @@ func setLogger() {
 		FullTimestamp:   true,
 		TimestampFormat: time.RFC1123,
 	})
-
-	log.Info("Starting server in ", appEnv, " environment")
 
 	// log to file if in prod environment, otherwise log to terminal
 	if appEnv == "prod" {
