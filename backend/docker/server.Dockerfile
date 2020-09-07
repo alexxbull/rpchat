@@ -6,6 +6,11 @@ WORKDIR /usr/src/grpchat-backend
 
 COPY . .
 
+# set timezone to Los Angeles 
+RUN apk add --no-cache tzdata
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 CMD if [ ${APP_ENV} = prod ]; \
     then \
     go build && ./backend; \

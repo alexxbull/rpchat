@@ -34,21 +34,12 @@ var (
 )
 
 func main() {
-	fmt.Printf("Starting server in %s environment\n", appEnv)
-	// log to file if in prod environment, otherwise log to terminal
-	if appEnv == "prod" {
-		// create or append to log file
-		logFile, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-		if err != nil {
-			log.Fatalf("Error creating log file: %v\n", err)
-		}
-
-		log.SetOutput(logFile)
-	}
+	// configure log settings
+	setLogger()
 
 	if hostname == "" {
 		hostname = "https://localhost"
-		log.Println("running server locally")
+		log.Info("Running server locally")
 	}
 
 	// connect to database
@@ -209,4 +200,24 @@ func streamIntercpeter(srv interface{}, stream grpc.ServerStream, info *grpc.Str
 	}
 
 	return handler(srv, stream)
+}
+
+func setLogger() {
+	log.SetFormatter(&log.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: time.RFC1123,
+	})
+
+	log.Info("Starting server in ", appEnv, " environment")
+
+	// log to file if in prod environment, otherwise log to terminal
+	if appEnv == "prod" {
+		// create or append to log file
+		logFile, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			log.Fatalf("Error creating log file: %v\n", err)
+		}
+
+		log.SetOutput(logFile)
+	}
 }
