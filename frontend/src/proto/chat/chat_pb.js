@@ -1,14 +1,15 @@
-/* eslint-disable */
-// @ts-nocheck
 // source: chat.proto
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {missingRequire} reports error on implicit type usages.
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+/* eslint-disable */
+// @ts-nocheck
 
 var jspb = require('google-protobuf');
 var goog = jspb;
@@ -45,7 +46,7 @@ goog.exportSymbol('proto.chat.NewUserRequest', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.EmptyMessage = function (opt_data) {
+proto.chat.EmptyMessage = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.EmptyMessage, jspb.Message);
@@ -66,7 +67,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.NewMessageRequest = function (opt_data) {
+proto.chat.NewMessageRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.NewMessageRequest, jspb.Message);
@@ -87,7 +88,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.EditMessageRequest = function (opt_data) {
+proto.chat.EditMessageRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.EditMessageRequest, jspb.Message);
@@ -108,7 +109,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.DeleteMessageRequest = function (opt_data) {
+proto.chat.DeleteMessageRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.DeleteMessageRequest, jspb.Message);
@@ -129,7 +130,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.NewChannelRequest = function (opt_data) {
+proto.chat.NewChannelRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.NewChannelRequest, jspb.Message);
@@ -150,7 +151,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.EditChannelRequest = function (opt_data) {
+proto.chat.EditChannelRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.EditChannelRequest, jspb.Message);
@@ -171,7 +172,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.DeleteChannelRequest = function (opt_data) {
+proto.chat.DeleteChannelRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.DeleteChannelRequest, jspb.Message);
@@ -192,7 +193,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.NewUserRequest = function (opt_data) {
+proto.chat.NewUserRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.NewUserRequest, jspb.Message);
@@ -213,7 +214,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.EditUserRequest = function (opt_data) {
+proto.chat.EditUserRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.EditUserRequest, jspb.Message);
@@ -234,7 +235,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetChannelsMessage = function (opt_data) {
+proto.chat.GetChannelsMessage = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.GetChannelsMessage, jspb.Message);
@@ -255,7 +256,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetChannelsResponse = function (opt_data) {
+proto.chat.GetChannelsResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.chat.GetChannelsResponse.repeatedFields_, null);
 };
 goog.inherits(proto.chat.GetChannelsResponse, jspb.Message);
@@ -276,7 +277,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetUsersMessage = function (opt_data) {
+proto.chat.GetUsersMessage = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.GetUsersMessage, jspb.Message);
@@ -297,7 +298,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetUsersResponse = function (opt_data) {
+proto.chat.GetUsersResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.chat.GetUsersResponse.repeatedFields_, null);
 };
 goog.inherits(proto.chat.GetUsersResponse, jspb.Message);
@@ -318,7 +319,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetMessagesRequest = function (opt_data) {
+proto.chat.GetMessagesRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.GetMessagesRequest, jspb.Message);
@@ -339,7 +340,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetFilteredMessagesRequest = function (opt_data) {
+proto.chat.GetFilteredMessagesRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.GetFilteredMessagesRequest, jspb.Message);
@@ -360,7 +361,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetMessagesMessage = function (opt_data) {
+proto.chat.GetMessagesMessage = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.GetMessagesMessage, jspb.Message);
@@ -381,7 +382,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.GetMessagesResponse = function (opt_data) {
+proto.chat.GetMessagesResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.chat.GetMessagesResponse.repeatedFields_, null);
 };
 goog.inherits(proto.chat.GetMessagesResponse, jspb.Message);
@@ -402,7 +403,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.BroadcastRequest = function (opt_data) {
+proto.chat.BroadcastRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.BroadcastRequest, jspb.Message);
@@ -423,7 +424,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.chat.BroadcastResponse = function (opt_data) {
+proto.chat.BroadcastResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.chat.BroadcastResponse, jspb.Message);
@@ -438,42 +439,42 @@ if (goog.DEBUG && !COMPILED) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.EmptyMessage.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.EmptyMessage.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.EmptyMessage.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.EmptyMessage.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.EmptyMessage} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.EmptyMessage.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.EmptyMessage} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.EmptyMessage.toObject = function (includeInstance, msg) {
-    var f, obj = {
-
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -482,7 +483,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.EmptyMessage}
  */
-proto.chat.EmptyMessage.deserializeBinary = function (bytes) {
+proto.chat.EmptyMessage.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.EmptyMessage;
   return proto.chat.EmptyMessage.deserializeBinaryFromReader(msg, reader);
@@ -496,16 +497,16 @@ proto.chat.EmptyMessage.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.EmptyMessage}
  */
-proto.chat.EmptyMessage.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.EmptyMessage.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      default:
-        reader.skipField();
-        break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -516,7 +517,7 @@ proto.chat.EmptyMessage.deserializeBinaryFromReader = function (msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.EmptyMessage.prototype.serializeBinary = function () {
+proto.chat.EmptyMessage.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.EmptyMessage.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -530,7 +531,7 @@ proto.chat.EmptyMessage.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.EmptyMessage.serializeBinaryToWriter = function (message, writer) {
+proto.chat.EmptyMessage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
 };
 
@@ -539,44 +540,44 @@ proto.chat.EmptyMessage.serializeBinaryToWriter = function (message, writer) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.NewMessageRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.NewMessageRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.NewMessageRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.NewMessageRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.NewMessageRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.NewMessageRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    user: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    channel: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.NewMessageRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.NewMessageRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      user: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      channel: jspb.Message.getFieldWithDefault(msg, 3, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -585,7 +586,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.NewMessageRequest}
  */
-proto.chat.NewMessageRequest.deserializeBinary = function (bytes) {
+proto.chat.NewMessageRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.NewMessageRequest;
   return proto.chat.NewMessageRequest.deserializeBinaryFromReader(msg, reader);
@@ -599,28 +600,28 @@ proto.chat.NewMessageRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.NewMessageRequest}
  */
-proto.chat.NewMessageRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.NewMessageRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUser(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setMemo(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setChannel(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUser(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMemo(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChannel(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -631,7 +632,7 @@ proto.chat.NewMessageRequest.deserializeBinaryFromReader = function (msg, reader
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.NewMessageRequest.prototype.serializeBinary = function () {
+proto.chat.NewMessageRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.NewMessageRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -645,7 +646,7 @@ proto.chat.NewMessageRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.NewMessageRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.NewMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUser();
   if (f.length > 0) {
@@ -675,7 +676,7 @@ proto.chat.NewMessageRequest.serializeBinaryToWriter = function (message, writer
  * optional string user = 1;
  * @return {string}
  */
-proto.chat.NewMessageRequest.prototype.getUser = function () {
+proto.chat.NewMessageRequest.prototype.getUser = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -684,7 +685,7 @@ proto.chat.NewMessageRequest.prototype.getUser = function () {
  * @param {string} value
  * @return {!proto.chat.NewMessageRequest} returns this
  */
-proto.chat.NewMessageRequest.prototype.setUser = function (value) {
+proto.chat.NewMessageRequest.prototype.setUser = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -693,7 +694,7 @@ proto.chat.NewMessageRequest.prototype.setUser = function (value) {
  * optional string memo = 2;
  * @return {string}
  */
-proto.chat.NewMessageRequest.prototype.getMemo = function () {
+proto.chat.NewMessageRequest.prototype.getMemo = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -702,7 +703,7 @@ proto.chat.NewMessageRequest.prototype.getMemo = function () {
  * @param {string} value
  * @return {!proto.chat.NewMessageRequest} returns this
  */
-proto.chat.NewMessageRequest.prototype.setMemo = function (value) {
+proto.chat.NewMessageRequest.prototype.setMemo = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -711,7 +712,7 @@ proto.chat.NewMessageRequest.prototype.setMemo = function (value) {
  * optional string channel = 3;
  * @return {string}
  */
-proto.chat.NewMessageRequest.prototype.getChannel = function () {
+proto.chat.NewMessageRequest.prototype.getChannel = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -720,7 +721,7 @@ proto.chat.NewMessageRequest.prototype.getChannel = function () {
  * @param {string} value
  * @return {!proto.chat.NewMessageRequest} returns this
  */
-proto.chat.NewMessageRequest.prototype.setChannel = function (value) {
+proto.chat.NewMessageRequest.prototype.setChannel = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -729,45 +730,45 @@ proto.chat.NewMessageRequest.prototype.setChannel = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.EditMessageRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.EditMessageRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.EditMessageRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.EditMessageRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.EditMessageRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.EditMessageRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    user: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    edited: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.EditMessageRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.EditMessageRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      user: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      edited: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -776,7 +777,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.EditMessageRequest}
  */
-proto.chat.EditMessageRequest.deserializeBinary = function (bytes) {
+proto.chat.EditMessageRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.EditMessageRequest;
   return proto.chat.EditMessageRequest.deserializeBinaryFromReader(msg, reader);
@@ -790,32 +791,32 @@ proto.chat.EditMessageRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.EditMessageRequest}
  */
-proto.chat.EditMessageRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.EditMessageRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setMemo(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUser(value);
-        break;
-      case 4:
-        var value = /** @type {boolean} */ (reader.readBool());
-        msg.setEdited(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMemo(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUser(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setEdited(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -826,7 +827,7 @@ proto.chat.EditMessageRequest.deserializeBinaryFromReader = function (msg, reade
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.EditMessageRequest.prototype.serializeBinary = function () {
+proto.chat.EditMessageRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.EditMessageRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -840,7 +841,7 @@ proto.chat.EditMessageRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.EditMessageRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.EditMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -877,7 +878,7 @@ proto.chat.EditMessageRequest.serializeBinaryToWriter = function (message, write
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.EditMessageRequest.prototype.getId = function () {
+proto.chat.EditMessageRequest.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -886,7 +887,7 @@ proto.chat.EditMessageRequest.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.EditMessageRequest} returns this
  */
-proto.chat.EditMessageRequest.prototype.setId = function (value) {
+proto.chat.EditMessageRequest.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -895,7 +896,7 @@ proto.chat.EditMessageRequest.prototype.setId = function (value) {
  * optional string memo = 2;
  * @return {string}
  */
-proto.chat.EditMessageRequest.prototype.getMemo = function () {
+proto.chat.EditMessageRequest.prototype.getMemo = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -904,7 +905,7 @@ proto.chat.EditMessageRequest.prototype.getMemo = function () {
  * @param {string} value
  * @return {!proto.chat.EditMessageRequest} returns this
  */
-proto.chat.EditMessageRequest.prototype.setMemo = function (value) {
+proto.chat.EditMessageRequest.prototype.setMemo = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -913,7 +914,7 @@ proto.chat.EditMessageRequest.prototype.setMemo = function (value) {
  * optional string user = 3;
  * @return {string}
  */
-proto.chat.EditMessageRequest.prototype.getUser = function () {
+proto.chat.EditMessageRequest.prototype.getUser = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -922,7 +923,7 @@ proto.chat.EditMessageRequest.prototype.getUser = function () {
  * @param {string} value
  * @return {!proto.chat.EditMessageRequest} returns this
  */
-proto.chat.EditMessageRequest.prototype.setUser = function (value) {
+proto.chat.EditMessageRequest.prototype.setUser = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -931,7 +932,7 @@ proto.chat.EditMessageRequest.prototype.setUser = function (value) {
  * optional bool edited = 4;
  * @return {boolean}
  */
-proto.chat.EditMessageRequest.prototype.getEdited = function () {
+proto.chat.EditMessageRequest.prototype.getEdited = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
@@ -940,7 +941,7 @@ proto.chat.EditMessageRequest.prototype.getEdited = function () {
  * @param {boolean} value
  * @return {!proto.chat.EditMessageRequest} returns this
  */
-proto.chat.EditMessageRequest.prototype.setEdited = function (value) {
+proto.chat.EditMessageRequest.prototype.setEdited = function(value) {
   return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
@@ -949,43 +950,43 @@ proto.chat.EditMessageRequest.prototype.setEdited = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.DeleteMessageRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.DeleteMessageRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.DeleteMessageRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.DeleteMessageRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.DeleteMessageRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.DeleteMessageRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    username: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.DeleteMessageRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.DeleteMessageRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      username: jspb.Message.getFieldWithDefault(msg, 2, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -994,7 +995,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.DeleteMessageRequest}
  */
-proto.chat.DeleteMessageRequest.deserializeBinary = function (bytes) {
+proto.chat.DeleteMessageRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.DeleteMessageRequest;
   return proto.chat.DeleteMessageRequest.deserializeBinaryFromReader(msg, reader);
@@ -1008,24 +1009,24 @@ proto.chat.DeleteMessageRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.DeleteMessageRequest}
  */
-proto.chat.DeleteMessageRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.DeleteMessageRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUsername(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUsername(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -1036,7 +1037,7 @@ proto.chat.DeleteMessageRequest.deserializeBinaryFromReader = function (msg, rea
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.DeleteMessageRequest.prototype.serializeBinary = function () {
+proto.chat.DeleteMessageRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.DeleteMessageRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1050,7 +1051,7 @@ proto.chat.DeleteMessageRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.DeleteMessageRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.DeleteMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -1073,7 +1074,7 @@ proto.chat.DeleteMessageRequest.serializeBinaryToWriter = function (message, wri
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.DeleteMessageRequest.prototype.getId = function () {
+proto.chat.DeleteMessageRequest.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -1082,7 +1083,7 @@ proto.chat.DeleteMessageRequest.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.DeleteMessageRequest} returns this
  */
-proto.chat.DeleteMessageRequest.prototype.setId = function (value) {
+proto.chat.DeleteMessageRequest.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -1091,7 +1092,7 @@ proto.chat.DeleteMessageRequest.prototype.setId = function (value) {
  * optional string username = 2;
  * @return {string}
  */
-proto.chat.DeleteMessageRequest.prototype.getUsername = function () {
+proto.chat.DeleteMessageRequest.prototype.getUsername = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1100,7 +1101,7 @@ proto.chat.DeleteMessageRequest.prototype.getUsername = function () {
  * @param {string} value
  * @return {!proto.chat.DeleteMessageRequest} returns this
  */
-proto.chat.DeleteMessageRequest.prototype.setUsername = function (value) {
+proto.chat.DeleteMessageRequest.prototype.setUsername = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1109,44 +1110,44 @@ proto.chat.DeleteMessageRequest.prototype.setUsername = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.NewChannelRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.NewChannelRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.NewChannelRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.NewChannelRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.NewChannelRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.NewChannelRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    owner: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.NewChannelRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.NewChannelRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      description: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      owner: jspb.Message.getFieldWithDefault(msg, 3, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1155,7 +1156,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.NewChannelRequest}
  */
-proto.chat.NewChannelRequest.deserializeBinary = function (bytes) {
+proto.chat.NewChannelRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.NewChannelRequest;
   return proto.chat.NewChannelRequest.deserializeBinaryFromReader(msg, reader);
@@ -1169,28 +1170,28 @@ proto.chat.NewChannelRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.NewChannelRequest}
  */
-proto.chat.NewChannelRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.NewChannelRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setDescription(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOwner(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOwner(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -1201,7 +1202,7 @@ proto.chat.NewChannelRequest.deserializeBinaryFromReader = function (msg, reader
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.NewChannelRequest.prototype.serializeBinary = function () {
+proto.chat.NewChannelRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.NewChannelRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1215,7 +1216,7 @@ proto.chat.NewChannelRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.NewChannelRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.NewChannelRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getName();
   if (f.length > 0) {
@@ -1245,7 +1246,7 @@ proto.chat.NewChannelRequest.serializeBinaryToWriter = function (message, writer
  * optional string name = 1;
  * @return {string}
  */
-proto.chat.NewChannelRequest.prototype.getName = function () {
+proto.chat.NewChannelRequest.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1254,7 +1255,7 @@ proto.chat.NewChannelRequest.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.NewChannelRequest} returns this
  */
-proto.chat.NewChannelRequest.prototype.setName = function (value) {
+proto.chat.NewChannelRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -1263,7 +1264,7 @@ proto.chat.NewChannelRequest.prototype.setName = function (value) {
  * optional string description = 2;
  * @return {string}
  */
-proto.chat.NewChannelRequest.prototype.getDescription = function () {
+proto.chat.NewChannelRequest.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1272,7 +1273,7 @@ proto.chat.NewChannelRequest.prototype.getDescription = function () {
  * @param {string} value
  * @return {!proto.chat.NewChannelRequest} returns this
  */
-proto.chat.NewChannelRequest.prototype.setDescription = function (value) {
+proto.chat.NewChannelRequest.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1281,7 +1282,7 @@ proto.chat.NewChannelRequest.prototype.setDescription = function (value) {
  * optional string owner = 3;
  * @return {string}
  */
-proto.chat.NewChannelRequest.prototype.getOwner = function () {
+proto.chat.NewChannelRequest.prototype.getOwner = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1290,7 +1291,7 @@ proto.chat.NewChannelRequest.prototype.getOwner = function () {
  * @param {string} value
  * @return {!proto.chat.NewChannelRequest} returns this
  */
-proto.chat.NewChannelRequest.prototype.setOwner = function (value) {
+proto.chat.NewChannelRequest.prototype.setOwner = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -1299,45 +1300,45 @@ proto.chat.NewChannelRequest.prototype.setOwner = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.EditChannelRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.EditChannelRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.EditChannelRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.EditChannelRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.EditChannelRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.EditChannelRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    owner: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.EditChannelRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.EditChannelRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      owner: jspb.Message.getFieldWithDefault(msg, 4, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1346,7 +1347,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.EditChannelRequest}
  */
-proto.chat.EditChannelRequest.deserializeBinary = function (bytes) {
+proto.chat.EditChannelRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.EditChannelRequest;
   return proto.chat.EditChannelRequest.deserializeBinaryFromReader(msg, reader);
@@ -1360,32 +1361,32 @@ proto.chat.EditChannelRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.EditChannelRequest}
  */
-proto.chat.EditChannelRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.EditChannelRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setDescription(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOwner(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOwner(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -1396,7 +1397,7 @@ proto.chat.EditChannelRequest.deserializeBinaryFromReader = function (msg, reade
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.EditChannelRequest.prototype.serializeBinary = function () {
+proto.chat.EditChannelRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.EditChannelRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1410,7 +1411,7 @@ proto.chat.EditChannelRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.EditChannelRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.EditChannelRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -1447,7 +1448,7 @@ proto.chat.EditChannelRequest.serializeBinaryToWriter = function (message, write
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.EditChannelRequest.prototype.getId = function () {
+proto.chat.EditChannelRequest.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -1456,7 +1457,7 @@ proto.chat.EditChannelRequest.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setId = function (value) {
+proto.chat.EditChannelRequest.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -1465,7 +1466,7 @@ proto.chat.EditChannelRequest.prototype.setId = function (value) {
  * optional string name = 2;
  * @return {string}
  */
-proto.chat.EditChannelRequest.prototype.getName = function () {
+proto.chat.EditChannelRequest.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1474,7 +1475,7 @@ proto.chat.EditChannelRequest.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setName = function (value) {
+proto.chat.EditChannelRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1483,7 +1484,7 @@ proto.chat.EditChannelRequest.prototype.setName = function (value) {
  * optional string description = 3;
  * @return {string}
  */
-proto.chat.EditChannelRequest.prototype.getDescription = function () {
+proto.chat.EditChannelRequest.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1492,7 +1493,7 @@ proto.chat.EditChannelRequest.prototype.getDescription = function () {
  * @param {string} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setDescription = function (value) {
+proto.chat.EditChannelRequest.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -1501,7 +1502,7 @@ proto.chat.EditChannelRequest.prototype.setDescription = function (value) {
  * optional string owner = 4;
  * @return {string}
  */
-proto.chat.EditChannelRequest.prototype.getOwner = function () {
+proto.chat.EditChannelRequest.prototype.getOwner = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -1510,7 +1511,7 @@ proto.chat.EditChannelRequest.prototype.getOwner = function () {
  * @param {string} value
  * @return {!proto.chat.EditChannelRequest} returns this
  */
-proto.chat.EditChannelRequest.prototype.setOwner = function (value) {
+proto.chat.EditChannelRequest.prototype.setOwner = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -1519,44 +1520,44 @@ proto.chat.EditChannelRequest.prototype.setOwner = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.DeleteChannelRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.DeleteChannelRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.DeleteChannelRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.DeleteChannelRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.DeleteChannelRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.DeleteChannelRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    username: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.DeleteChannelRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.DeleteChannelRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      username: jspb.Message.getFieldWithDefault(msg, 3, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1565,7 +1566,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.DeleteChannelRequest}
  */
-proto.chat.DeleteChannelRequest.deserializeBinary = function (bytes) {
+proto.chat.DeleteChannelRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.DeleteChannelRequest;
   return proto.chat.DeleteChannelRequest.deserializeBinaryFromReader(msg, reader);
@@ -1579,28 +1580,28 @@ proto.chat.DeleteChannelRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.DeleteChannelRequest}
  */
-proto.chat.DeleteChannelRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.DeleteChannelRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUsername(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUsername(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -1611,7 +1612,7 @@ proto.chat.DeleteChannelRequest.deserializeBinaryFromReader = function (msg, rea
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.DeleteChannelRequest.prototype.serializeBinary = function () {
+proto.chat.DeleteChannelRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.DeleteChannelRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1625,7 +1626,7 @@ proto.chat.DeleteChannelRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.DeleteChannelRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.DeleteChannelRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -1655,7 +1656,7 @@ proto.chat.DeleteChannelRequest.serializeBinaryToWriter = function (message, wri
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.DeleteChannelRequest.prototype.getId = function () {
+proto.chat.DeleteChannelRequest.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -1664,7 +1665,7 @@ proto.chat.DeleteChannelRequest.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.DeleteChannelRequest} returns this
  */
-proto.chat.DeleteChannelRequest.prototype.setId = function (value) {
+proto.chat.DeleteChannelRequest.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -1673,7 +1674,7 @@ proto.chat.DeleteChannelRequest.prototype.setId = function (value) {
  * optional string name = 2;
  * @return {string}
  */
-proto.chat.DeleteChannelRequest.prototype.getName = function () {
+proto.chat.DeleteChannelRequest.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1682,7 +1683,7 @@ proto.chat.DeleteChannelRequest.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.DeleteChannelRequest} returns this
  */
-proto.chat.DeleteChannelRequest.prototype.setName = function (value) {
+proto.chat.DeleteChannelRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1691,7 +1692,7 @@ proto.chat.DeleteChannelRequest.prototype.setName = function (value) {
  * optional string username = 3;
  * @return {string}
  */
-proto.chat.DeleteChannelRequest.prototype.getUsername = function () {
+proto.chat.DeleteChannelRequest.prototype.getUsername = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1700,7 +1701,7 @@ proto.chat.DeleteChannelRequest.prototype.getUsername = function () {
  * @param {string} value
  * @return {!proto.chat.DeleteChannelRequest} returns this
  */
-proto.chat.DeleteChannelRequest.prototype.setUsername = function (value) {
+proto.chat.DeleteChannelRequest.prototype.setUsername = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -1709,45 +1710,45 @@ proto.chat.DeleteChannelRequest.prototype.setUsername = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.NewUserRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.NewUserRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.NewUserRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.NewUserRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.NewUserRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.NewUserRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    password: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    imagePath: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.NewUserRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.NewUserRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      password: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      imagePath: jspb.Message.getFieldWithDefault(msg, 4, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1756,7 +1757,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.NewUserRequest}
  */
-proto.chat.NewUserRequest.deserializeBinary = function (bytes) {
+proto.chat.NewUserRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.NewUserRequest;
   return proto.chat.NewUserRequest.deserializeBinaryFromReader(msg, reader);
@@ -1770,32 +1771,32 @@ proto.chat.NewUserRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.NewUserRequest}
  */
-proto.chat.NewUserRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.NewUserRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setEmail(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setPassword(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setImagePath(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEmail(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPassword(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setImagePath(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -1806,7 +1807,7 @@ proto.chat.NewUserRequest.deserializeBinaryFromReader = function (msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.NewUserRequest.prototype.serializeBinary = function () {
+proto.chat.NewUserRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.NewUserRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1820,7 +1821,7 @@ proto.chat.NewUserRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.NewUserRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.NewUserRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getName();
   if (f.length > 0) {
@@ -1857,7 +1858,7 @@ proto.chat.NewUserRequest.serializeBinaryToWriter = function (message, writer) {
  * optional string name = 1;
  * @return {string}
  */
-proto.chat.NewUserRequest.prototype.getName = function () {
+proto.chat.NewUserRequest.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1866,7 +1867,7 @@ proto.chat.NewUserRequest.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.NewUserRequest} returns this
  */
-proto.chat.NewUserRequest.prototype.setName = function (value) {
+proto.chat.NewUserRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -1875,7 +1876,7 @@ proto.chat.NewUserRequest.prototype.setName = function (value) {
  * optional string email = 2;
  * @return {string}
  */
-proto.chat.NewUserRequest.prototype.getEmail = function () {
+proto.chat.NewUserRequest.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1884,7 +1885,7 @@ proto.chat.NewUserRequest.prototype.getEmail = function () {
  * @param {string} value
  * @return {!proto.chat.NewUserRequest} returns this
  */
-proto.chat.NewUserRequest.prototype.setEmail = function (value) {
+proto.chat.NewUserRequest.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1893,7 +1894,7 @@ proto.chat.NewUserRequest.prototype.setEmail = function (value) {
  * optional string password = 3;
  * @return {string}
  */
-proto.chat.NewUserRequest.prototype.getPassword = function () {
+proto.chat.NewUserRequest.prototype.getPassword = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1902,7 +1903,7 @@ proto.chat.NewUserRequest.prototype.getPassword = function () {
  * @param {string} value
  * @return {!proto.chat.NewUserRequest} returns this
  */
-proto.chat.NewUserRequest.prototype.setPassword = function (value) {
+proto.chat.NewUserRequest.prototype.setPassword = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -1911,7 +1912,7 @@ proto.chat.NewUserRequest.prototype.setPassword = function (value) {
  * optional string image_path = 4;
  * @return {string}
  */
-proto.chat.NewUserRequest.prototype.getImagePath = function () {
+proto.chat.NewUserRequest.prototype.getImagePath = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -1920,7 +1921,7 @@ proto.chat.NewUserRequest.prototype.getImagePath = function () {
  * @param {string} value
  * @return {!proto.chat.NewUserRequest} returns this
  */
-proto.chat.NewUserRequest.prototype.setImagePath = function (value) {
+proto.chat.NewUserRequest.prototype.setImagePath = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -1929,46 +1930,46 @@ proto.chat.NewUserRequest.prototype.setImagePath = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.EditUserRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.EditUserRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.EditUserRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.EditUserRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.EditUserRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.EditUserRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    oldName: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    oldPassword: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    password: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.EditUserRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.EditUserRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      oldName: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      email: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      name: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      oldPassword: jspb.Message.getFieldWithDefault(msg, 4, ""),
-      password: jspb.Message.getFieldWithDefault(msg, 5, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1977,7 +1978,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.EditUserRequest}
  */
-proto.chat.EditUserRequest.deserializeBinary = function (bytes) {
+proto.chat.EditUserRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.EditUserRequest;
   return proto.chat.EditUserRequest.deserializeBinaryFromReader(msg, reader);
@@ -1991,36 +1992,36 @@ proto.chat.EditUserRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.EditUserRequest}
  */
-proto.chat.EditUserRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.EditUserRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOldName(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setEmail(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOldPassword(value);
-        break;
-      case 5:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setPassword(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOldName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEmail(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOldPassword(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPassword(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2031,7 +2032,7 @@ proto.chat.EditUserRequest.deserializeBinaryFromReader = function (msg, reader) 
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.EditUserRequest.prototype.serializeBinary = function () {
+proto.chat.EditUserRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.EditUserRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2045,7 +2046,7 @@ proto.chat.EditUserRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.EditUserRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.EditUserRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getOldName();
   if (f.length > 0) {
@@ -2089,7 +2090,7 @@ proto.chat.EditUserRequest.serializeBinaryToWriter = function (message, writer) 
  * optional string old_name = 1;
  * @return {string}
  */
-proto.chat.EditUserRequest.prototype.getOldName = function () {
+proto.chat.EditUserRequest.prototype.getOldName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -2098,7 +2099,7 @@ proto.chat.EditUserRequest.prototype.getOldName = function () {
  * @param {string} value
  * @return {!proto.chat.EditUserRequest} returns this
  */
-proto.chat.EditUserRequest.prototype.setOldName = function (value) {
+proto.chat.EditUserRequest.prototype.setOldName = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -2107,7 +2108,7 @@ proto.chat.EditUserRequest.prototype.setOldName = function (value) {
  * optional string email = 2;
  * @return {string}
  */
-proto.chat.EditUserRequest.prototype.getEmail = function () {
+proto.chat.EditUserRequest.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -2116,7 +2117,7 @@ proto.chat.EditUserRequest.prototype.getEmail = function () {
  * @param {string} value
  * @return {!proto.chat.EditUserRequest} returns this
  */
-proto.chat.EditUserRequest.prototype.setEmail = function (value) {
+proto.chat.EditUserRequest.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -2125,7 +2126,7 @@ proto.chat.EditUserRequest.prototype.setEmail = function (value) {
  * optional string name = 3;
  * @return {string}
  */
-proto.chat.EditUserRequest.prototype.getName = function () {
+proto.chat.EditUserRequest.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -2134,7 +2135,7 @@ proto.chat.EditUserRequest.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.EditUserRequest} returns this
  */
-proto.chat.EditUserRequest.prototype.setName = function (value) {
+proto.chat.EditUserRequest.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -2143,7 +2144,7 @@ proto.chat.EditUserRequest.prototype.setName = function (value) {
  * optional string old_password = 4;
  * @return {string}
  */
-proto.chat.EditUserRequest.prototype.getOldPassword = function () {
+proto.chat.EditUserRequest.prototype.getOldPassword = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -2152,7 +2153,7 @@ proto.chat.EditUserRequest.prototype.getOldPassword = function () {
  * @param {string} value
  * @return {!proto.chat.EditUserRequest} returns this
  */
-proto.chat.EditUserRequest.prototype.setOldPassword = function (value) {
+proto.chat.EditUserRequest.prototype.setOldPassword = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -2161,7 +2162,7 @@ proto.chat.EditUserRequest.prototype.setOldPassword = function (value) {
  * optional string password = 5;
  * @return {string}
  */
-proto.chat.EditUserRequest.prototype.getPassword = function () {
+proto.chat.EditUserRequest.prototype.getPassword = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -2170,7 +2171,7 @@ proto.chat.EditUserRequest.prototype.getPassword = function () {
  * @param {string} value
  * @return {!proto.chat.EditUserRequest} returns this
  */
-proto.chat.EditUserRequest.prototype.setPassword = function (value) {
+proto.chat.EditUserRequest.prototype.setPassword = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
@@ -2179,45 +2180,45 @@ proto.chat.EditUserRequest.prototype.setPassword = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetChannelsMessage.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetChannelsMessage.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetChannelsMessage.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetChannelsMessage.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetChannelsMessage} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetChannelsMessage.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    owner: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetChannelsMessage} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetChannelsMessage.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      owner: jspb.Message.getFieldWithDefault(msg, 4, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2226,7 +2227,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetChannelsMessage}
  */
-proto.chat.GetChannelsMessage.deserializeBinary = function (bytes) {
+proto.chat.GetChannelsMessage.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetChannelsMessage;
   return proto.chat.GetChannelsMessage.deserializeBinaryFromReader(msg, reader);
@@ -2240,32 +2241,32 @@ proto.chat.GetChannelsMessage.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetChannelsMessage}
  */
-proto.chat.GetChannelsMessage.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetChannelsMessage.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setDescription(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setOwner(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOwner(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2276,7 +2277,7 @@ proto.chat.GetChannelsMessage.deserializeBinaryFromReader = function (msg, reade
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetChannelsMessage.prototype.serializeBinary = function () {
+proto.chat.GetChannelsMessage.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetChannelsMessage.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2290,7 +2291,7 @@ proto.chat.GetChannelsMessage.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetChannelsMessage.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetChannelsMessage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -2327,7 +2328,7 @@ proto.chat.GetChannelsMessage.serializeBinaryToWriter = function (message, write
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.GetChannelsMessage.prototype.getId = function () {
+proto.chat.GetChannelsMessage.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -2336,7 +2337,7 @@ proto.chat.GetChannelsMessage.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.GetChannelsMessage} returns this
  */
-proto.chat.GetChannelsMessage.prototype.setId = function (value) {
+proto.chat.GetChannelsMessage.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -2345,7 +2346,7 @@ proto.chat.GetChannelsMessage.prototype.setId = function (value) {
  * optional string name = 2;
  * @return {string}
  */
-proto.chat.GetChannelsMessage.prototype.getName = function () {
+proto.chat.GetChannelsMessage.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -2354,7 +2355,7 @@ proto.chat.GetChannelsMessage.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.GetChannelsMessage} returns this
  */
-proto.chat.GetChannelsMessage.prototype.setName = function (value) {
+proto.chat.GetChannelsMessage.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -2363,7 +2364,7 @@ proto.chat.GetChannelsMessage.prototype.setName = function (value) {
  * optional string description = 3;
  * @return {string}
  */
-proto.chat.GetChannelsMessage.prototype.getDescription = function () {
+proto.chat.GetChannelsMessage.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -2372,7 +2373,7 @@ proto.chat.GetChannelsMessage.prototype.getDescription = function () {
  * @param {string} value
  * @return {!proto.chat.GetChannelsMessage} returns this
  */
-proto.chat.GetChannelsMessage.prototype.setDescription = function (value) {
+proto.chat.GetChannelsMessage.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -2381,7 +2382,7 @@ proto.chat.GetChannelsMessage.prototype.setDescription = function (value) {
  * optional string owner = 4;
  * @return {string}
  */
-proto.chat.GetChannelsMessage.prototype.getOwner = function () {
+proto.chat.GetChannelsMessage.prototype.getOwner = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -2390,7 +2391,7 @@ proto.chat.GetChannelsMessage.prototype.getOwner = function () {
  * @param {string} value
  * @return {!proto.chat.GetChannelsMessage} returns this
  */
-proto.chat.GetChannelsMessage.prototype.setOwner = function (value) {
+proto.chat.GetChannelsMessage.prototype.setOwner = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -2406,43 +2407,43 @@ proto.chat.GetChannelsResponse.repeatedFields_ = [1];
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetChannelsResponse.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetChannelsResponse.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetChannelsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetChannelsResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetChannelsResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetChannelsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    channelsList: jspb.Message.toObjectList(msg.getChannelsList(),
+    proto.chat.GetChannelsMessage.toObject, includeInstance)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetChannelsResponse} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetChannelsResponse.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      channelsList: jspb.Message.toObjectList(msg.getChannelsList(),
-        proto.chat.GetChannelsMessage.toObject, includeInstance)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2451,7 +2452,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetChannelsResponse}
  */
-proto.chat.GetChannelsResponse.deserializeBinary = function (bytes) {
+proto.chat.GetChannelsResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetChannelsResponse;
   return proto.chat.GetChannelsResponse.deserializeBinaryFromReader(msg, reader);
@@ -2465,21 +2466,21 @@ proto.chat.GetChannelsResponse.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetChannelsResponse}
  */
-proto.chat.GetChannelsResponse.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetChannelsResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = new proto.chat.GetChannelsMessage;
-        reader.readMessage(value, proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
-        msg.addChannels(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = new proto.chat.GetChannelsMessage;
+      reader.readMessage(value,proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
+      msg.addChannels(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2490,7 +2491,7 @@ proto.chat.GetChannelsResponse.deserializeBinaryFromReader = function (msg, read
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetChannelsResponse.prototype.serializeBinary = function () {
+proto.chat.GetChannelsResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetChannelsResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2504,7 +2505,7 @@ proto.chat.GetChannelsResponse.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetChannelsResponse.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetChannelsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getChannelsList();
   if (f.length > 0) {
@@ -2521,7 +2522,7 @@ proto.chat.GetChannelsResponse.serializeBinaryToWriter = function (message, writ
  * repeated GetChannelsMessage channels = 1;
  * @return {!Array<!proto.chat.GetChannelsMessage>}
  */
-proto.chat.GetChannelsResponse.prototype.getChannelsList = function () {
+proto.chat.GetChannelsResponse.prototype.getChannelsList = function() {
   return /** @type{!Array<!proto.chat.GetChannelsMessage>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.chat.GetChannelsMessage, 1));
 };
@@ -2531,7 +2532,7 @@ proto.chat.GetChannelsResponse.prototype.getChannelsList = function () {
  * @param {!Array<!proto.chat.GetChannelsMessage>} value
  * @return {!proto.chat.GetChannelsResponse} returns this
 */
-proto.chat.GetChannelsResponse.prototype.setChannelsList = function (value) {
+proto.chat.GetChannelsResponse.prototype.setChannelsList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
@@ -2541,7 +2542,7 @@ proto.chat.GetChannelsResponse.prototype.setChannelsList = function (value) {
  * @param {number=} opt_index
  * @return {!proto.chat.GetChannelsMessage}
  */
-proto.chat.GetChannelsResponse.prototype.addChannels = function (opt_value, opt_index) {
+proto.chat.GetChannelsResponse.prototype.addChannels = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.chat.GetChannelsMessage, opt_index);
 };
 
@@ -2550,7 +2551,7 @@ proto.chat.GetChannelsResponse.prototype.addChannels = function (opt_value, opt_
  * Clears the list making it empty but non-null.
  * @return {!proto.chat.GetChannelsResponse} returns this
  */
-proto.chat.GetChannelsResponse.prototype.clearChannelsList = function () {
+proto.chat.GetChannelsResponse.prototype.clearChannelsList = function() {
   return this.setChannelsList([]);
 };
 
@@ -2559,44 +2560,44 @@ proto.chat.GetChannelsResponse.prototype.clearChannelsList = function () {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetUsersMessage.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetUsersMessage.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetUsersMessage.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetUsersMessage.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetUsersMessage} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetUsersMessage.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetUsersMessage} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetUsersMessage.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      avatar: jspb.Message.getFieldWithDefault(msg, 3, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2605,7 +2606,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetUsersMessage}
  */
-proto.chat.GetUsersMessage.deserializeBinary = function (bytes) {
+proto.chat.GetUsersMessage.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetUsersMessage;
   return proto.chat.GetUsersMessage.deserializeBinaryFromReader(msg, reader);
@@ -2619,28 +2620,28 @@ proto.chat.GetUsersMessage.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetUsersMessage}
  */
-proto.chat.GetUsersMessage.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetUsersMessage.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setAvatar(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2651,7 +2652,7 @@ proto.chat.GetUsersMessage.deserializeBinaryFromReader = function (msg, reader) 
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetUsersMessage.prototype.serializeBinary = function () {
+proto.chat.GetUsersMessage.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetUsersMessage.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2665,7 +2666,7 @@ proto.chat.GetUsersMessage.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetUsersMessage.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetUsersMessage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -2695,7 +2696,7 @@ proto.chat.GetUsersMessage.serializeBinaryToWriter = function (message, writer) 
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.GetUsersMessage.prototype.getId = function () {
+proto.chat.GetUsersMessage.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -2704,7 +2705,7 @@ proto.chat.GetUsersMessage.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.GetUsersMessage} returns this
  */
-proto.chat.GetUsersMessage.prototype.setId = function (value) {
+proto.chat.GetUsersMessage.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -2713,7 +2714,7 @@ proto.chat.GetUsersMessage.prototype.setId = function (value) {
  * optional string name = 2;
  * @return {string}
  */
-proto.chat.GetUsersMessage.prototype.getName = function () {
+proto.chat.GetUsersMessage.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -2722,7 +2723,7 @@ proto.chat.GetUsersMessage.prototype.getName = function () {
  * @param {string} value
  * @return {!proto.chat.GetUsersMessage} returns this
  */
-proto.chat.GetUsersMessage.prototype.setName = function (value) {
+proto.chat.GetUsersMessage.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -2731,7 +2732,7 @@ proto.chat.GetUsersMessage.prototype.setName = function (value) {
  * optional string avatar = 3;
  * @return {string}
  */
-proto.chat.GetUsersMessage.prototype.getAvatar = function () {
+proto.chat.GetUsersMessage.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -2740,7 +2741,7 @@ proto.chat.GetUsersMessage.prototype.getAvatar = function () {
  * @param {string} value
  * @return {!proto.chat.GetUsersMessage} returns this
  */
-proto.chat.GetUsersMessage.prototype.setAvatar = function (value) {
+proto.chat.GetUsersMessage.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -2756,43 +2757,43 @@ proto.chat.GetUsersResponse.repeatedFields_ = [1];
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetUsersResponse.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetUsersResponse.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetUsersResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetUsersResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetUsersResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetUsersResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    usersList: jspb.Message.toObjectList(msg.getUsersList(),
+    proto.chat.GetUsersMessage.toObject, includeInstance)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetUsersResponse} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetUsersResponse.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      usersList: jspb.Message.toObjectList(msg.getUsersList(),
-        proto.chat.GetUsersMessage.toObject, includeInstance)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2801,7 +2802,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetUsersResponse}
  */
-proto.chat.GetUsersResponse.deserializeBinary = function (bytes) {
+proto.chat.GetUsersResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetUsersResponse;
   return proto.chat.GetUsersResponse.deserializeBinaryFromReader(msg, reader);
@@ -2815,21 +2816,21 @@ proto.chat.GetUsersResponse.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetUsersResponse}
  */
-proto.chat.GetUsersResponse.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetUsersResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = new proto.chat.GetUsersMessage;
-        reader.readMessage(value, proto.chat.GetUsersMessage.deserializeBinaryFromReader);
-        msg.addUsers(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = new proto.chat.GetUsersMessage;
+      reader.readMessage(value,proto.chat.GetUsersMessage.deserializeBinaryFromReader);
+      msg.addUsers(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2840,7 +2841,7 @@ proto.chat.GetUsersResponse.deserializeBinaryFromReader = function (msg, reader)
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetUsersResponse.prototype.serializeBinary = function () {
+proto.chat.GetUsersResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetUsersResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2854,7 +2855,7 @@ proto.chat.GetUsersResponse.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetUsersResponse.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetUsersResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUsersList();
   if (f.length > 0) {
@@ -2871,7 +2872,7 @@ proto.chat.GetUsersResponse.serializeBinaryToWriter = function (message, writer)
  * repeated GetUsersMessage users = 1;
  * @return {!Array<!proto.chat.GetUsersMessage>}
  */
-proto.chat.GetUsersResponse.prototype.getUsersList = function () {
+proto.chat.GetUsersResponse.prototype.getUsersList = function() {
   return /** @type{!Array<!proto.chat.GetUsersMessage>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.chat.GetUsersMessage, 1));
 };
@@ -2881,7 +2882,7 @@ proto.chat.GetUsersResponse.prototype.getUsersList = function () {
  * @param {!Array<!proto.chat.GetUsersMessage>} value
  * @return {!proto.chat.GetUsersResponse} returns this
 */
-proto.chat.GetUsersResponse.prototype.setUsersList = function (value) {
+proto.chat.GetUsersResponse.prototype.setUsersList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
@@ -2891,7 +2892,7 @@ proto.chat.GetUsersResponse.prototype.setUsersList = function (value) {
  * @param {number=} opt_index
  * @return {!proto.chat.GetUsersMessage}
  */
-proto.chat.GetUsersResponse.prototype.addUsers = function (opt_value, opt_index) {
+proto.chat.GetUsersResponse.prototype.addUsers = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.chat.GetUsersMessage, opt_index);
 };
 
@@ -2900,7 +2901,7 @@ proto.chat.GetUsersResponse.prototype.addUsers = function (opt_value, opt_index)
  * Clears the list making it empty but non-null.
  * @return {!proto.chat.GetUsersResponse} returns this
  */
-proto.chat.GetUsersResponse.prototype.clearUsersList = function () {
+proto.chat.GetUsersResponse.prototype.clearUsersList = function() {
   return this.setUsersList([]);
 };
 
@@ -2909,42 +2910,42 @@ proto.chat.GetUsersResponse.prototype.clearUsersList = function () {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetMessagesRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetMessagesRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetMessagesRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetMessagesRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetMessagesRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetMessagesRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    channel: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetMessagesRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetMessagesRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      channel: jspb.Message.getFieldWithDefault(msg, 1, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2953,7 +2954,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetMessagesRequest}
  */
-proto.chat.GetMessagesRequest.deserializeBinary = function (bytes) {
+proto.chat.GetMessagesRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetMessagesRequest;
   return proto.chat.GetMessagesRequest.deserializeBinaryFromReader(msg, reader);
@@ -2967,20 +2968,20 @@ proto.chat.GetMessagesRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetMessagesRequest}
  */
-proto.chat.GetMessagesRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetMessagesRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setChannel(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChannel(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -2991,7 +2992,7 @@ proto.chat.GetMessagesRequest.deserializeBinaryFromReader = function (msg, reade
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetMessagesRequest.prototype.serializeBinary = function () {
+proto.chat.GetMessagesRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetMessagesRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3005,7 +3006,7 @@ proto.chat.GetMessagesRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetMessagesRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetMessagesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getChannel();
   if (f.length > 0) {
@@ -3021,7 +3022,7 @@ proto.chat.GetMessagesRequest.serializeBinaryToWriter = function (message, write
  * optional string channel = 1;
  * @return {string}
  */
-proto.chat.GetMessagesRequest.prototype.getChannel = function () {
+proto.chat.GetMessagesRequest.prototype.getChannel = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -3030,7 +3031,7 @@ proto.chat.GetMessagesRequest.prototype.getChannel = function () {
  * @param {string} value
  * @return {!proto.chat.GetMessagesRequest} returns this
  */
-proto.chat.GetMessagesRequest.prototype.setChannel = function (value) {
+proto.chat.GetMessagesRequest.prototype.setChannel = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -3039,43 +3040,43 @@ proto.chat.GetMessagesRequest.prototype.setChannel = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetFilteredMessagesRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetFilteredMessagesRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetFilteredMessagesRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetFilteredMessagesRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetFilteredMessagesRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetFilteredMessagesRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    channel: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    minId: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetFilteredMessagesRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetFilteredMessagesRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      channel: jspb.Message.getFieldWithDefault(msg, 1, ""),
-      minId: jspb.Message.getFieldWithDefault(msg, 2, 0)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3084,7 +3085,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetFilteredMessagesRequest}
  */
-proto.chat.GetFilteredMessagesRequest.deserializeBinary = function (bytes) {
+proto.chat.GetFilteredMessagesRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetFilteredMessagesRequest;
   return proto.chat.GetFilteredMessagesRequest.deserializeBinaryFromReader(msg, reader);
@@ -3098,24 +3099,24 @@ proto.chat.GetFilteredMessagesRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetFilteredMessagesRequest}
  */
-proto.chat.GetFilteredMessagesRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetFilteredMessagesRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setChannel(value);
-        break;
-      case 2:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setMinId(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChannel(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMinId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -3126,7 +3127,7 @@ proto.chat.GetFilteredMessagesRequest.deserializeBinaryFromReader = function (ms
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetFilteredMessagesRequest.prototype.serializeBinary = function () {
+proto.chat.GetFilteredMessagesRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetFilteredMessagesRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3140,7 +3141,7 @@ proto.chat.GetFilteredMessagesRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetFilteredMessagesRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetFilteredMessagesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getChannel();
   if (f.length > 0) {
@@ -3163,7 +3164,7 @@ proto.chat.GetFilteredMessagesRequest.serializeBinaryToWriter = function (messag
  * optional string channel = 1;
  * @return {string}
  */
-proto.chat.GetFilteredMessagesRequest.prototype.getChannel = function () {
+proto.chat.GetFilteredMessagesRequest.prototype.getChannel = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -3172,7 +3173,7 @@ proto.chat.GetFilteredMessagesRequest.prototype.getChannel = function () {
  * @param {string} value
  * @return {!proto.chat.GetFilteredMessagesRequest} returns this
  */
-proto.chat.GetFilteredMessagesRequest.prototype.setChannel = function (value) {
+proto.chat.GetFilteredMessagesRequest.prototype.setChannel = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -3181,7 +3182,7 @@ proto.chat.GetFilteredMessagesRequest.prototype.setChannel = function (value) {
  * optional int32 min_id = 2;
  * @return {number}
  */
-proto.chat.GetFilteredMessagesRequest.prototype.getMinId = function () {
+proto.chat.GetFilteredMessagesRequest.prototype.getMinId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -3190,7 +3191,7 @@ proto.chat.GetFilteredMessagesRequest.prototype.getMinId = function () {
  * @param {number} value
  * @return {!proto.chat.GetFilteredMessagesRequest} returns this
  */
-proto.chat.GetFilteredMessagesRequest.prototype.setMinId = function (value) {
+proto.chat.GetFilteredMessagesRequest.prototype.setMinId = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -3199,48 +3200,48 @@ proto.chat.GetFilteredMessagesRequest.prototype.setMinId = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetMessagesMessage.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetMessagesMessage.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetMessagesMessage.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetMessagesMessage.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetMessagesMessage} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetMessagesMessage.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    channel: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    user: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    edited: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetMessagesMessage} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetMessagesMessage.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      id: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      memo: jspb.Message.getFieldWithDefault(msg, 2, ""),
-      channel: jspb.Message.getFieldWithDefault(msg, 3, ""),
-      timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-      user: jspb.Message.getFieldWithDefault(msg, 5, ""),
-      avatar: jspb.Message.getFieldWithDefault(msg, 6, ""),
-      edited: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3249,7 +3250,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetMessagesMessage}
  */
-proto.chat.GetMessagesMessage.deserializeBinary = function (bytes) {
+proto.chat.GetMessagesMessage.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetMessagesMessage;
   return proto.chat.GetMessagesMessage.deserializeBinaryFromReader(msg, reader);
@@ -3263,45 +3264,45 @@ proto.chat.GetMessagesMessage.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetMessagesMessage}
  */
-proto.chat.GetMessagesMessage.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetMessagesMessage.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setId(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setMemo(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setChannel(value);
-        break;
-      case 4:
-        var value = new google_protobuf_timestamp_pb.Timestamp;
-        reader.readMessage(value, google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
-        msg.setTimestamp(value);
-        break;
-      case 5:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUser(value);
-        break;
-      case 6:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setAvatar(value);
-        break;
-      case 7:
-        var value = /** @type {boolean} */ (reader.readBool());
-        msg.setEdited(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMemo(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChannel(value);
+      break;
+    case 4:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setTimestamp(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUser(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setEdited(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -3312,7 +3313,7 @@ proto.chat.GetMessagesMessage.deserializeBinaryFromReader = function (msg, reade
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetMessagesMessage.prototype.serializeBinary = function () {
+proto.chat.GetMessagesMessage.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetMessagesMessage.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3326,7 +3327,7 @@ proto.chat.GetMessagesMessage.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetMessagesMessage.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetMessagesMessage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f !== 0) {
@@ -3385,7 +3386,7 @@ proto.chat.GetMessagesMessage.serializeBinaryToWriter = function (message, write
  * optional int32 id = 1;
  * @return {number}
  */
-proto.chat.GetMessagesMessage.prototype.getId = function () {
+proto.chat.GetMessagesMessage.prototype.getId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -3394,7 +3395,7 @@ proto.chat.GetMessagesMessage.prototype.getId = function () {
  * @param {number} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setId = function (value) {
+proto.chat.GetMessagesMessage.prototype.setId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -3403,7 +3404,7 @@ proto.chat.GetMessagesMessage.prototype.setId = function (value) {
  * optional string memo = 2;
  * @return {string}
  */
-proto.chat.GetMessagesMessage.prototype.getMemo = function () {
+proto.chat.GetMessagesMessage.prototype.getMemo = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -3412,7 +3413,7 @@ proto.chat.GetMessagesMessage.prototype.getMemo = function () {
  * @param {string} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setMemo = function (value) {
+proto.chat.GetMessagesMessage.prototype.setMemo = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -3421,7 +3422,7 @@ proto.chat.GetMessagesMessage.prototype.setMemo = function (value) {
  * optional string channel = 3;
  * @return {string}
  */
-proto.chat.GetMessagesMessage.prototype.getChannel = function () {
+proto.chat.GetMessagesMessage.prototype.getChannel = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -3430,7 +3431,7 @@ proto.chat.GetMessagesMessage.prototype.getChannel = function () {
  * @param {string} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setChannel = function (value) {
+proto.chat.GetMessagesMessage.prototype.setChannel = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -3439,7 +3440,7 @@ proto.chat.GetMessagesMessage.prototype.setChannel = function (value) {
  * optional google.protobuf.Timestamp timestamp = 4;
  * @return {?proto.google.protobuf.Timestamp}
  */
-proto.chat.GetMessagesMessage.prototype.getTimestamp = function () {
+proto.chat.GetMessagesMessage.prototype.getTimestamp = function() {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
     jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 4));
 };
@@ -3449,7 +3450,7 @@ proto.chat.GetMessagesMessage.prototype.getTimestamp = function () {
  * @param {?proto.google.protobuf.Timestamp|undefined} value
  * @return {!proto.chat.GetMessagesMessage} returns this
 */
-proto.chat.GetMessagesMessage.prototype.setTimestamp = function (value) {
+proto.chat.GetMessagesMessage.prototype.setTimestamp = function(value) {
   return jspb.Message.setWrapperField(this, 4, value);
 };
 
@@ -3458,7 +3459,7 @@ proto.chat.GetMessagesMessage.prototype.setTimestamp = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.clearTimestamp = function () {
+proto.chat.GetMessagesMessage.prototype.clearTimestamp = function() {
   return this.setTimestamp(undefined);
 };
 
@@ -3467,7 +3468,7 @@ proto.chat.GetMessagesMessage.prototype.clearTimestamp = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.GetMessagesMessage.prototype.hasTimestamp = function () {
+proto.chat.GetMessagesMessage.prototype.hasTimestamp = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 
@@ -3476,7 +3477,7 @@ proto.chat.GetMessagesMessage.prototype.hasTimestamp = function () {
  * optional string user = 5;
  * @return {string}
  */
-proto.chat.GetMessagesMessage.prototype.getUser = function () {
+proto.chat.GetMessagesMessage.prototype.getUser = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -3485,7 +3486,7 @@ proto.chat.GetMessagesMessage.prototype.getUser = function () {
  * @param {string} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setUser = function (value) {
+proto.chat.GetMessagesMessage.prototype.setUser = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
@@ -3494,7 +3495,7 @@ proto.chat.GetMessagesMessage.prototype.setUser = function (value) {
  * optional string avatar = 6;
  * @return {string}
  */
-proto.chat.GetMessagesMessage.prototype.getAvatar = function () {
+proto.chat.GetMessagesMessage.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -3503,7 +3504,7 @@ proto.chat.GetMessagesMessage.prototype.getAvatar = function () {
  * @param {string} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setAvatar = function (value) {
+proto.chat.GetMessagesMessage.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
@@ -3512,7 +3513,7 @@ proto.chat.GetMessagesMessage.prototype.setAvatar = function (value) {
  * optional bool edited = 7;
  * @return {boolean}
  */
-proto.chat.GetMessagesMessage.prototype.getEdited = function () {
+proto.chat.GetMessagesMessage.prototype.getEdited = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
 };
 
@@ -3521,7 +3522,7 @@ proto.chat.GetMessagesMessage.prototype.getEdited = function () {
  * @param {boolean} value
  * @return {!proto.chat.GetMessagesMessage} returns this
  */
-proto.chat.GetMessagesMessage.prototype.setEdited = function (value) {
+proto.chat.GetMessagesMessage.prototype.setEdited = function(value) {
   return jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
@@ -3537,44 +3538,44 @@ proto.chat.GetMessagesResponse.repeatedFields_ = [1];
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.GetMessagesResponse.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.GetMessagesResponse.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.GetMessagesResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.GetMessagesResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.GetMessagesResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.GetMessagesResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    messagesList: jspb.Message.toObjectList(msg.getMessagesList(),
+    proto.chat.GetMessagesMessage.toObject, includeInstance),
+    minId: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.GetMessagesResponse} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.GetMessagesResponse.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      messagesList: jspb.Message.toObjectList(msg.getMessagesList(),
-        proto.chat.GetMessagesMessage.toObject, includeInstance),
-      minId: jspb.Message.getFieldWithDefault(msg, 2, 0)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3583,7 +3584,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.GetMessagesResponse}
  */
-proto.chat.GetMessagesResponse.deserializeBinary = function (bytes) {
+proto.chat.GetMessagesResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.GetMessagesResponse;
   return proto.chat.GetMessagesResponse.deserializeBinaryFromReader(msg, reader);
@@ -3597,25 +3598,25 @@ proto.chat.GetMessagesResponse.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.GetMessagesResponse}
  */
-proto.chat.GetMessagesResponse.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.GetMessagesResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = new proto.chat.GetMessagesMessage;
-        reader.readMessage(value, proto.chat.GetMessagesMessage.deserializeBinaryFromReader);
-        msg.addMessages(value);
-        break;
-      case 2:
-        var value = /** @type {number} */ (reader.readInt32());
-        msg.setMinId(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = new proto.chat.GetMessagesMessage;
+      reader.readMessage(value,proto.chat.GetMessagesMessage.deserializeBinaryFromReader);
+      msg.addMessages(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMinId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -3626,7 +3627,7 @@ proto.chat.GetMessagesResponse.deserializeBinaryFromReader = function (msg, read
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.GetMessagesResponse.prototype.serializeBinary = function () {
+proto.chat.GetMessagesResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.GetMessagesResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3640,7 +3641,7 @@ proto.chat.GetMessagesResponse.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.GetMessagesResponse.serializeBinaryToWriter = function (message, writer) {
+proto.chat.GetMessagesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getMessagesList();
   if (f.length > 0) {
@@ -3664,7 +3665,7 @@ proto.chat.GetMessagesResponse.serializeBinaryToWriter = function (message, writ
  * repeated GetMessagesMessage messages = 1;
  * @return {!Array<!proto.chat.GetMessagesMessage>}
  */
-proto.chat.GetMessagesResponse.prototype.getMessagesList = function () {
+proto.chat.GetMessagesResponse.prototype.getMessagesList = function() {
   return /** @type{!Array<!proto.chat.GetMessagesMessage>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.chat.GetMessagesMessage, 1));
 };
@@ -3674,7 +3675,7 @@ proto.chat.GetMessagesResponse.prototype.getMessagesList = function () {
  * @param {!Array<!proto.chat.GetMessagesMessage>} value
  * @return {!proto.chat.GetMessagesResponse} returns this
 */
-proto.chat.GetMessagesResponse.prototype.setMessagesList = function (value) {
+proto.chat.GetMessagesResponse.prototype.setMessagesList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
@@ -3684,7 +3685,7 @@ proto.chat.GetMessagesResponse.prototype.setMessagesList = function (value) {
  * @param {number=} opt_index
  * @return {!proto.chat.GetMessagesMessage}
  */
-proto.chat.GetMessagesResponse.prototype.addMessages = function (opt_value, opt_index) {
+proto.chat.GetMessagesResponse.prototype.addMessages = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.chat.GetMessagesMessage, opt_index);
 };
 
@@ -3693,7 +3694,7 @@ proto.chat.GetMessagesResponse.prototype.addMessages = function (opt_value, opt_
  * Clears the list making it empty but non-null.
  * @return {!proto.chat.GetMessagesResponse} returns this
  */
-proto.chat.GetMessagesResponse.prototype.clearMessagesList = function () {
+proto.chat.GetMessagesResponse.prototype.clearMessagesList = function() {
   return this.setMessagesList([]);
 };
 
@@ -3702,7 +3703,7 @@ proto.chat.GetMessagesResponse.prototype.clearMessagesList = function () {
  * optional int32 min_id = 2;
  * @return {number}
  */
-proto.chat.GetMessagesResponse.prototype.getMinId = function () {
+proto.chat.GetMessagesResponse.prototype.getMinId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -3711,7 +3712,7 @@ proto.chat.GetMessagesResponse.prototype.getMinId = function () {
  * @param {number} value
  * @return {!proto.chat.GetMessagesResponse} returns this
  */
-proto.chat.GetMessagesResponse.prototype.setMinId = function (value) {
+proto.chat.GetMessagesResponse.prototype.setMinId = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -3720,42 +3721,42 @@ proto.chat.GetMessagesResponse.prototype.setMinId = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.BroadcastRequest.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.BroadcastRequest.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.BroadcastRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.BroadcastRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.BroadcastRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.BroadcastRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    username: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.BroadcastRequest} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.BroadcastRequest.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      username: jspb.Message.getFieldWithDefault(msg, 1, "")
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3764,7 +3765,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.BroadcastRequest}
  */
-proto.chat.BroadcastRequest.deserializeBinary = function (bytes) {
+proto.chat.BroadcastRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.BroadcastRequest;
   return proto.chat.BroadcastRequest.deserializeBinaryFromReader(msg, reader);
@@ -3778,20 +3779,20 @@ proto.chat.BroadcastRequest.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.BroadcastRequest}
  */
-proto.chat.BroadcastRequest.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.BroadcastRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUsername(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUsername(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -3802,7 +3803,7 @@ proto.chat.BroadcastRequest.deserializeBinaryFromReader = function (msg, reader)
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.BroadcastRequest.prototype.serializeBinary = function () {
+proto.chat.BroadcastRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.BroadcastRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3816,7 +3817,7 @@ proto.chat.BroadcastRequest.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.BroadcastRequest.serializeBinaryToWriter = function (message, writer) {
+proto.chat.BroadcastRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUsername();
   if (f.length > 0) {
@@ -3832,7 +3833,7 @@ proto.chat.BroadcastRequest.serializeBinaryToWriter = function (message, writer)
  * optional string username = 1;
  * @return {string}
  */
-proto.chat.BroadcastRequest.prototype.getUsername = function () {
+proto.chat.BroadcastRequest.prototype.getUsername = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -3841,7 +3842,7 @@ proto.chat.BroadcastRequest.prototype.getUsername = function () {
  * @param {string} value
  * @return {!proto.chat.BroadcastRequest} returns this
  */
-proto.chat.BroadcastRequest.prototype.setUsername = function (value) {
+proto.chat.BroadcastRequest.prototype.setUsername = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -3850,50 +3851,50 @@ proto.chat.BroadcastRequest.prototype.setUsername = function (value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.chat.BroadcastResponse.prototype.toObject = function (opt_includeInstance) {
-    return proto.chat.BroadcastResponse.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.chat.BroadcastResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.chat.BroadcastResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.chat.BroadcastResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.chat.BroadcastResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    chatMessage: (f = msg.getChatMessage()) && proto.chat.GetMessagesMessage.toObject(includeInstance, f),
+    channel: (f = msg.getChannel()) && proto.chat.GetChannelsMessage.toObject(includeInstance, f),
+    user: (f = msg.getUser()) && proto.chat.GetUsersMessage.toObject(includeInstance, f),
+    users: (f = msg.getUsers()) && proto.chat.GetUsersResponse.toObject(includeInstance, f),
+    chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f),
+    channelEdit: (f = msg.getChannelEdit()) && proto.chat.EditChannelRequest.toObject(includeInstance, f),
+    chatMessageDeleted: (f = msg.getChatMessageDeleted()) && proto.chat.DeleteMessageRequest.toObject(includeInstance, f),
+    channelDeleted: (f = msg.getChannelDeleted()) && proto.chat.DeleteChannelRequest.toObject(includeInstance, f),
+    connected: jspb.Message.getBooleanFieldWithDefault(msg, 9, false)
   };
 
-
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.chat.BroadcastResponse} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.chat.BroadcastResponse.toObject = function (includeInstance, msg) {
-    var f, obj = {
-      chatMessage: (f = msg.getChatMessage()) && proto.chat.GetMessagesMessage.toObject(includeInstance, f),
-      channel: (f = msg.getChannel()) && proto.chat.GetChannelsMessage.toObject(includeInstance, f),
-      user: (f = msg.getUser()) && proto.chat.GetUsersMessage.toObject(includeInstance, f),
-      users: (f = msg.getUsers()) && proto.chat.GetUsersResponse.toObject(includeInstance, f),
-      chatMessageEdit: (f = msg.getChatMessageEdit()) && proto.chat.EditMessageRequest.toObject(includeInstance, f),
-      channelEdit: (f = msg.getChannelEdit()) && proto.chat.EditChannelRequest.toObject(includeInstance, f),
-      chatMessageDeleted: (f = msg.getChatMessageDeleted()) && proto.chat.DeleteMessageRequest.toObject(includeInstance, f),
-      channelDeleted: (f = msg.getChannelDeleted()) && proto.chat.DeleteChannelRequest.toObject(includeInstance, f),
-      connected: jspb.Message.getBooleanFieldWithDefault(msg, 9, false)
-    };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3902,7 +3903,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.chat.BroadcastResponse}
  */
-proto.chat.BroadcastResponse.deserializeBinary = function (bytes) {
+proto.chat.BroadcastResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.chat.BroadcastResponse;
   return proto.chat.BroadcastResponse.deserializeBinaryFromReader(msg, reader);
@@ -3916,60 +3917,60 @@ proto.chat.BroadcastResponse.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.chat.BroadcastResponse}
  */
-proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader) {
+proto.chat.BroadcastResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = new proto.chat.GetMessagesMessage;
-        reader.readMessage(value, proto.chat.GetMessagesMessage.deserializeBinaryFromReader);
-        msg.setChatMessage(value);
-        break;
-      case 2:
-        var value = new proto.chat.GetChannelsMessage;
-        reader.readMessage(value, proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
-        msg.setChannel(value);
-        break;
-      case 3:
-        var value = new proto.chat.GetUsersMessage;
-        reader.readMessage(value, proto.chat.GetUsersMessage.deserializeBinaryFromReader);
-        msg.setUser(value);
-        break;
-      case 4:
-        var value = new proto.chat.GetUsersResponse;
-        reader.readMessage(value, proto.chat.GetUsersResponse.deserializeBinaryFromReader);
-        msg.setUsers(value);
-        break;
-      case 5:
-        var value = new proto.chat.EditMessageRequest;
-        reader.readMessage(value, proto.chat.EditMessageRequest.deserializeBinaryFromReader);
-        msg.setChatMessageEdit(value);
-        break;
-      case 6:
-        var value = new proto.chat.EditChannelRequest;
-        reader.readMessage(value, proto.chat.EditChannelRequest.deserializeBinaryFromReader);
-        msg.setChannelEdit(value);
-        break;
-      case 7:
-        var value = new proto.chat.DeleteMessageRequest;
-        reader.readMessage(value, proto.chat.DeleteMessageRequest.deserializeBinaryFromReader);
-        msg.setChatMessageDeleted(value);
-        break;
-      case 8:
-        var value = new proto.chat.DeleteChannelRequest;
-        reader.readMessage(value, proto.chat.DeleteChannelRequest.deserializeBinaryFromReader);
-        msg.setChannelDeleted(value);
-        break;
-      case 9:
-        var value = /** @type {boolean} */ (reader.readBool());
-        msg.setConnected(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = new proto.chat.GetMessagesMessage;
+      reader.readMessage(value,proto.chat.GetMessagesMessage.deserializeBinaryFromReader);
+      msg.setChatMessage(value);
+      break;
+    case 2:
+      var value = new proto.chat.GetChannelsMessage;
+      reader.readMessage(value,proto.chat.GetChannelsMessage.deserializeBinaryFromReader);
+      msg.setChannel(value);
+      break;
+    case 3:
+      var value = new proto.chat.GetUsersMessage;
+      reader.readMessage(value,proto.chat.GetUsersMessage.deserializeBinaryFromReader);
+      msg.setUser(value);
+      break;
+    case 4:
+      var value = new proto.chat.GetUsersResponse;
+      reader.readMessage(value,proto.chat.GetUsersResponse.deserializeBinaryFromReader);
+      msg.setUsers(value);
+      break;
+    case 5:
+      var value = new proto.chat.EditMessageRequest;
+      reader.readMessage(value,proto.chat.EditMessageRequest.deserializeBinaryFromReader);
+      msg.setChatMessageEdit(value);
+      break;
+    case 6:
+      var value = new proto.chat.EditChannelRequest;
+      reader.readMessage(value,proto.chat.EditChannelRequest.deserializeBinaryFromReader);
+      msg.setChannelEdit(value);
+      break;
+    case 7:
+      var value = new proto.chat.DeleteMessageRequest;
+      reader.readMessage(value,proto.chat.DeleteMessageRequest.deserializeBinaryFromReader);
+      msg.setChatMessageDeleted(value);
+      break;
+    case 8:
+      var value = new proto.chat.DeleteChannelRequest;
+      reader.readMessage(value,proto.chat.DeleteChannelRequest.deserializeBinaryFromReader);
+      msg.setChannelDeleted(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setConnected(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
@@ -3980,7 +3981,7 @@ proto.chat.BroadcastResponse.deserializeBinaryFromReader = function (msg, reader
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.chat.BroadcastResponse.prototype.serializeBinary = function () {
+proto.chat.BroadcastResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.chat.BroadcastResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3994,7 +3995,7 @@ proto.chat.BroadcastResponse.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer) {
+proto.chat.BroadcastResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getChatMessage();
   if (f != null) {
@@ -4074,7 +4075,7 @@ proto.chat.BroadcastResponse.serializeBinaryToWriter = function (message, writer
  * optional GetMessagesMessage chat_message = 1;
  * @return {?proto.chat.GetMessagesMessage}
  */
-proto.chat.BroadcastResponse.prototype.getChatMessage = function () {
+proto.chat.BroadcastResponse.prototype.getChatMessage = function() {
   return /** @type{?proto.chat.GetMessagesMessage} */ (
     jspb.Message.getWrapperField(this, proto.chat.GetMessagesMessage, 1));
 };
@@ -4084,7 +4085,7 @@ proto.chat.BroadcastResponse.prototype.getChatMessage = function () {
  * @param {?proto.chat.GetMessagesMessage|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChatMessage = function (value) {
+proto.chat.BroadcastResponse.prototype.setChatMessage = function(value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -4093,7 +4094,7 @@ proto.chat.BroadcastResponse.prototype.setChatMessage = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChatMessage = function () {
+proto.chat.BroadcastResponse.prototype.clearChatMessage = function() {
   return this.setChatMessage(undefined);
 };
 
@@ -4102,7 +4103,7 @@ proto.chat.BroadcastResponse.prototype.clearChatMessage = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChatMessage = function () {
+proto.chat.BroadcastResponse.prototype.hasChatMessage = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
@@ -4111,7 +4112,7 @@ proto.chat.BroadcastResponse.prototype.hasChatMessage = function () {
  * optional GetChannelsMessage channel = 2;
  * @return {?proto.chat.GetChannelsMessage}
  */
-proto.chat.BroadcastResponse.prototype.getChannel = function () {
+proto.chat.BroadcastResponse.prototype.getChannel = function() {
   return /** @type{?proto.chat.GetChannelsMessage} */ (
     jspb.Message.getWrapperField(this, proto.chat.GetChannelsMessage, 2));
 };
@@ -4121,7 +4122,7 @@ proto.chat.BroadcastResponse.prototype.getChannel = function () {
  * @param {?proto.chat.GetChannelsMessage|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChannel = function (value) {
+proto.chat.BroadcastResponse.prototype.setChannel = function(value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -4130,7 +4131,7 @@ proto.chat.BroadcastResponse.prototype.setChannel = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChannel = function () {
+proto.chat.BroadcastResponse.prototype.clearChannel = function() {
   return this.setChannel(undefined);
 };
 
@@ -4139,7 +4140,7 @@ proto.chat.BroadcastResponse.prototype.clearChannel = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChannel = function () {
+proto.chat.BroadcastResponse.prototype.hasChannel = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -4148,7 +4149,7 @@ proto.chat.BroadcastResponse.prototype.hasChannel = function () {
  * optional GetUsersMessage user = 3;
  * @return {?proto.chat.GetUsersMessage}
  */
-proto.chat.BroadcastResponse.prototype.getUser = function () {
+proto.chat.BroadcastResponse.prototype.getUser = function() {
   return /** @type{?proto.chat.GetUsersMessage} */ (
     jspb.Message.getWrapperField(this, proto.chat.GetUsersMessage, 3));
 };
@@ -4158,7 +4159,7 @@ proto.chat.BroadcastResponse.prototype.getUser = function () {
  * @param {?proto.chat.GetUsersMessage|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setUser = function (value) {
+proto.chat.BroadcastResponse.prototype.setUser = function(value) {
   return jspb.Message.setWrapperField(this, 3, value);
 };
 
@@ -4167,7 +4168,7 @@ proto.chat.BroadcastResponse.prototype.setUser = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearUser = function () {
+proto.chat.BroadcastResponse.prototype.clearUser = function() {
   return this.setUser(undefined);
 };
 
@@ -4176,7 +4177,7 @@ proto.chat.BroadcastResponse.prototype.clearUser = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasUser = function () {
+proto.chat.BroadcastResponse.prototype.hasUser = function() {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -4185,7 +4186,7 @@ proto.chat.BroadcastResponse.prototype.hasUser = function () {
  * optional GetUsersResponse users = 4;
  * @return {?proto.chat.GetUsersResponse}
  */
-proto.chat.BroadcastResponse.prototype.getUsers = function () {
+proto.chat.BroadcastResponse.prototype.getUsers = function() {
   return /** @type{?proto.chat.GetUsersResponse} */ (
     jspb.Message.getWrapperField(this, proto.chat.GetUsersResponse, 4));
 };
@@ -4195,7 +4196,7 @@ proto.chat.BroadcastResponse.prototype.getUsers = function () {
  * @param {?proto.chat.GetUsersResponse|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setUsers = function (value) {
+proto.chat.BroadcastResponse.prototype.setUsers = function(value) {
   return jspb.Message.setWrapperField(this, 4, value);
 };
 
@@ -4204,7 +4205,7 @@ proto.chat.BroadcastResponse.prototype.setUsers = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearUsers = function () {
+proto.chat.BroadcastResponse.prototype.clearUsers = function() {
   return this.setUsers(undefined);
 };
 
@@ -4213,7 +4214,7 @@ proto.chat.BroadcastResponse.prototype.clearUsers = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasUsers = function () {
+proto.chat.BroadcastResponse.prototype.hasUsers = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 
@@ -4222,7 +4223,7 @@ proto.chat.BroadcastResponse.prototype.hasUsers = function () {
  * optional EditMessageRequest chat_message_edit = 5;
  * @return {?proto.chat.EditMessageRequest}
  */
-proto.chat.BroadcastResponse.prototype.getChatMessageEdit = function () {
+proto.chat.BroadcastResponse.prototype.getChatMessageEdit = function() {
   return /** @type{?proto.chat.EditMessageRequest} */ (
     jspb.Message.getWrapperField(this, proto.chat.EditMessageRequest, 5));
 };
@@ -4232,7 +4233,7 @@ proto.chat.BroadcastResponse.prototype.getChatMessageEdit = function () {
  * @param {?proto.chat.EditMessageRequest|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChatMessageEdit = function (value) {
+proto.chat.BroadcastResponse.prototype.setChatMessageEdit = function(value) {
   return jspb.Message.setWrapperField(this, 5, value);
 };
 
@@ -4241,7 +4242,7 @@ proto.chat.BroadcastResponse.prototype.setChatMessageEdit = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChatMessageEdit = function () {
+proto.chat.BroadcastResponse.prototype.clearChatMessageEdit = function() {
   return this.setChatMessageEdit(undefined);
 };
 
@@ -4250,7 +4251,7 @@ proto.chat.BroadcastResponse.prototype.clearChatMessageEdit = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChatMessageEdit = function () {
+proto.chat.BroadcastResponse.prototype.hasChatMessageEdit = function() {
   return jspb.Message.getField(this, 5) != null;
 };
 
@@ -4259,7 +4260,7 @@ proto.chat.BroadcastResponse.prototype.hasChatMessageEdit = function () {
  * optional EditChannelRequest channel_edit = 6;
  * @return {?proto.chat.EditChannelRequest}
  */
-proto.chat.BroadcastResponse.prototype.getChannelEdit = function () {
+proto.chat.BroadcastResponse.prototype.getChannelEdit = function() {
   return /** @type{?proto.chat.EditChannelRequest} */ (
     jspb.Message.getWrapperField(this, proto.chat.EditChannelRequest, 6));
 };
@@ -4269,7 +4270,7 @@ proto.chat.BroadcastResponse.prototype.getChannelEdit = function () {
  * @param {?proto.chat.EditChannelRequest|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChannelEdit = function (value) {
+proto.chat.BroadcastResponse.prototype.setChannelEdit = function(value) {
   return jspb.Message.setWrapperField(this, 6, value);
 };
 
@@ -4278,7 +4279,7 @@ proto.chat.BroadcastResponse.prototype.setChannelEdit = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChannelEdit = function () {
+proto.chat.BroadcastResponse.prototype.clearChannelEdit = function() {
   return this.setChannelEdit(undefined);
 };
 
@@ -4287,7 +4288,7 @@ proto.chat.BroadcastResponse.prototype.clearChannelEdit = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChannelEdit = function () {
+proto.chat.BroadcastResponse.prototype.hasChannelEdit = function() {
   return jspb.Message.getField(this, 6) != null;
 };
 
@@ -4296,7 +4297,7 @@ proto.chat.BroadcastResponse.prototype.hasChannelEdit = function () {
  * optional DeleteMessageRequest chat_message_deleted = 7;
  * @return {?proto.chat.DeleteMessageRequest}
  */
-proto.chat.BroadcastResponse.prototype.getChatMessageDeleted = function () {
+proto.chat.BroadcastResponse.prototype.getChatMessageDeleted = function() {
   return /** @type{?proto.chat.DeleteMessageRequest} */ (
     jspb.Message.getWrapperField(this, proto.chat.DeleteMessageRequest, 7));
 };
@@ -4306,7 +4307,7 @@ proto.chat.BroadcastResponse.prototype.getChatMessageDeleted = function () {
  * @param {?proto.chat.DeleteMessageRequest|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChatMessageDeleted = function (value) {
+proto.chat.BroadcastResponse.prototype.setChatMessageDeleted = function(value) {
   return jspb.Message.setWrapperField(this, 7, value);
 };
 
@@ -4315,7 +4316,7 @@ proto.chat.BroadcastResponse.prototype.setChatMessageDeleted = function (value) 
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChatMessageDeleted = function () {
+proto.chat.BroadcastResponse.prototype.clearChatMessageDeleted = function() {
   return this.setChatMessageDeleted(undefined);
 };
 
@@ -4324,7 +4325,7 @@ proto.chat.BroadcastResponse.prototype.clearChatMessageDeleted = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChatMessageDeleted = function () {
+proto.chat.BroadcastResponse.prototype.hasChatMessageDeleted = function() {
   return jspb.Message.getField(this, 7) != null;
 };
 
@@ -4333,7 +4334,7 @@ proto.chat.BroadcastResponse.prototype.hasChatMessageDeleted = function () {
  * optional DeleteChannelRequest channel_deleted = 8;
  * @return {?proto.chat.DeleteChannelRequest}
  */
-proto.chat.BroadcastResponse.prototype.getChannelDeleted = function () {
+proto.chat.BroadcastResponse.prototype.getChannelDeleted = function() {
   return /** @type{?proto.chat.DeleteChannelRequest} */ (
     jspb.Message.getWrapperField(this, proto.chat.DeleteChannelRequest, 8));
 };
@@ -4343,7 +4344,7 @@ proto.chat.BroadcastResponse.prototype.getChannelDeleted = function () {
  * @param {?proto.chat.DeleteChannelRequest|undefined} value
  * @return {!proto.chat.BroadcastResponse} returns this
 */
-proto.chat.BroadcastResponse.prototype.setChannelDeleted = function (value) {
+proto.chat.BroadcastResponse.prototype.setChannelDeleted = function(value) {
   return jspb.Message.setWrapperField(this, 8, value);
 };
 
@@ -4352,7 +4353,7 @@ proto.chat.BroadcastResponse.prototype.setChannelDeleted = function (value) {
  * Clears the message field making it undefined.
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.clearChannelDeleted = function () {
+proto.chat.BroadcastResponse.prototype.clearChannelDeleted = function() {
   return this.setChannelDeleted(undefined);
 };
 
@@ -4361,7 +4362,7 @@ proto.chat.BroadcastResponse.prototype.clearChannelDeleted = function () {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.hasChannelDeleted = function () {
+proto.chat.BroadcastResponse.prototype.hasChannelDeleted = function() {
   return jspb.Message.getField(this, 8) != null;
 };
 
@@ -4370,7 +4371,7 @@ proto.chat.BroadcastResponse.prototype.hasChannelDeleted = function () {
  * optional bool connected = 9;
  * @return {boolean}
  */
-proto.chat.BroadcastResponse.prototype.getConnected = function () {
+proto.chat.BroadcastResponse.prototype.getConnected = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
 };
 
@@ -4379,7 +4380,7 @@ proto.chat.BroadcastResponse.prototype.getConnected = function () {
  * @param {boolean} value
  * @return {!proto.chat.BroadcastResponse} returns this
  */
-proto.chat.BroadcastResponse.prototype.setConnected = function (value) {
+proto.chat.BroadcastResponse.prototype.setConnected = function(value) {
   return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 

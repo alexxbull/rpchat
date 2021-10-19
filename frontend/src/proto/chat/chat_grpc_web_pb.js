@@ -23,7 +23,7 @@ proto.chat = require('./chat_pb.js');
 /**
  * @param {string} hostname
  * @param {?Object} credentials
- * @param {?Object} options
+ * @param {?grpc.web.ClientOptions} options
  * @constructor
  * @struct
  * @final
@@ -31,7 +31,7 @@ proto.chat = require('./chat_pb.js');
 proto.chat.ChatServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -49,7 +49,7 @@ proto.chat.ChatServiceClient =
 /**
  * @param {string} hostname
  * @param {?Object} credentials
- * @param {?Object} options
+ * @param {?grpc.web.ClientOptions} options
  * @constructor
  * @struct
  * @final
@@ -57,7 +57,7 @@ proto.chat.ChatServiceClient =
 proto.chat.ChatServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -95,27 +95,8 @@ const methodDescriptor_ChatService_Broadcast = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.BroadcastRequest,
- *   !proto.chat.BroadcastResponse>}
- */
-const methodInfo_ChatService_Broadcast = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.BroadcastResponse,
-  /**
-   * @param {!proto.chat.BroadcastRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.BroadcastResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.BroadcastRequest} request The request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastResponse>}
  *     The XHR Node Readable Stream
@@ -132,7 +113,7 @@ proto.chat.ChatServiceClient.prototype.broadcast =
 
 /**
  * @param {!proto.chat.BroadcastRequest} request The request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!grpc.web.ClientReadableStream<!proto.chat.BroadcastResponse>}
  *     The XHR Node Readable Stream
@@ -170,30 +151,11 @@ const methodDescriptor_ChatService_CloseBroadcast = new grpc.web.MethodDescripto
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.BroadcastRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_CloseBroadcast = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.BroadcastRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.BroadcastRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -212,7 +174,7 @@ proto.chat.ChatServiceClient.prototype.closeBroadcast =
 /**
  * @param {!proto.chat.BroadcastRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -250,30 +212,11 @@ const methodDescriptor_ChatService_AddMessage = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.NewMessageRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_AddMessage = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.NewMessageRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.NewMessageRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -292,7 +235,7 @@ proto.chat.ChatServiceClient.prototype.addMessage =
 /**
  * @param {!proto.chat.NewMessageRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -330,30 +273,11 @@ const methodDescriptor_ChatService_AddChannel = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.NewChannelRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_AddChannel = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.NewChannelRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.NewChannelRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -372,7 +296,7 @@ proto.chat.ChatServiceClient.prototype.addChannel =
 /**
  * @param {!proto.chat.NewChannelRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -410,30 +334,11 @@ const methodDescriptor_ChatService_DeleteMessage = new grpc.web.MethodDescriptor
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.DeleteMessageRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_DeleteMessage = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.DeleteMessageRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.DeleteMessageRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -452,7 +357,7 @@ proto.chat.ChatServiceClient.prototype.deleteMessage =
 /**
  * @param {!proto.chat.DeleteMessageRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -490,30 +395,11 @@ const methodDescriptor_ChatService_DeleteChannel = new grpc.web.MethodDescriptor
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.DeleteChannelRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_DeleteChannel = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.DeleteChannelRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.DeleteChannelRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -532,7 +418,7 @@ proto.chat.ChatServiceClient.prototype.deleteChannel =
 /**
  * @param {!proto.chat.DeleteChannelRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -570,30 +456,11 @@ const methodDescriptor_ChatService_EditMessage = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EditMessageRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_EditMessage = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.EditMessageRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.EditMessageRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -612,7 +479,7 @@ proto.chat.ChatServiceClient.prototype.editMessage =
 /**
  * @param {!proto.chat.EditMessageRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -650,30 +517,11 @@ const methodDescriptor_ChatService_EditChannel = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EditChannelRequest,
- *   !proto.chat.EmptyMessage>}
- */
-const methodInfo_ChatService_EditChannel = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.EmptyMessage,
-  /**
-   * @param {!proto.chat.EditChannelRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.EmptyMessage.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.EditChannelRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.EmptyMessage)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.EmptyMessage)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.EmptyMessage>|undefined}
  *     The XHR Node Readable Stream
@@ -692,7 +540,7 @@ proto.chat.ChatServiceClient.prototype.editChannel =
 /**
  * @param {!proto.chat.EditChannelRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.EmptyMessage>}
  *     Promise that resolves to the response
@@ -730,30 +578,11 @@ const methodDescriptor_ChatService_GetChannels = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EmptyMessage,
- *   !proto.chat.GetChannelsResponse>}
- */
-const methodInfo_ChatService_GetChannels = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.GetChannelsResponse,
-  /**
-   * @param {!proto.chat.EmptyMessage} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.GetChannelsResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.EmptyMessage} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.GetChannelsResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.GetChannelsResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.GetChannelsResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -772,7 +601,7 @@ proto.chat.ChatServiceClient.prototype.getChannels =
 /**
  * @param {!proto.chat.EmptyMessage} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetChannelsResponse>}
  *     Promise that resolves to the response
@@ -810,30 +639,11 @@ const methodDescriptor_ChatService_GetUsers = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.EmptyMessage,
- *   !proto.chat.GetUsersResponse>}
- */
-const methodInfo_ChatService_GetUsers = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.GetUsersResponse,
-  /**
-   * @param {!proto.chat.EmptyMessage} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.GetUsersResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.EmptyMessage} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.GetUsersResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.GetUsersResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.GetUsersResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -852,7 +662,7 @@ proto.chat.ChatServiceClient.prototype.getUsers =
 /**
  * @param {!proto.chat.EmptyMessage} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetUsersResponse>}
  *     Promise that resolves to the response
@@ -890,30 +700,11 @@ const methodDescriptor_ChatService_GetMessages = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.GetMessagesRequest,
- *   !proto.chat.GetMessagesResponse>}
- */
-const methodInfo_ChatService_GetMessages = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.GetMessagesResponse,
-  /**
-   * @param {!proto.chat.GetMessagesRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.GetMessagesResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.GetMessagesRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.GetMessagesResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.GetMessagesResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.GetMessagesResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -932,7 +723,7 @@ proto.chat.ChatServiceClient.prototype.getMessages =
 /**
  * @param {!proto.chat.GetMessagesRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetMessagesResponse>}
  *     Promise that resolves to the response
@@ -970,30 +761,11 @@ const methodDescriptor_ChatService_GetFilteredMessages = new grpc.web.MethodDesc
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.chat.GetFilteredMessagesRequest,
- *   !proto.chat.GetMessagesResponse>}
- */
-const methodInfo_ChatService_GetFilteredMessages = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.chat.GetMessagesResponse,
-  /**
-   * @param {!proto.chat.GetFilteredMessagesRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.chat.GetMessagesResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.chat.GetFilteredMessagesRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.chat.GetMessagesResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.chat.GetMessagesResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.chat.GetMessagesResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -1012,7 +784,7 @@ proto.chat.ChatServiceClient.prototype.getFilteredMessages =
 /**
  * @param {!proto.chat.GetFilteredMessagesRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.chat.GetMessagesResponse>}
  *     Promise that resolves to the response

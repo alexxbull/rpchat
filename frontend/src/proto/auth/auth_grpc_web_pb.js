@@ -21,7 +21,7 @@ proto.auth = require('./auth_pb.js');
 /**
  * @param {string} hostname
  * @param {?Object} credentials
- * @param {?Object} options
+ * @param {?grpc.web.ClientOptions} options
  * @constructor
  * @struct
  * @final
@@ -29,7 +29,7 @@ proto.auth = require('./auth_pb.js');
 proto.auth.AuthServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -47,7 +47,7 @@ proto.auth.AuthServiceClient =
 /**
  * @param {string} hostname
  * @param {?Object} credentials
- * @param {?Object} options
+ * @param {?grpc.web.ClientOptions} options
  * @constructor
  * @struct
  * @final
@@ -55,7 +55,7 @@ proto.auth.AuthServiceClient =
 proto.auth.AuthServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -93,30 +93,11 @@ const methodDescriptor_AuthService_Login = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.auth.LoginRequest,
- *   !proto.auth.LoginResponse>}
- */
-const methodInfo_AuthService_Login = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.auth.LoginResponse,
-  /**
-   * @param {!proto.auth.LoginRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.auth.LoginResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.auth.LoginRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.auth.LoginResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.auth.LoginResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.auth.LoginResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -135,10 +116,10 @@ proto.auth.AuthServiceClient.prototype.login =
 /**
  * @param {!proto.auth.LoginRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.auth.LoginResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.auth.AuthServicePromiseClient.prototype.login =
     function(request, metadata) {
@@ -173,30 +154,11 @@ const methodDescriptor_AuthService_Refresh = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.auth.EmptyMessage,
- *   !proto.auth.LoginResponse>}
- */
-const methodInfo_AuthService_Refresh = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.auth.LoginResponse,
-  /**
-   * @param {!proto.auth.EmptyMessage} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.auth.LoginResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.auth.EmptyMessage} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.auth.LoginResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.auth.LoginResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.auth.LoginResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -215,10 +177,10 @@ proto.auth.AuthServiceClient.prototype.refresh =
 /**
  * @param {!proto.auth.EmptyMessage} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.auth.LoginResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.auth.AuthServicePromiseClient.prototype.refresh =
     function(request, metadata) {
@@ -253,30 +215,11 @@ const methodDescriptor_AuthService_Register = new grpc.web.MethodDescriptor(
 
 
 /**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.auth.RegisterRequest,
- *   !proto.auth.LoginResponse>}
- */
-const methodInfo_AuthService_Register = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.auth.LoginResponse,
-  /**
-   * @param {!proto.auth.RegisterRequest} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.auth.LoginResponse.deserializeBinary
-);
-
-
-/**
  * @param {!proto.auth.RegisterRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.auth.LoginResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.auth.LoginResponse)}
  *     callback The callback function(error, response)
  * @return {!grpc.web.ClientReadableStream<!proto.auth.LoginResponse>|undefined}
  *     The XHR Node Readable Stream
@@ -295,10 +238,10 @@ proto.auth.AuthServiceClient.prototype.register =
 /**
  * @param {!proto.auth.RegisterRequest} request The
  *     request proto
- * @param {?Object<string, string>} metadata User defined
+ * @param {?Object<string, string>=} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.auth.LoginResponse>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.auth.AuthServicePromiseClient.prototype.register =
     function(request, metadata) {
