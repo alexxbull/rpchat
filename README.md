@@ -43,3 +43,15 @@ Desktop
 <img src="https://github.com/alexxbull/rpchat/blob/master/screenshots/message-options-desktop.png" width=350px/>
 <img src="https://github.com/alexxbull/rpchat/blob/master/screenshots/about-desktop.png" width=350px/>
 </div> 
+
+# Useful commands:
+* Compile protobufs for frontend (assumes working directory is the root directory `rpchat`)
+     ```
+        protoc chat.proto \
+            --js_out=import_style=commonjs:frontend/src/proto/chat \
+            --grpc-web_out=import_style=commonjs,mode=grpcwebtext:frontend/src/proto/chat
+            
+        protoc auth.proto \
+            --js_out=import_style=commonjs:frontend/src/proto/auth \
+            --grpc-web_out=import_style=commonjs,mode=grpcwebtext:frontend/src/proto/auth
+    ```
