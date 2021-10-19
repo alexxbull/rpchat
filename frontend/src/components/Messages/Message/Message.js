@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 // css 
 import classes from '../Messages.module.css';
@@ -14,7 +14,8 @@ const Message = props => {
     const { avatar, edited, grouped, id, isDesktop, memo, scrollRef, time, timestamp, user, username } = props
     const { state, dispatch } = useContext(StoreContext)
 
-    const initialMessageOptions = {
+    const initialMessageOptions = useMemo( () => {
+        return {
         messageBtnClasses: [classes.MessageBtns],
         deleteBtnClasses: [classes.DeleteBtn, classes.MessageBtn],
         deletedClasses: [classes.Deleted],
@@ -27,7 +28,9 @@ const Message = props => {
         rows: 1,
         startLongPress: false,
         timeClasses: [classes.Message_time],
-    }
+        }
+    }, [memo])
+
     const [messageOptions, setMessageOptions] = useState(initialMessageOptions)
 
 
