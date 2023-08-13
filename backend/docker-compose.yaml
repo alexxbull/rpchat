@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - RPCHAT_ADMIN_PASSWORD=${RPCHAT_ADMIN_PASSWORD}
       - PGOPTIONS=${PGOPTIONS}
-    image: postgres:alpine
+    image: postgres:12-alpine
     ports: 
         - "5430:5432"
     restart: on-failure
