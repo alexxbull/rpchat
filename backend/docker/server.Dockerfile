@@ -15,8 +15,9 @@ CMD if [ ${APP_ENV} = prod ]; \
     then \
     go build && ./backend; \
     else \
-    go get -u github.com/cosmtrek/air && \
-    air; \
+    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=localhost" && \
+    go get -tool github.com/air-verse/air@latest && \
+    go tool air; \
     fi
 
 EXPOSE 9090
