@@ -13,7 +13,8 @@ db-data
 *.dll
 *.so
 *.dylib
-backend
+backend/backend
+backend/tmp
 
 # Test binary, built with `go test -c`
 *.test
