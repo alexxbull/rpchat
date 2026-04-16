@@ -45,3 +45,6 @@ frontend.env.production.local
 frontendnpm-debug.log*
 frontendyarn-debug.log*
 frontendyarn-error.log*
+
+#----------> nix stuff <----------
+.direnv/
