@@ -29,8 +29,8 @@ const (
 var (
 	authSrvr authServer
 	chatSrvr chatServer
-	hostname = os.Getenv("GRPC_SERVER_HOST")
-	appEnv   = os.Getenv("APP_ENV")
+	hostname = os.Getenv("RPCHAT_SERVER_HOST")
+	appEnv   = os.Getenv("RPCHAT_ENV")
 )
 
 func main() {
@@ -44,7 +44,7 @@ func main() {
 	log.Info("Starting server in ", appEnv, " environment")
 
 	// connect to database
-	dbConnInfo := fmt.Sprintf("host=db dbname=%s user=%s password=%s sslmode=disable", os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
+	dbConnInfo := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", hostname, os.Getenv("POSTGRES_DB"), os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"))
 	db, err := connectDatabase(dbConnInfo)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v", err)
