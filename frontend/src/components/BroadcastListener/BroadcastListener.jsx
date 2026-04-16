@@ -1,11 +1,12 @@
-// grpc
-import { BroadcastRequest } from '../../proto/chat/chat_pb.js'
-import { ChatClient } from '../../client/grpc_clients.js'
+import { create } from "@bufbuild/protobuf";
+import { BroadcastRequestSchema } from "../../proto/chat/chat_pb.js";
+import { ChatClient } from '../../client/grpc_clients'
 
 const broadcastListener = async (username, dispatch) => {
     try {
-        const req = new BroadcastRequest()
-        req.setUsername(username)
+        const req = create(BroadcastRequestSchema, {
+            username: username,
+        });
 
         const chatClient = ChatClient(dispatch)
         const stream = await chatClient.broadcast(req, {})

@@ -3,8 +3,9 @@ import React, { useContext, useState } from 'react'
 import classes from './ReplyBox.module.css'
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js'
-import { NewMessageRequest, EditMessageRequest } from '../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../client/grpc_clients'
+import { NewMessageRequestSchema, EditMessageRequestSchema } from '../../proto/chat/chat_pb.js'
 
 // context
 import { StoreContext } from '../../context/Store'
@@ -64,11 +65,11 @@ const ReplyBox = props => {
             if (mobileMessageEdit.memo) {
                 if (mobileMessageEdit.memo !== memo) {
                     try {
-                        const req = new EditMessageRequest()
-                        req.setId(mobileMessageEdit.id)
-                        req.setMemo(memo)
-                        req.setUser(state.username)
-
+                        const req = create(EditMessageRequestSchema, {
+                            id: mobileMessageEdit.id,
+                            memo: memo,
+                            username: state.username,
+                        });
                         const chatClient = ChatClient(dispatch)
                         await chatClient.editMessage(req, {})
                     }
@@ -79,10 +80,11 @@ const ReplyBox = props => {
                 endMobileMessageEdit()
             }
             else {
-                const req = new NewMessageRequest()
-                req.setMemo(memo)
-                req.setUser(state.username)
-                req.setChannel(state.currentChannel.name)
+                const req = create(NewMessageRequestSchema, {
+                    memo: memo,
+                    username: state.username,
+                    channel: state.currentChannel.name,
+                });
 
                 try {
                     const chatClient = ChatClient(dispatch)

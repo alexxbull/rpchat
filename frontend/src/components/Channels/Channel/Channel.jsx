@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import classes from './Channel.module.css'
 
 // context
-import { StoreContext } from '../../../context/Store.js';
+import { StoreContext } from '../../../context/Store';
 import { useEffect } from 'react';
 
 const Channel = props => {

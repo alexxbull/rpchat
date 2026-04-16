@@ -37,13 +37,8 @@
 
               # grpc
               protobuf
-              protoc-gen-connect-go
               protoc-gen-doc
               protoc-gen-es
-              protoc-gen-go
-              protoc-gen-grpc-web
-              protoc-gen-js
-              protoc-gen-lint
 
               # Nix / OS stuff
               nixfmt

@@ -1,0 +1,43 @@
+// import { ChatServicePromiseClient } from '../proto/chat/chat_grpc_web_pb'
+// import { AuthServicePromiseClient } from '../proto/auth/auth_grpc_web_pb'
+import { AuthUnaryInterceptor } from '../interceptors/AuthUnaryInterceptor'
+import { AuthStreamInterceptor } from '../interceptors/AuthStreamInterceptor'
+
+// import { AuthServicePromiseClient } from '../proto/auth/auth_grpc_web_pb'
+import * as auth_grpc_web_pb from '../proto/auth/auth_grpc_web_pb';
+const AuthServicePromiseClient = new auth_grpc_web_pb.AuthServicePromiseClient();
+
+
+// import { ChatServicePromiseClient } from '../proto/chat/chat_grpc_web_pb'
+import * as chat_grpc_web_pb from '../proto/chat/chat_grpc_web_pb';
+const ChatServicePromiseClient = new chat_grpc_web_pb.ChatServicePromiseClient();
+
+
+const hostname = import.meta.env.VITE_RPCHAT_SERVER_HOST || 'https://localhost:443'
+
+const AuthClient = dispatch => {
+    const authUnaryInterceptor = new AuthUnaryInterceptor(dispatch)
+
+    const authOpts = {
+        'unaryInterceptors': [authUnaryInterceptor],
+        'withCredentials': true,
+    }
+
+    return new AuthServicePromiseClient(hostname, null, authOpts)
+}
+
+const ChatClient = dispatch => {
+    const authUnaryInterceptor = new AuthUnaryInterceptor(dispatch)
+    const authStreamInterceptor = new AuthStreamInterceptor(dispatch)
+
+    const chatOpts = {
+        'unaryInterceptors': [authUnaryInterceptor],
+        'streamInterceptors': [authStreamInterceptor],
+        'withCredentials': true,
+    }
+
+    return new ChatServicePromiseClient(hostname, null, chatOpts)
+}
+
+
+export { AuthClient, ChatClient }

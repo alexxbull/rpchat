@@ -1,8 +1,9 @@
 import { useContext, useEffect } from 'react'
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js'
-import { BroadcastRequest } from '../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../client/grpc_clients'
+import { BroadcastRequestSchema } from '../../proto/chat/chat_pb.js'
 
 // context
 import { StoreContext } from '../../context/Store'
@@ -17,9 +18,10 @@ const RefreshHandler = props => {
 
             const handleDisconnect = async () => {
                 // close connection with server
-                const chatClient = ChatClient(dispatch)
-                const req = new BroadcastRequest()
-                req.setUsername(state.username)
+                const chatClient = ChatClient(dispatch)                
+                const req = create(BroadcastRequestSchema, {
+                    username: state.username,
+                });
                 await chatClient.closeBroadcast(req, {})
 
                 // open a new broadcast listener if user stays on page

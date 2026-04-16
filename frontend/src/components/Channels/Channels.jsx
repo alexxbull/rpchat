@@ -5,23 +5,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import classes from './Channels.module.css'
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js';
-import { EmptyMessage } from '../../proto/chat/chat_pb.js'
+import { ChatClient } from '../../client/grpc_clients';
+import { EmptyMessageSchema } from "../../proto/chat/chat_pb.js";
 
 // context
 import { StoreContext } from '../../context/Store';
 
 // components
-import Channel from './Channel/Channel.js'
-import ChannelsHeader from './ChannelsHeader/ChannelsHeader.js';
-import SettingsBar from '../SettingsBar/SettingsBar.js';
-import ChannelModal from './ChannelModal/ChannelModal.js';
-import Spinner from '../Spinner/Spinner.js';
-import { useHistory } from 'react-router-dom';
+import Channel from './Channel/Channel'
+import ChannelsHeader from './ChannelsHeader/ChannelsHeader';
+import SettingsBar from '../SettingsBar/SettingsBar';
+import ChannelModal from './ChannelModal/ChannelModal';
+import Spinner from '../Spinner/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const Channels = props => {
     const { state, dispatch } = useContext(StoreContext)
-    const history = useHistory()
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
     const { isDesktop, show } = props
     const initialChannelOptions = {
@@ -40,7 +40,7 @@ const Channels = props => {
                 // only load channels if user is connected to broadcast stream
                 if (state.listening) {
                     try {
-                        const req = new EmptyMessage()
+                        const req = create(EmptyMessageSchema, {});
                         const chatClient = ChatClient(dispatch)
                         const res = await chatClient.getChannels(req, {})
                         let currentChannel = null
@@ -63,12 +63,12 @@ const Channels = props => {
                     }
                     catch (err) {
                         console.error('error loading channels:', err.message)
-                        history.push('/error')
+                        navigate('/error')
                     }
                 }
             }
         )()
-    }, [dispatch, history, state.accessToken, state.listening])
+    }, [dispatch, navigate, state.accessToken, state.listening])
 
     // hide channel options when on desktop
     useEffect(() => {

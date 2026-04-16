@@ -1,13 +1,13 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // css
 import classes from './ErrorPage.module.css'
 
-import { ReactComponent as ErrorIcon } from '../../assets/error-icon.svg'
+import ErrorIcon from '../../assets/error-icon.svg?react'
 
 const ErrorPage = props => {
-    const history = useHistory()
+    const navigate = useNavigate()
 
     // highlight on touch/longpress
     const touchHighlight = {
@@ -36,8 +36,8 @@ const ErrorPage = props => {
                 </div>
 
                 <div className={classes.Buttons}>
-                    <button className={classes.Button} {...touchHighlight} onClick={() => history.push('/')}>Homepage</button>
-                    <button className={classes.Button} {...touchHighlight} onClick={() => history.push('/chat')}>Chat</button>
+                    <button className={classes.Button} {...touchHighlight} onClick={() => navigate('/')}>Homepage</button>
+                    <button className={classes.Button} {...touchHighlight} onClick={() => navigate('/chat')}>Chat</button>
                 </div>
             </div>
         </div>

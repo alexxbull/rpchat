@@ -1,8 +1,7 @@
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
 
 // grpc
-import { AuthClient } from '../client/grpc_clients.js'
-import { EmptyMessage } from '../proto/auth/auth_pb.js'
+import { AuthClient } from '../client/grpc_clients'
 
 const authRoutes = ['/auth.AuthService/Login', '/auth.AuthService/Refresh', '/auth.AuthService/Register']
 
@@ -37,8 +36,8 @@ class AuthUnaryInterceptor {
         }
         catch (err) {
             if (err.message === 'expired token' || err.message === 'missing access token') {
-                try {
-                    const tokenRequest = new EmptyMessage()
+                try {               
+                    const tokenRequest = {}
                     const authClient = AuthClient(null)
                     const refreshResponse = await authClient.refresh(tokenRequest, {})
                     const avatar = refreshResponse.getAvatar()

@@ -1,33 +1,36 @@
 import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // css
 import classes from './Settings.module.css'
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js'
-import { BroadcastRequest } from '../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../client/grpc_clients'
+import { BroadcastRequestSchema } from '../../proto/chat/chat_pb.js'
+
 
 // context
-import { StoreContext } from '../../context/Store.js'
+import { StoreContext } from '../../context/Store'
 
 const Settings = props => {
     const { dispatch, state } = useContext(StoreContext)
-    const history = useHistory()
+    const navigate = useNavigate()
     const [showSettingsMenu, setShowSettingsMenu] = useState(false)
 
     const handleLogout = async () => {
         try {
             const chatClient = ChatClient(dispatch)
-            const req = new BroadcastRequest()
-            req.setUsername(state.username)
+            const req = create(BroadcastRequestSchema, {
+                username: state.username,
+            });
             await chatClient.closeBroadcast(req, {})
         }
         catch (err) {
             console.error('Logout issue:', err.message)
         }
 
-        history.push('/')
+        navigate('/')
         dispatch({ type: 'logout' })
     }
 
@@ -35,7 +38,7 @@ const Settings = props => {
     if (showSettingsMenu) {
         settingsMenu = (
             <div className={classes.Settings_menu}>
-                <button className={classes.Settings_menu_item} onClick={() => history.push('/About')}>About</button>
+                <button className={classes.Settings_menu_item} onClick={() => navigate('/About')}>About</button>
                 <button className={classes.Settings_menu_item} onClick={handleLogout}>Log Out</button>
             </div>
         )

@@ -6,11 +6,12 @@ import classes from './ChannelModal.module.css'
 import { StoreContext } from '../../../context/Store'
 
 // grpc
-import { ChatClient } from '../../../client/grpc_clients.js'
-import { DeleteChannelRequest, EditChannelRequest, NewChannelRequest } from '../../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../../client/grpc_clients'
+import { DeleteChannelRequestSchema , EditChannelRequestSchema, NewChannelRequestSchema } from '../../../proto/chat/chat_pb'
 
 // copmponents
-import Modal from '../../Modal/Modal.js'
+import Modal from '../../Modal/Modal'
 
 const ChannelModal = props => {
     const { dispatch, state } = useContext(StoreContext)
@@ -40,10 +41,11 @@ const ChannelModal = props => {
         switch (props.modalType) {
             case 'new':
                 try {
-                    const req = new NewChannelRequest()
-                    req.setName(channel.name)
-                    req.setDescription(channel.desc)
-                    req.setOwner(state.username)
+                    const req = create(NewChannelRequestSchema, {
+                        name: channel.name,
+                        description: channel.desc,
+                        owner: state.username,
+                    });
 
                     const chatClient = ChatClient(dispatch)
                     await chatClient.addChannel(req, {})
@@ -55,11 +57,12 @@ const ChannelModal = props => {
                 break
             case 'edit':
                 try {
-                    const req = new EditChannelRequest()
-                    req.setId(channel.id)
-                    req.setName(channel.name)
-                    req.setDescription(channel.desc)
-                    req.setOwner(state.username)
+                    const req = create(EditChannelRequestSchema, {
+                        id: channel.id,
+                        name: channel.name,
+                        description: channel.desc,
+                        username: state.username,
+                    });
 
                     const chatClient = ChatClient(dispatch)
                     await chatClient.editChannel(req, {})
@@ -71,10 +74,11 @@ const ChannelModal = props => {
                 break
             case 'delete':
                 try {
-                    const req = new DeleteChannelRequest()
-                    req.setId(channel.id)
-                    req.setName(channel.name)
-                    req.setUsername(state.username)
+                    const req = create(DeleteChannelRequestSchema, {
+                        id: channel.id,
+                        name: channel.name,
+                        username: state.username,
+                    });
 
                     const chatClient = ChatClient(dispatch)
                     await chatClient.deleteChannel(req, {})

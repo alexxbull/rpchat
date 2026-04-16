@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 // grpc
-import { AuthClient } from './client/grpc_clients.js'
-import { EmptyMessage } from './proto/auth/auth_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { AuthClient } from './client/grpc_clients'
+import { EmptyMessageSchema } from './proto/auth/auth_pb.js'
 
 // context
-import { StoreContext } from './context/Store.js';
+import { StoreContext } from './context/Store';
 
 // components
-import Chat from './containers/Chat/Chat.js';
-import Channels from './components/Channels/Channels.js';
-import Users from './components/Users/Users.js';
-import Backdrop from './components/Backdrop/Backdrop.js';
-import { broadcastListener } from './components/BroadcastListener/BroadcastListener.js';
-import RefreshHandler from './components/RefreshHandler/RefreshHandler.js';
+import Chat from './containers/Chat/Chat.jsx';
+import Channels from './components/Channels/Channels.jsx';
+import Users from './components/Users/Users.jsx';
+import Backdrop from './components/Backdrop/Backdrop.jsx';
+import { broadcastListener } from './components/BroadcastListener/BroadcastListener.jsx';
+import RefreshHandler from './components/RefreshHandler/RefreshHandler.jsx';
 
 const rem = 16
 
@@ -32,7 +33,7 @@ const App = props => {
   // authenticate user
   const getAccessToken = async () => {
     try {
-      const req = new EmptyMessage()
+      const req = create(EmptyMessageSchema, {});
       const authClient = AuthClient(dispatch)
       await authClient.refresh(req, {})
     }

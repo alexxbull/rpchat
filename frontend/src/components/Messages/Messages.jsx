@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from '../../utils/withRouter';
 import moment from 'moment'
 
 // css
 import classes from './Messages.module.css';
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js'
-import { DeleteMessageRequest, GetFilteredMessagesRequest, GetMessagesRequest } from '../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../client/grpc_clients'
+import { DeleteMessageRequestSchema , GetFilteredMessagesRequestSchema, GetMessagesRequestSchema } from '../../proto/chat/chat_pb'
+
 
 // context
 import { StoreContext } from '../../context/Store';
@@ -26,6 +28,7 @@ const initialMessageOptions = {
     messageOptionClasses: [classes.MessageOption],
     messageOptionsClasses: [classes.MessageOptions],
 }
+
 
 class Messages extends Component {
     static contextType = StoreContext
@@ -115,9 +118,9 @@ class Messages extends Component {
             try {
                 this.setState({ loading: true })
 
-                const req = new GetMessagesRequest()
-                req.setChannel(currentChannel.name)
-
+                const req = create(GetMessagesRequestSchema, {
+                    channel: currentChannel.name,
+                });
                 const chatClient = ChatClient(dispatch)
                 const res = await chatClient.getMessages(req, {})
                 const messages = res.getMessagesList().map(message => {
@@ -172,10 +175,10 @@ class Messages extends Component {
                 try {
                     this.setState({ loading: true })
 
-                    const req = new GetFilteredMessagesRequest()
-                    req.setChannel(currentChannel.name)
-                    req.setMinId(clientMin)
-
+                    const req = create(GetFilteredMessagesRequestSchema, {
+                        channel: currentChannel.name,
+                        minId: clientMin,
+                    });
                     const chatClient = ChatClient(dispatch)
                     const res = await chatClient.getFilteredMessages(req, {})
                     const messages = res.getMessagesList().map(message => {
@@ -220,9 +223,10 @@ class Messages extends Component {
         const { dispatch, state } = this.context
 
         try {
-            const req = new DeleteMessageRequest()
-            req.setId(this.state.targetMessage.id)
-            req.setUsername(state.username)
+            const req = create(DeleteMessageRequestSchema, {
+                id: this.state.targetMessage.id,
+                username: state.username,
+            });
 
             const chatClient = ChatClient(dispatch)
             await chatClient.deleteMessage(req, {})

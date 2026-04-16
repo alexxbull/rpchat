@@ -6,7 +6,7 @@ import classes from './SettingsBar.module.css'
 import { StoreContext } from '../../context/Store'
 
 // components
-import Settings from '../../containers/Settings/Settings.js'
+import Settings from '../../containers/Settings/Settings'
 
 const SettingsBar = props => {
     const { state } = useContext(StoreContext)

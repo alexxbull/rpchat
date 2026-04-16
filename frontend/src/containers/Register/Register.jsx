@@ -1,23 +1,29 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import classes from './Login.module.css'
+import classes from './Register.module.css'
 
 // grpc
-import { AuthClient } from '../../client/grpc_clients.js'
-import { LoginRequest } from '../../proto/auth/auth_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { RegisterRequestSchema } from "../../proto/auth/auth_pb";
+
+import { AuthClient } from '../../client/grpc_clients'
 
 // context
 import { StoreContext } from '../../context/Store'
 
-const Login = props => {
+const Register = props => {
     const { dispatch } = useContext(StoreContext)
     const [error, setError] = useState('')
+    const [email, setEmail] = useState({ value: '', styles: [classes.Email] })
     const [username, setUsername] = useState({ value: '', styles: [classes.Username] })
     const [password, setPassword] = useState({ value: '', styles: [classes.Password] })
 
     const handleInput = event => {
         switch (event.target.name) {
+            case "email":
+                setEmail({ value: event.target.value, styles: [classes.Email] })
+                break
             case "username":
                 setUsername({ value: event.target.value, styles: [classes.Username] })
                 break
@@ -31,8 +37,11 @@ const Login = props => {
             setError('')
     }
 
-    const handleLogin = async (event) => {
+    const handleRegister = async (event) => {
         event.preventDefault()
+
+        if (!email.value)
+            setEmail({ ...email, styles: [classes.Email, classes.InputError] })
 
         if (!username.value)
             setUsername({ ...username, styles: [classes.Username, classes.InputError] })
@@ -40,25 +49,29 @@ const Login = props => {
         if (!password.value)
             setPassword({ ...password, styles: [classes.Password, classes.InputError] })
 
-        if (username.value && password.value) {
+        if (email.value && username.value && password.value) {
             try {
-                const req = new LoginRequest()
-                req.setUsername(username.value)
-                req.setPassword(password.value)
+                const req = create(RegisterRequest, {
+                    email: email.value,
+                    username: username.value,
+                    password: password.value,
+                });
+
 
                 const authClient = AuthClient(dispatch)
-                await authClient.login(req, {})
+                await authClient.register(req, {})
                 props.history.push('/chat')
             }
             catch (err) {
-                console.error('login err', err.message)
+                console.error('reg err', err.message)
                 setError(err.message)
             }
         }
         else {
-            setError('Invalid login information')
+            setError('Invalid registration information')
         }
     }
+
 
     const errorClasses = [classes.Error]
     if (error)
@@ -66,22 +79,27 @@ const Login = props => {
 
     return (
         <div className={classes.Container}>
-            <div className={classes.Login}>
+            <div className={classes.Register}>
                 <div className={errorClasses.join(' ')}>{error}</div>
                 <h1>RPChat</h1>
-                <form className={classes.Login_Form} onSubmit={handleLogin}>
-                    <label htmlFor="Username">Username</label>
+                <form className={classes.Register_Form} onSubmit={handleRegister}>
+                    <label htmlFor="email">Email</label>
+                    <input className={email.styles.join(' ')} type="email" placeholder="Enter email" name="email" value={email.value} onChange={handleInput} />
+
+                    <label htmlFor="username">Username</label>
                     <input className={username.styles.join(' ')} type="text" placeholder="Enter username" name="username" value={username.value} onChange={handleInput} />
 
                     <label htmlFor="password">Password</label>
                     <input className={password.styles.join(' ')} type="password" placeholder="Enter password" name="password" value={password.value} onChange={handleInput} />
 
-                    <input className={classes.LoginBtn} type="submit" value="LOG IN" />
+                    <input className={classes.RegisterBtn} type="submit" value="SIGN UP" />
                 </form>
-                <div className={classes.RegisterLink}><Link to="/register">Create an account</Link></div>
+                <div className={classes.LoginLink}>
+                    Already have an account? <Link to="/">Login</Link>
+                </div>
             </div>
         </div>
     )
 }
 
-export default Login
+export default Register

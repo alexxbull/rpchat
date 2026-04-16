@@ -4,11 +4,13 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import classes from '../Messages.module.css';
 
 // grpc
-import { ChatClient } from '../../../client/grpc_clients.js';
-import { EditMessageRequest } from '../../../proto/chat/chat_pb.js'
+import { create } from "@bufbuild/protobuf";
+import { ChatClient } from '../../../client/grpc_clients';
+import { EditMessageRequestSchema } from '../../../proto/chat/chat_pb.js'
+
 
 // context
-import { StoreContext } from '../../../context/Store.js';
+import { StoreContext } from '../../../context/Store';
 
 const Message = props => {
     const { avatar, edited, grouped, id, isDesktop, memo, scrollRef, time, timestamp, user, username } = props
@@ -130,10 +132,11 @@ const Message = props => {
             const newMessageText = messageOptions.messageText.trim()
             if (newMessageText !== memo) {
                 try {
-                    const req = new EditMessageRequest()
-                    req.setId(id)
-                    req.setMemo(newMessageText)
-                    req.setUser(state.username)
+                    const req = create(EditMessageRequestSchema, {
+                        id: id,
+                        memo: newMessageText,
+                        user: state.username,
+                    });
 
                     const chatClient = ChatClient(dispatch)
                     await chatClient.editMessage(req, {})

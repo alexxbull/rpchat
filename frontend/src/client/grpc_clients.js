@@ -1,33 +1,36 @@
-import { ChatServicePromiseClient } from '../proto/chat/chat_grpc_web_pb.js'
-import { AuthServicePromiseClient } from '../proto/auth/auth_grpc_web_pb.js'
-import { AuthUnaryInterceptor } from '../interceptors/AuthUnaryInterceptor.js'
-import { AuthStreamInterceptor } from '../interceptors/AuthStreamInterceptor.js'
+import { createClient } from "@connectrpc/connect";
+// import { createConnectTransport } from "@connectrpc/connect-web";
+import { createGrpcWebTransport } from "@connectrpc/connect-web";
+import { AuthService } from "../proto/auth/auth_pb.js";
+import { ChatService } from "../proto/chat/chat_pb.js";
 
-const hostname = process.env.REACT_APP_GRPC_SERVER_HOST || 'https://localhost:443'
+const hostname = import.meta.env.VITE_RPCHAT_SERVER_HOST || 'https://localhost:443';
 
-const AuthClient = dispatch => {
-    const authUnaryInterceptor = new AuthUnaryInterceptor(dispatch)
+// Simplified Interceptor for Connect v2
+const createAuthInterceptor = (dispatch) => (next) => async (req) => {
+    // Add your logic here (e.g. headers)
+    return await next(req);
+};
 
-    const authOpts = {
-        'unaryInterceptors': [authUnaryInterceptor],
-        'withCredentials': true,
-    }
+const AuthClient = (dispatch) => {
+    const transport = createGrpcWebTransport({
+        baseUrl: hostname,
+        credentials: "include",
+        interceptors: [createAuthInterceptor(dispatch)],
+    });
 
-    return new AuthServicePromiseClient(hostname, null, authOpts)
-}
+    // Use createClient, NOT new AuthServicePromiseClient
+    return createClient(AuthService, transport);
+};
 
-const ChatClient = dispatch => {
-    const authUnaryInterceptor = new AuthUnaryInterceptor(dispatch)
-    const authStreamInterceptor = new AuthStreamInterceptor(dispatch)
+const ChatClient = (dispatch) => {
+    const transport = createGrpcWebTransport({
+        baseUrl: hostname,
+        credentials: "include",
+        interceptors: [createAuthInterceptor(dispatch)],
+    });
 
-    const chatOpts = {
-        'unaryInterceptors': [authUnaryInterceptor],
-        'streamInterceptors': [authStreamInterceptor],
-        'withCredentials': true,
-    }
+    return createClient(ChatService, transport);
+};
 
-    return new ChatServicePromiseClient(hostname, null, chatOpts)
-}
-
-
-export { AuthClient, ChatClient }
+export { AuthClient, ChatClient };

@@ -3,9 +3,9 @@ import React from 'react';
 import classes from './Chat.module.css'
 
 // components
-import Messages from '../../components/Messages/Messages.js';
-import ReplyBox from '../../components/ReplyBox/ReplyBox.js';
-import Toolbar from '../Toolbar/Toolbar.js';
+import Messages from '../../components/Messages/Messages';
+import ReplyBox from '../../components/ReplyBox/ReplyBox';
+import Toolbar from '../Toolbar/Toolbar';
 
 const Chat = props => {
     return (

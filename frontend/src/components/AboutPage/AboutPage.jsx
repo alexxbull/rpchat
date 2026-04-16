@@ -1,17 +1,17 @@
 import React from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 // css
 import classes from './AboutPage.module.css'
 
 // components
-import { ReactComponent as ReceiptIcon } from '../../assets/receipt-icon.svg'
-import { ReactComponent as SourceIcon } from '../../assets/source-icon.svg'
+import ReceiptIcon from '../../assets/receipt-icon.svg?react'
+import SourceIcon from '../../assets/source-icon.svg?react'
 
 const AboutPage = props => {
-    const history = useHistory()
+    const navigate = useNavigate()
 
-    // highlight on touch/longpress
+    // highlight on touch/longpressp
     const touchHighlight = {
         onTouchStart: event => event.target.classList.add(classes.Highlight),
         onTouchEnd: event => event.target.classList.remove(classes.Highlight),
@@ -46,8 +46,8 @@ const AboutPage = props => {
                 </div>
 
                 <div className={classes.Buttons}>
-                    <button className={classes.Button} {...touchHighlight} onClick={() => history.push('/')}>Homepage</button>
-                    <button className={classes.Button} {...touchHighlight} onClick={() => history.push('/chat')}>Chat</button>
+                    <button className={classes.Button} {...touchHighlight} onClick={() => navigate('/')}>Homepage</button>
+                    <button className={classes.Button} {...touchHighlight} onClick={() => navigate('/chat')}>Chat</button>
                 </div>
             </div>
         </div>

@@ -1,23 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import classes from './Users.module.css';
 
 // grpc
-import { ChatClient } from '../../client/grpc_clients.js';
-import { EmptyMessage } from '../../proto/chat/chat_pb.js'
+import { ChatClient } from '../../client/grpc_clients';
+import { EmptyMessageSchema } from '../../proto/chat/chat_pb.js'
 
 // context
 import { StoreContext } from '../../context/Store';
 
 // components
-import User from './User/User.js'
+import User from './User/User'
 import UsersHeader from './UsersHeader/UsersHeader';
 import Spinner from '../Spinner/Spinner';
 
 const Users = props => {
     const { state, dispatch } = useContext(StoreContext)
-    const history = useHistory()
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
 
     // load user after initial render only
@@ -28,7 +28,7 @@ const Users = props => {
                 if (state.listening) {
                     // load users
                     try {
-                        const req = new EmptyMessage()
+                        const req = create(EmptyMessageSchema, {});
                         const chatClient = ChatClient(dispatch)
                         const res = await chatClient.getUsers(req, {})
                         const newUsers = res.getUsersList().map(user => {
@@ -43,12 +43,12 @@ const Users = props => {
                     }
                     catch (err) {
                         console.error('error loading users:', err.message)
-                        history.push('/error')
+                        navigate('/error')
                     }
                 }
             }
         )()
-    }, [dispatch, history, state.accessToken, state.listening])
+    }, [dispatch, navigate, state.accessToken, state.listening])
 
     const usersClasses = [classes.Users]
     if (props.show)
