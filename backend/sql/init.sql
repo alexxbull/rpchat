@@ -1,5 +1,13 @@
 SET TIMEZONE='America/Los_angeles';
 
+-- Setup user and database (note that these variables are set by the psql command that called this file)
+CREATE USER :"user" WITH ENCRYPTED PASSWORD :'pass';
+CREATE DATABASE :"db" OWNER :"user";
+GRANT ALL PRIVILEGES ON DATABASE :"db" TO :"user";
+
+-- Switch connection to the new database
+\c :"db"
+
 -- Tables
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,	
@@ -16,7 +24,7 @@ CREATE TABLE channels (
     channel_name TEXT UNIQUE NOT NULL,
     creation_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     description TEXT DEFAULT '',
-    channel_owner TEXT DEFAULT 'admin' REFERENCES users(user_name) ON UPDATE CASCADE ON DELETE SET DEFAULT 
+    channel_owner TEXT DEFAULT 'mod' REFERENCES users(user_name) ON UPDATE CASCADE ON DELETE SET DEFAULT 
 );
 
 CREATE TABLE messages (
@@ -61,7 +69,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE delete_server_image();
 
 INSERT INTO users(email, image_path, user_name, user_password)
-VALUES ('admin@alexxbull.com', 'attachments/default/user-icon.svg', 'admin', current_setting('custom.admin_password'));
+VALUES ('mod@moderator.com', 'attachments/default/user-icon.svg', 'mod', current_setting('custom.moderator_password'));
 
 INSERT INTO channels(channel_name, description, channel_owner)
-VALUES ('general', 'A channel for dicussing a range of topics', 'admin');
+VALUES ('general', 'A channel for dicussing a range of topics', 'mod');
